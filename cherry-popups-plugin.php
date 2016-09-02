@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Blank Plugin
+ * Plugin Name: Cherry popUps
  * Plugin URI:  http://www.cherryframework.com/
  * Description: A plugin for WordPress.
  * Version:     1.0.0
  * Author:      Cherry Team
- * Text Domain: blank-plugin
+ * Text Domain: cherry-popups
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Domain Path: /languages
  *
- * @package Blank_Plugin
+ * @package Cherry_Popups
  * @author  Cherry Team
  * @version 1.0.0
  * @license GPL-3.0+
@@ -22,13 +22,13 @@ if ( ! defined( 'WPINC' ) ) {
 	die();
 }
 
-// If class `Blank_Plugin` doesn't exists yet.
-if ( ! class_exists( 'Blank_Plugin' ) ) {
+// If class `Cherry_Popups` doesn't exists yet.
+if ( ! class_exists( 'Cherry_Popups' ) ) {
 
 	/**
-	 * Sets up and initializes the Blank plugin.
+	 * Sets up and initializes the Cherry_Popups plugin.
 	 */
-	class Blank_Plugin {
+	class Cherry_Popups {
 
 		/**
 		 * A reference to an instance of this class.
@@ -105,28 +105,28 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'BLANK_PLUGIN_VERSION', '1.0.0' );
+			define( 'CHERRY_POPUPS_VERSION', '1.0.0' );
 
 			/**
 			 * Set the slug of the plugin.
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'BLANK_PLUGIN_SLUG', basename( dirname( __FILE__ ) ) );
+			define( 'CHERRY_POPUPS_SLUG', basename( dirname( __FILE__ ) ) );
 
 			/**
 			 * Set constant path to the plugin directory.
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'BLANK_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+			define( 'CHERRY_POPUPS_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
 			/**
 			 * Set constant path to the plugin URI.
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'BLANK_PLUGIN_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+			define( 'CHERRY_POPUPS_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 		}
 
 		/**
@@ -144,7 +144,7 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			do_action( 'blank_plugin_core_before' );
+			do_action( 'cherry_popups_core_before' );
 
 			global $chery_core_version;
 
@@ -160,8 +160,8 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 			}
 
 			$this->core = new Cherry_Core( array(
-				'base_dir' => BLANK_PLUGIN_DIR . 'cherry-framework',
-				'base_url' => BLANK_PLUGIN_URI . 'cherry-framework',
+				'base_dir' => CHERRY_POPUPS_DIR . 'cherry-framework',
+				'base_url' => CHERRY_POPUPS_URI . 'cherry-framework',
 				'modules'  => array(
 					'cherry-js-core' => array(
 						'autoload' => true,
@@ -203,7 +203,7 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 		 */
 		public function admin() {
 			if ( is_admin() ) {
-				require_once( BLANK_PLUGIN_DIR . 'includes/admin/class-plugin-admin.php' );
+				require_once( CHERRY_POPUPS_DIR . 'includes/admin/class-cherry-popups-admin.php' );
 			}
 		}
 
@@ -215,7 +215,7 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 		 * @return void
 		 */
 		public function lang() {
-			load_plugin_textdomain( 'blank-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+			load_plugin_textdomain( 'cherry-popups', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 
 		/**
@@ -225,10 +225,10 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 		 */
 		public function register_assets() {
 			// Register stylesheets.
-			wp_register_style( 'blank-plugin', esc_url( BLANK_PLUGIN_URI . 'assets/css/min/blank-plugin.min.css' ), array(), BLANK_PLUGIN_VERSION, 'all' );
+			wp_register_style( 'cherry-popups-styles', esc_url( CHERRY_POPUPS_URI . 'assets/css/min/cherry-popups-styles.min.css' ), array(), CHERRY_POPUPS_VERSION, 'all' );
 
 			// Register JavaScripts.
-			wp_register_script( 'blank-plugin',esc_url( BLANK_PLUGIN_URI . 'assets/js/min/blank-plugin.min.js' ), array( 'cherry-js-core' ), BLANK_PLUGIN_VERSION, true );
+			wp_register_script( 'cherry-popups-scripts',esc_url( CHERRY_POPUPS_URI . 'assets/js/min/cherry-popups-scripts.min.js' ), array( 'cherry-js-core' ), CHERRY_POPUPS_VERSION, true );
 		}
 
 		/**
@@ -239,7 +239,7 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 		 * @return void
 		 */
 		public function enqueue_styles() {
-			wp_enqueue_style( 'blank-plugin' );
+			wp_enqueue_style( 'cherry-popups-styles' );
 		}
 
 		/**
@@ -290,7 +290,7 @@ if ( ! class_exists( 'Blank_Plugin' ) ) {
 	}
 }
 
-if ( ! function_exists( 'blank_plugin' ) ) {
+if ( ! function_exists( 'cherry_popups' ) ) {
 
 	/**
 	 * Returns instanse of the plugin class.
@@ -298,9 +298,9 @@ if ( ! function_exists( 'blank_plugin' ) ) {
 	 * @since  1.0.0
 	 * @return object
 	 */
-	function blank_plugin() {
-		return Blank_Plugin::get_instance();
+	function cherry_popups() {
+		return Cherry_Popups::get_instance();
 	}
 }
 
-blank_plugin();
+cherry_popups();

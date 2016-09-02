@@ -2,20 +2,20 @@
 /**
  * Sets up the admin functionality for the plugin.
  *
- * @package    Blank_Plugin
+ * @package    Cherry_Popups
  * @subpackage Admin
  * @author     Cherry Team
  * @license    GPL-3.0+
  * @copyright  2002-2016, Cherry Team
  */
 
-// If class `Blank_Plugin_Admin` doesn't exists yet.
-if ( ! class_exists( 'Blank_Plugin_Admin' ) ) {
+// If class `Cherry_Popups_Admin` doesn't exists yet.
+if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 
 	/**
-	 * Blank_Plugin_Admin class.
+	 * Cherry_Popups_Admin class.
 	 */
-	class Blank_Plugin_Admin {
+	class Cherry_Popups_Admin {
 
 		/**
 		 * A reference to an instance of this class.
@@ -57,8 +57,8 @@ if ( ! class_exists( 'Blank_Plugin_Admin' ) ) {
 		public function includes() {
 
 			// Include plugin pages.
-			require_once( trailingslashit( BLANK_PLUGIN_DIR ) . 'includes/admin/pages/class-plugin-main-page.php' );
-			require_once( trailingslashit( BLANK_PLUGIN_DIR ) . 'includes/admin/pages/class-plugin-options-page.php' );
+			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/admin/pages/class-plugin-main-page.php' );
+			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/admin/pages/class-plugin-options-page.php' );
 		}
 
 		/**
@@ -98,11 +98,11 @@ if ( ! class_exists( 'Blank_Plugin_Admin' ) ) {
 		 * @return void
 		 */
 		public function enqueue_styles( $hook ) {
-			if ( Blank_Plugin_Admin::is_plugin_page() ) {
+			if ( Cherry_Popups_Admin::is_plugin_page() ) {
 				wp_enqueue_style(
-					'blank-plugin-admin',
-					esc_url( BLANK_PLUGIN_URI . 'assets/admin/css/min/blank-plugin-admin.min.css' ),
-					array(), BLANK_PLUGIN_VERSION,
+					'cherry-popups-admin-styles',
+					esc_url( CHERRY_POPUPS_URI . 'assets/admin/css/min/cherry-popups-admin-styles.min.css' ),
+					array(), CHERRY_POPUPS_VERSION,
 					'all'
 				);
 			}
@@ -117,12 +117,12 @@ if ( ! class_exists( 'Blank_Plugin_Admin' ) ) {
 		 * @return void
 		 */
 		public function enqueue_scripts( $hook ) {
-			if ( Blank_Plugin_Admin::is_plugin_page() ) {
+			if ( Cherry_Popups_Admin::is_plugin_page() ) {
 				wp_enqueue_script(
-					'blank-plugin-admin',
-					esc_url( BLANK_PLUGIN_URI . 'assets/admin/js/min/blank-plugin-admin.min.js' ),
+					'cherry-popups-admin-scripts',
+					esc_url( CHERRY_POPUPS_URI . 'assets/admin/js/min/cherry-popups-admin-scripts.min.js' ),
 					array( 'cherry-js-core' ),
-					BLANK_PLUGIN_VERSION,
+					CHERRY_POPUPS_VERSION,
 					true
 				);
 			}
@@ -138,7 +138,7 @@ if ( ! class_exists( 'Blank_Plugin_Admin' ) ) {
 		public static function is_plugin_page() {
 			$screen = get_current_screen();
 
-			return ( ! empty( $screen->base ) && false !== strpos( $screen->base, BLANK_PLUGIN_SLUG ) ) ? true : false ;
+			return ( ! empty( $screen->base ) && false !== strpos( $screen->base, CHERRY_POPUPS_SLUG ) ) ? true : false ;
 		}
 
 		/**
@@ -161,7 +161,7 @@ if ( ! class_exists( 'Blank_Plugin_Admin' ) ) {
 
 }
 
-if ( ! function_exists( 'blank_plugin_admin' ) ) {
+if ( ! function_exists( 'cherry_popups_admin' ) ) {
 
 	/**
 	 * Returns instanse of the plugin class.
@@ -169,9 +169,9 @@ if ( ! function_exists( 'blank_plugin_admin' ) ) {
 	 * @since  1.0.0
 	 * @return object
 	 */
-	function blank_plugin_admin() {
-		return Blank_Plugin_Admin::get_instance();
+	function cherry_popups_admin() {
+		return Cherry_Popups_Admin::get_instance();
 	}
 }
 
-blank_plugin_admin();
+cherry_popups_admin();

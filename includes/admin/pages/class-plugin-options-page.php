@@ -146,7 +146,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'value'					=> 'fa-wordpress',
 						'icon_data'				=> array(
 							'icon_set'		=> 'cherryWidgetFontAwesome',
-							'icon_css'		=> esc_url( BLANK_PLUGIN_URI . 'assets/css/min/font-awesome.min.css' ),
+							'icon_css'		=> esc_url( CHERRY_POPUPS_URI . 'assets/css/min/font-awesome.min.css' ),
 							'icon_base'		=> 'fa',
 							'icon_prefix'	=> 'fa-',
 							'icons'			=> $this->get_icons_set(),
@@ -219,23 +219,23 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'options'	=> array(
 							'grid-layout' => array(
 								'label'		=> esc_html__( 'Grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-grid.svg',
 							),
 							'masonry-layout' => array(
 								'label'		=> esc_html__( 'Masonry', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-masonry.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-masonry.svg',
 							),
 							'justified-layout' => array(
 								'label'		=> esc_html__( 'Justified', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-justified.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-justified.svg',
 							),
 							'cascading-grid-layout' => array(
 								'label'		=> esc_html__( 'Cascading grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
 							),
 							'list-layout' => array(
 								'label'		=> esc_html__( 'List', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-listing.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-listing.svg',
 							),
 						),
 					),
@@ -538,7 +538,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'value'					=> 'fa-wordpress',
 						'icon_data'				=> array(
 							'icon_set'		=> 'cherryWidgetFontAwesome',
-							'icon_css'		=> esc_url( BLANK_PLUGIN_URI . 'assets/css/min/font-awesome.min.css' ),
+							'icon_css'		=> esc_url( CHERRY_POPUPS_URI . 'assets/css/min/font-awesome.min.css' ),
 							'icon_base'		=> 'fa',
 							'icon_prefix'	=> 'fa-',
 							'icons'			=> $this->get_icons_set(),
@@ -613,23 +613,23 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'options'	=> array(
 							'grid-layout' => array(
 								'label'		=> esc_html__( 'Grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-grid.svg',
 							),
 							'masonry-layout' => array(
 								'label'		=> esc_html__( 'Masonry', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-masonry.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-masonry.svg',
 							),
 							'justified-layout' => array(
 								'label'		=> esc_html__( 'Justified', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-justified.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-justified.svg',
 							),
 							'cascading-grid-layout' => array(
 								'label'		=> esc_html__( 'Cascading grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
 							),
 							'list-layout' => array(
 								'label'		=> esc_html__( 'List', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-listing.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-listing.svg',
 							),
 						),
 					),
@@ -804,7 +804,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'value'					=> 'fa-wordpress',
 						'icon_data'				=> array(
 							'icon_set'		=> 'cherryWidgetFontAwesome',
-							'icon_css'		=> esc_url( BLANK_PLUGIN_URI . 'assets/css/min/font-awesome.min.css' ),
+							'icon_css'		=> esc_url( CHERRY_POPUPS_URI . 'assets/css/min/font-awesome.min.css' ),
 							'icon_base'		=> 'fa',
 							'icon_prefix'	=> 'fa-',
 							'icons'			=> $this->get_icons_set(),
@@ -879,23 +879,23 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'options'	=> array(
 							'grid-layout' => array(
 								'label'		=> esc_html__( 'Grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-grid.svg',
 							),
 							'masonry-layout' => array(
 								'label'		=> esc_html__( 'Masonry', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-masonry.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-masonry.svg',
 							),
 							'justified-layout' => array(
 								'label'		=> esc_html__( 'Justified', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-justified.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-justified.svg',
 							),
 							'cascading-grid-layout' => array(
 								'label'		=> esc_html__( 'Cascading grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
 							),
 							'list-layout' => array(
 								'label'		=> esc_html__( 'List', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-listing.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-listing.svg',
 							),
 						),
 					),
@@ -1070,7 +1070,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'value'					=> 'fa-wordpress',
 						'icon_data'				=> array(
 							'icon_set'		=> 'cherryWidgetFontAwesome',
-							'icon_css'		=> esc_url( BLANK_PLUGIN_URI . 'assets/css/min/font-awesome.min.css' ),
+							'icon_css'		=> esc_url( CHERRY_POPUPS_URI . 'assets/css/min/font-awesome.min.css' ),
 							'icon_base'		=> 'fa',
 							'icon_prefix'	=> 'fa-',
 							'icons'			=> $this->get_icons_set(),
@@ -1145,23 +1145,23 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'options'	=> array(
 							'grid-layout' => array(
 								'label'		=> esc_html__( 'Grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-grid.svg',
 							),
 							'masonry-layout' => array(
 								'label'		=> esc_html__( 'Masonry', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-masonry.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-masonry.svg',
 							),
 							'justified-layout' => array(
 								'label'		=> esc_html__( 'Justified', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-justified.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-justified.svg',
 							),
 							'cascading-grid-layout' => array(
 								'label'		=> esc_html__( 'Cascading grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
 							),
 							'list-layout' => array(
 								'label'		=> esc_html__( 'List', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-listing.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-listing.svg',
 							),
 						),
 					),
@@ -1336,7 +1336,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'value'					=> 'fa-wordpress',
 						'icon_data'				=> array(
 							'icon_set'		=> 'cherryWidgetFontAwesome',
-							'icon_css'		=> esc_url( BLANK_PLUGIN_URI . 'assets/css/min/font-awesome.min.css' ),
+							'icon_css'		=> esc_url( CHERRY_POPUPS_URI . 'assets/css/min/font-awesome.min.css' ),
 							'icon_base'		=> 'fa',
 							'icon_prefix'	=> 'fa-',
 							'icons'			=> $this->get_icons_set(),
@@ -1411,23 +1411,23 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'options'	=> array(
 							'grid-layout' => array(
 								'label'		=> esc_html__( 'Grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-grid.svg',
 							),
 							'masonry-layout' => array(
 								'label'		=> esc_html__( 'Masonry', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-masonry.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-masonry.svg',
 							),
 							'justified-layout' => array(
 								'label'		=> esc_html__( 'Justified', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-justified.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-justified.svg',
 							),
 							'cascading-grid-layout' => array(
 								'label'		=> esc_html__( 'Cascading grid', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-cascading-grid.svg',
 							),
 							'list-layout' => array(
 								'label'		=> esc_html__( 'List', 'blank-plugin' ),
-								'img_src'	=> BLANK_PLUGIN_URI . 'assets/img/svg/list-layout-listing.svg',
+								'img_src'	=> CHERRY_POPUPS_URI . 'assets/img/svg/list-layout-listing.svg',
 							),
 						),
 					),
@@ -1560,7 +1560,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 		private function get_icons_set() {
 			ob_start();
 
-			include BLANK_PLUGIN_DIR . 'assets/fonts/icons.json';
+			include CHERRY_POPUPS_DIR . 'assets/fonts/icons.json';
 
 			$json = ob_get_clean();
 			$result = array();
