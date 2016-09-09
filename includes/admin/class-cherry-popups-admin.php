@@ -69,22 +69,12 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 		 * @return void
 		 */
 		public function menu() {
-			add_menu_page(
-				esc_html__( 'Blank Plugin', 'blank-plugin' ),
-				esc_html__( 'Blank Plugin', 'blank-plugin' ),
-				'edit_theme_options',
-				'blank-plugin',
-				array( 'Blank_Plugin_Main_Page', 'get_instance' ),
-				'',
-				58
-			);
-
 			add_submenu_page(
-				'blank-plugin',
-				esc_html__( 'Options Example', 'blank-plugin' ),
-				esc_html__( 'Options Example', 'blank-plugin' ),
+				'edit.php?post_type=cherry_popups',
+				esc_html__( 'Popups Options', 'cherry-popups' ),
+				esc_html__( 'Settings', 'cherry-popups' ),
 				'edit_theme_options',
-				'blank-plugin-options-page',
+				'cherry-popups-options',
 				array( 'Blank_Plugin_Options_Page', 'get_instance' )
 			);
 		}
@@ -138,7 +128,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 		public static function is_plugin_page() {
 			$screen = get_current_screen();
 
-			return ( ! empty( $screen->base ) && false !== strpos( $screen->base, CHERRY_POPUPS_SLUG ) ) ? true : false ;
+			return ( ! empty( $screen->post_type ) && false !== strpos( $screen->post_type, 'cherry_popups' ) ) ? true : false ;
 		}
 
 		/**

@@ -41,7 +41,7 @@ if ( ! class_exists( 'Blank_Plugin_Main_Page' ) ) {
 		 * @return void
 		 */
 		public function __construct() {
-			$this->builder = blank_plugin()->get_core()->modules['cherry-interface-builder'];
+			$this->builder = cherry_popups()->get_core()->modules['cherry-interface-builder'];
 			$this->render_page();
 		}
 
@@ -53,6 +53,7 @@ if ( ! class_exists( 'Blank_Plugin_Main_Page' ) ) {
 		 * @return void
 		 */
 		public function render_page() {
+
 			$this->builder->register_section(
 				array(
 					'main_page' => array(

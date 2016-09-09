@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Cherry popUps
+ * Plugin Name: Cherry PopUps
  * Plugin URI:  http://www.cherryframework.com/
  * Description: A plugin for WordPress.
  * Version:     1.0.0
@@ -49,6 +49,13 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		private $core = null;
 
 		/**
+		 * Cherry utility init
+		 *
+		 * @var null
+		 */
+		public $cherry_utility = null;
+
+		/**
 		 * Sets up needed actions/filters for the plugin to initialize.
 		 *
 		 * @since 1.0.0
@@ -58,6 +65,9 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		public function __construct() {
 			// Set the constants needed by the plugin.
 			$this->constants();
+
+			// Load the functions files.
+			$this->includes();
 
 			// Load the installer core.
 			add_action( 'after_setup_theme', require( trailingslashit( __DIR__ ) . 'cherry-framework/setup.php' ), 0 );
@@ -108,6 +118,13 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			define( 'CHERRY_POPUPS_VERSION', '1.0.0' );
 
 			/**
+			 * Set constant name for the post type name.
+			 *
+			 * @since 1.0.0
+			 */
+			define( 'CHERRY_POPUPS_NAME', 'cherry_popups' );
+
+			/**
 			 * Set the slug of the plugin.
 			 *
 			 * @since 1.0.0
@@ -127,6 +144,15 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 * @since 1.0.0
 			 */
 			define( 'CHERRY_POPUPS_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+		}
+
+		/**
+		 * Loads files from the '/includes' folder.
+		 *
+		 * @since 1.0.0
+		 */
+		function includes() {
+			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/public/class-popups-registration.php' );
 		}
 
 		/**
@@ -175,6 +201,9 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 					'cherry-interface-builder' => array(
 						'autoload' => false,
 					),
+					'cherry-utility' => array(
+						'autoload' => false,
+					),
 				),
 			) );
 
@@ -192,6 +221,9 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			if ( is_admin() ) {
 				$this->get_core()->init_module( 'cherry-interface-builder', array() );
 			}
+
+			$this->get_core()->init_module( 'cherry-utility' );
+			$this->cherry_utility = $this->get_core()->modules['cherry-utility']->utility;
 		}
 
 		/**
