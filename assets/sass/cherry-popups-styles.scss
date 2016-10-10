@@ -1,0 +1,189 @@
+@import "variables";
+@import "tm_mixins";
+
+.cherry-popup-wrapper{
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	&.hide-state{
+		//display: none;
+	}
+	.cherry-popup-container{
+		flex: 0 1 auto;
+		align-self: center;
+		min-width: 300px;
+		min-height: 300px;
+		background-color: rgba( 255, 255, 255, 1);
+		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+		z-index: 2;
+		&__inner{
+			padding: 20px;
+			position: relative;
+		}
+	}
+	.cherry-popup-overlay{
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: rgba( 0, 0, 0, 0.5);
+		z-index: 1;
+	}
+	.cherry-popup-close-button{
+		display: block;
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
+		color: $blue_color;
+		@include transition(all 0.3s ease);
+		&:hover{
+			color: $red_color;
+		}
+	}
+
+	&.simple-fade-animation{
+		display: none;
+		.cherry-popup-container{
+
+			animation: simple-fade 2s 1;
+			animation-delay: 0.3s;
+			animation-fill-mode: both;
+			animation-play-state: paused;
+		}
+		.cherry-popup-overlay{
+			display: none;
+			animation: simple-fade 2s 1;
+			animation-fill-mode: both;
+			animation-play-state: paused;
+		}
+		&.show-animation{
+			.cherry-popup-container{
+				display: block;
+				animation-play-state: running;
+			}
+			.cherry-popup-overlay{
+				display: block;
+				animation-play-state: running;
+			}
+		}
+		&.hide-animation{
+			.cherry-popup-container{
+
+			}
+			.cherry-popup-overlay{
+
+			}
+		}
+	}
+
+	/*&.simple-fade-animation{
+		.cherry-popup-container{
+			@include opacity(0);
+			@include multiTranslate(translateY(50px));
+		}
+		.cherry-popup-overlay{
+			@include opacity(0);
+		}
+		&.show-animation{
+			.cherry-popup-container{
+				@include opacity(1);
+				@include multiTranslate(translateY(0px));
+				@include transition(all 0.5s cubic-bezier(.29,.65,.64,.97) 0.2s);
+			}
+			.cherry-popup-overlay{
+				@include opacity(1);
+				@include transition(all 0.5s ease);
+			}
+		}
+		&.hide-animation{
+			.cherry-popup-container{
+				@include opacity(0);
+				@include multiTranslate(translateY(-50px));
+				@include transition(all 0.3s cubic-bezier(.58,.22,.41,.79));
+			}
+			.cherry-popup-overlay{
+				@include opacity(0);
+				@include transition(all 0.3s ease);
+			}
+		}
+	}*/
+
+
+	&.simple-scale-animation{
+		@include perspective(1000px);
+		@include perspective-origin(50% 50%);
+		&.show-animation{
+			.cherry-popup-container{
+				@include opacity(1);
+				@include multiTranslate(translateY(0px) translateZ(0px) rotateX(0deg));
+				@include transition(all 0.5s cubic-bezier(.29,.65,.64,.97) 0.5s);
+			}
+			.cherry-popup-overlay{
+				@include opacity(1);
+				@include transition(all 0.5s ease);
+			}
+		}
+		&.hide-animation{
+			.cherry-popup-container{
+				@include preserve-3d();
+				@include opacity(0);
+				@include multiTranslate(translateY(-30px) translateZ(-1500px) rotateX(45deg));
+				@include transition(all 0.3s ease);
+			}
+			.cherry-popup-overlay{
+				@include opacity(0);
+				@include transition(all 0.3s ease);
+			}
+		}
+	}
+	&.move-up-animation{
+		@include perspective(1000px);
+		@include perspective-origin(50% 50%);
+		.cherry-popup-container{
+			@include opacity(0);
+			@include multiTranslate(translateY(100px) rotateX(25deg) translateZ(-1500px));
+		}
+		.cherry-popup-overlay{
+			@include opacity(0);
+		}
+		&.show-animation{
+			.cherry-popup-container{
+				@include opacity(1);
+				@include multiTranslate(translateY(0px) rotateX(0deg) translateZ(0px));
+				@include transition(all 0.5s cubic-bezier(.29,.65,.64,.97) 0.2s);
+			}
+			.cherry-popup-overlay{
+				@include opacity(1);
+				@include transition(all 0.5s ease);
+			}
+		}
+		&.hide-animation{
+			.cherry-popup-container{
+				@include opacity(0);
+				@include multiTranslate(translateY(-100px) rotateX(0deg) translateZ(0px));
+				@include transition(all 0.3s cubic-bezier(.59,.26,.41,.78));
+			}
+			.cherry-popup-overlay{
+				@include opacity(0);
+				@include transition(all 0.3s ease 0.2s);
+			}
+		}
+	}
+}
+
+@keyframes simple-fade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

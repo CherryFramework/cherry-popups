@@ -9,13 +9,13 @@
  * @copyright  2002-2016, Cherry Team
  */
 
-// If class `Blank_Plugin_Options_Page` doesn't exists yet.
-if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
+// If class `Popups_Options_Page` doesn't exists yet.
+if ( ! class_exists( 'Popups_Options_Page' ) ) {
 
 	/**
 	 * Blank_Plugin_Options_Page class.
 	 */
-	class Blank_Plugin_Options_Page {
+	class Popups_Options_Page {
 
 		/**
 		 * A reference to an instance of this class.
@@ -32,6 +32,24 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 		 * @var object
 		 */
 		private $builder = null;
+
+		/**
+		 * HTML spinner.
+		 *
+		 * @since 1.0.0
+		 * @var string
+		 * @access private
+		 */
+		private $spinner = '<span class="loader-wrapper"><span class="loader"></span></span>';
+
+		/**
+		 * Dashicons.
+		 *
+		 * @since 1.0.0
+		 * @var string
+		 * @access private
+		 */
+		private $button_icon = '<span class="dashicons dashicons-yes icon"></span>';
 
 		/**
 		 * Class constructor.
@@ -53,8 +71,6 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 		 * @return void
 		 */
 		public function render_page() {
-
-
 			$this->builder->register_section(
 				array(
 					'popups_options_section' => array(
@@ -66,35 +82,25 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 				)
 			);
 
+			$this->builder->register_form(
+				array(
+					'cherry-popups-options-form' => array(
+						'type'   => 'form',
+						'parent' => 'popups_options_section',
+					),
+				)
+			);
+
 			$this->builder->register_settings(
 				array(
 					'option_page_content' => array(
 						'type'   => 'settings',
-						'parent' => 'popups_options_section',
+						'parent' => 'cherry-popups-options-form',
 					),
 					'option_page_footer' => array(
 						'type'   => 'settings',
-						'parent' => 'popups_options_section',
-					),
-				)
-			);
-
-			$this->builder->register_html(
-				array(
-					'footer_html' => array(
-						'type'   => 'html',
-						'parent' => 'option_page_footer',
-						'class'  => 'cherry-control form-button',
-						'html'   => '<div id="cherry-projects-save-options" class="custom-button save-button"><span>' . esc_html__( 'Save', 'blank-plugin' ) . '</span></div><div id="cherry-projects-restore-options" class="custom-button restore-button"><span>' . esc_html__( 'Restore', 'blank-plugin' ) . '</span></div>',
-					),
-				)
-			);
-
-			$this->builder->register_form(
-				array(
-					'popups_options_form' => array(
-						'type'   => 'form',
-						'parent' => 'popups_options_section',
+						'parent' => 'cherry-popups-options-form',
+						'class'  => 'option-page-footer',
 					),
 				)
 			);
@@ -111,73 +117,51 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 			$this->builder->register_settings(
 				array(
 					'general_tab' => array(
-						'parent'			=> 'tab_vertical',
-						'title'				=> esc_html__( 'General settings', 'cherry-popups' ),
-						'description'		=> esc_html__( 'General plugin settings', 'cherry-popups' ),
+						'parent'      => 'tab_vertical',
+						'title'       => esc_html__( 'General settings', 'cherry-popups' ),
+						'description' => esc_html__( 'General plugin settings', 'cherry-popups' ),
 					),
 					'open_page_tab' => array(
-						'parent'			=> 'tab_vertical',
-						'title'				=> esc_html__( 'Open page settings', 'cherry-popups' ),
-						'description'		=> esc_html__( 'Open page default popups settings', 'cherry-popups' ),
+						'parent'      => 'tab_vertical',
+						'title'       => esc_html__( 'Open page settings', 'cherry-popups' ),
+						'description' => esc_html__( 'Open page default popups settings', 'cherry-popups' ),
 					),
 					'close_page_tab' => array(
-						'parent'			=> 'tab_vertical',
-						'title'				=> esc_html__( 'Close page settings', 'cherry-popups' ),
-						'description'		=> esc_html__( 'Third tab description.', 'cherry-popups' ),
+						'parent'      => 'tab_vertical',
+						'title'       => esc_html__( 'Close page settings', 'cherry-popups' ),
+						'description' => esc_html__( 'Third tab description.', 'cherry-popups' ),
 					),
 					'mailing_options' => array(
-						'parent'			=> 'tab_vertical',
-						'title'				=> esc_html__( 'Mailing List Manager', 'cherry-popups' ),
-						'description'		=> esc_html__( 'Fourth tab description.', 'cherry-popups' ),
+						'parent'      => 'tab_vertical',
+						'title'       => esc_html__( 'Mailing List Manager', 'cherry-popups' ),
+						'description' => esc_html__( 'Fourth tab description.', 'cherry-popups' ),
 					),
 				)
 			);
 
 			$this->builder->register_control(
 				array(
-					'test_button' => array(
-						'type'         => 'button',
-						'parent'       => 'option_page_footer',
-						'style'=> '',
+					'cherry-popups-restore-options' => array(
+						'type'          => 'button',
+						'parent'        => 'option_page_footer',
+						'style'         => 'normal',
 						'view_wrapping' => false,
+						'content'       => '<span class="text">' . esc_html__( 'Restore', 'cherry-popups' ) . '</span>' . $this->spinner . $this->button_icon,
 					),
-					'test_button_2' => array(
-						'type'         => 'button',
-						'parent'       => 'option_page_footer',
-						'style'=> 'success',
-						'class' => 'custom-class',
+					'cherry-popups-save-options' => array(
+						'type'          => 'button',
+						'parent'        => 'option_page_footer',
+						'style'         => 'success',
+						'class'         => 'custom-class',
 						'view_wrapping' => false,
+						'content'       => '<span class="text">' . esc_html__( 'Save', 'cherry-popups' ) . '</span>' . $this->spinner . $this->button_icon,
 					),
-					'test_button_3' => array(
-						'type'         => 'button',
-						'parent'       => 'option_page_footer',
-						'style'=> 'normal',
-						'view_wrapping' => false,
-					),
-					'test_button_4' => array(
-						'type'         => 'button',
-						'parent'       => 'option_page_footer',
-						'style'=> 'primary',
-						'view_wrapping' => false,
-					),
-					'test_button_5' => array(
-						'type'         => 'button',
-						'parent'       => 'option_page_footer',
-						'style'=> 'danger',
-						'view_wrapping' => false,
-					),
-					'test_button_6' => array(
-						'type'         => 'button',
-						'parent'       => 'option_page_footer',
-						'style'=> 'warning',
-						'view_wrapping' => false,
-					),
-					'enable_popups' => array(
+					'enable-popups' => array(
 						'type'         => 'switcher',
 						'parent'       => 'general_tab',
 						'title'        => esc_html__( 'Enable popups', 'cherry-popups' ),
 						'description'  => esc_html__( 'Enable / Disable popups at once on all pages', 'cherry-popups' ),
-						'value'        => 'true',
+						'value'        => cherry_popups()->get_option( 'enable-popups', 'true' ),
 						'toggle'       => array(
 							'true_toggle'  => 'Enable',
 							'false_toggle' => 'Disable',
@@ -186,12 +170,12 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'class'        => '',
 						'label'        => '',
 					),
-					'mobile_enable_popups' => array(
+					'mobile-enable-popups' => array(
 						'type'         => 'switcher',
 						'parent'       => 'general_tab',
 						'title'        => esc_html__( 'Enable Plugin on Mobile Devices', 'cherry-popups' ),
 						'description'  => esc_html__( 'Enable / Disable popups on mobile devices at once on all pages', 'cherry-popups' ),
-						'value'        => 'true',
+						'value'        => cherry_popups()->get_option( 'mobile-enable-popups', 'true' ),
 						'toggle'       => array(
 							'true_toggle'  => 'Enable',
 							'false_toggle' => 'Disable',
@@ -200,12 +184,12 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'class'        => '',
 						'label'        => '',
 					),
-					'disable_logged_users' => array(
+					'disable-logged-users' => array(
 						'type'         => 'switcher',
 						'parent'       => 'general_tab',
 						'title'        => esc_html__( 'Disable for logged users', 'cherry-popups' ),
 						'description'  => esc_html__( 'All popup will not be displayed for logged users', 'cherry-popups' ),
-						'value'        => 'false',
+						'value'        => cherry_popups()->get_option( 'disable-logged-users', 'false' ),
 						'toggle'       => array(
 							'true_toggle'  => 'Enable',
 							'false_toggle' => 'Disable',
@@ -214,32 +198,27 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 						'class'        => '',
 						'label'        => '',
 					),
-					'default_open_page_popup' => array(
-						'type'        => 'select',
-						'parent'      => 'open_page_tab',
-						'title'       => esc_html__( 'Default Open Page Popup', 'cherry-popups' ),
-						'description' => esc_html__( 'Assign one of the popup that is displayed when you open the page.', 'cherry-popups' ),
-						'multiple'    => false,
-						'filter'      => true,
-						'value'       => 'disable',
-						'options'     => array(
-							'disable' => esc_html__( 'Disable', 'cherry-popups' ),
-							'popup-1' => 'Popup 1',
-							'popup-2' => 'Popup 2',
-							'popup-3' => 'Popup 3',
-							'popup-4' => 'Popup 4',
-						),
-						'placeholder' => 'Select',
-						'label'       => '',
-						'class'       => '',
+					'default-open-page-popup' => array(
+						'type'             => 'select',
+						'parent'           => 'open_page_tab',
+						'title'            => esc_html__( 'Default Open Page Popup', 'cherry-popups' ),
+						'description'      => esc_html__( 'Assign one of the popup that is displayed when you open the page.', 'cherry-popups' ),
+						'multiple'         => false,
+						'filter'           => true,
+						'value'            => cherry_popups()->get_option( 'default-open-page-popup', 'disable' ),
+						'options'          => array(),
+						'options_callback' => array( cherry_popups_init(), 'get_avaliable_popups' ),
+						'placeholder'      => 'Select',
+						'label'            => '',
+						'class'            => '',
 					),
-					'open_page_popup_display' => array(
+					'open-page-popup-display' => array(
 						'type'			=> 'checkbox',
 						'parent'		=> 'open_page_tab',
 						'title'			=> esc_html__( 'Open page popup display in:', 'cherry-popups' ),
 						'description'	=> esc_html__( 'Displaing Open page popup in site pages', 'cherry-popups' ),
 						'class'			=> '',
-						'value'			=> array(),
+						'value'			=> cherry_popups()->get_option( 'open-page-popup-display', array() ),
 						'options'		=> array(
 							'home'  => esc_html__( 'Home', 'cherry-popups' ),
 							'pages' => esc_html__( 'Pages', 'cherry-popups' ),
@@ -247,33 +226,28 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 							'other' => esc_html__( 'Categories, Archive and other', 'cherry-popups' ),
 						),
 					),
-					'default_close_page_popup' => array(
-						'type'        => 'select',
-						'parent'      => 'close_page_tab',
-						'title'       => esc_html__( 'Default Close Page Popup', 'cherry-popups' ),
-						'description' => esc_html__( 'Assign one of the popup that is displayed when you close the page', 'cherry-popups' ),
-						'multiple'    => false,
-						'filter'      => true,
-						'value'       => 'disable',
-						'options'     => array(
-							'disable' => esc_html__( 'Disable', 'cherry-popups' ),
-							'popup-1' => 'Popup 1',
-							'popup-2' => 'Popup 2',
-							'popup-3' => 'Popup 3',
-							'popup-4' => 'Popup 4',
-						),
-						'placeholder' => 'Select',
-						'label'       => '',
-						'class'       => '',
+					'default-close-page-popup' => array(
+						'type'             => 'select',
+						'parent'           => 'close_page_tab',
+						'title'            => esc_html__( 'Default Close Page Popup', 'cherry-popups' ),
+						'description'      => esc_html__( 'Assign one of the popup that is displayed when you close the page', 'cherry-popups' ),
+						'multiple'         => false,
+						'filter'           => true,
+						'value'            => cherry_popups()->get_option( 'default-close-page-popup', 'disable' ),
+						'options'          => array(),
+						'options_callback' => array( cherry_popups_init(), 'get_avaliable_popups' ),
+						'placeholder'      => 'Select',
+						'label'            => '',
+						'class'            => '',
 					),
-					'close_page_popup_display' => array(
-						'type'			=> 'checkbox',
-						'parent'		=> 'close_page_tab',
-						'title'			=> esc_html__( 'Close page popup display in:', 'cherry-popups' ),
-						'description'	=> esc_html__( 'Displaing Close page popup in site pages', 'cherry-popups' ),
-						'class'			=> '',
-						'value'			=> array(),
-						'options'		=> array(
+					'close-page-popup-display' => array(
+						'type'        => 'checkbox',
+						'parent'      => 'close_page_tab',
+						'title'       => esc_html__( 'Close page popup display in:', 'cherry-popups' ),
+						'description' => esc_html__( 'Displaing Close page popup in site pages', 'cherry-popups' ),
+						'class'       => '',
+						'value'       => cherry_popups()->get_option( 'close-page-popup-display', array() ),
+						'options'     => array(
 							'home'  => esc_html__( 'Home', 'cherry-popups' ),
 							'pages' => esc_html__( 'Pages', 'cherry-popups' ),
 							'posts' => esc_html__( 'Posts', 'cherry-popups' ),
@@ -283,30 +257,7 @@ if ( ! class_exists( 'Blank_Plugin_Options_Page' ) ) {
 				)
 			);
 
-
-
 			$this->builder->render();
-		}
-
-		/**
-		 * Get icons set
-		 *
-		 * @return array
-		 */
-		private function get_icons_set() {
-			ob_start();
-
-			include CHERRY_POPUPS_DIR . 'assets/fonts/icons.json';
-
-			$json = ob_get_clean();
-			$result = array();
-			$icons = json_decode( $json, true );
-
-			foreach ( $icons['icons'] as $icon ) {
-				$result[] = $icon['id'];
-			}
-
-			return $result;
 		}
 
 		/**

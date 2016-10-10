@@ -38,30 +38,23 @@ class Cherry_Popups_Data {
 	private $posts_query = null;
 
 	/**
+	 * Current popup meta data
+	 *
+	 * @var null
+	 */
+	public $popup_settings = null;
+
+	/**
 	 * Sets up our actions/filters.
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
-
-		$this->set_default_options();
-
-	}
-
-	/**
-	 * Get defaults data options
-	 *
-	 * @return void
-	 */
-	public function set_default_options() {
+	public function __construct( $options = array() ) {
 		$this->default_options = array(
-			//'standard-post-template' => cherry_projects()->get_option( 'standard-post-template', 'standard-post-template.tmpl' ),
-			//'image-post-template'    => cherry_projects()->get_option( 'image-post-template', 'image-post-template.tmpl' ),
-			//'gallery-post-template'  => cherry_projects()->get_option( 'gallery-post-template', 'gallery-post-template.tmpl' ),
-			//'audio-post-template'    => cherry_projects()->get_option( 'audio-post-template', 'audio-post-template.tmpl' ),
-			//'video-post-template'    => cherry_projects()->get_option( 'video-post-template', 'video-post-template.tmpl' ),
-			'id'                     => null,
-			'echo'                   => true,
+			'id'       => null,
+			'use'      => false,
+			'template' => 'default-theme-popup.tmpl',
+			'echo'     => true,
 		);
 
 		/**
@@ -71,22 +64,73 @@ class Cherry_Popups_Data {
 		 * @param array options.
 		 */
 		$this->default_options = apply_filters( 'cherry_popups_default_options', $this->default_options );
-	}
-
-	/**
-	 * Render PopUps
-	 *
-	 * @return string html string
-	 */
-	public function render_popups( $options = array() ) {
-		$this->enqueue_styles();
-		$this->enqueue_scripts();
 
 		$this->options = wp_parse_args( $options, $this->default_options );
 
+		$auto_height = $this->get_popup_meta_field( 'cherry-popup-auto-height', 'auto' );
 
-		$html = '<div class="cherry-projects-wrapper">';
+		var_dump(get_post_meta( $this->options['id'], '', true ));
+		$this->popup_settings = array(
+			'use'                  => $this->options['use'],
+			'show-hide-animation'  => $this->get_popup_meta_field( 'cherry-show-hide-animation', 'simple-fade' ),
+			'base-theme'           => $this->get_popup_meta_field( 'cherry-popup-base-theme', 'theme-1' ),
+			'width'                => $this->get_popup_meta_field( 'cherry-popup-width', 600 ),
+			'height'               => ! filter_var( $auto_height, FILTER_VALIDATE_BOOLEAN ) ? $this->get_popup_meta_field( 'cherry-popup-height', 600 ) : 'auto',
+			'overlay-type'         => $this->get_popup_meta_field( 'cherry-overlay-type', 'default' ),
+			'overlay-color'        => $this->get_popup_meta_field( 'cherry-overlay-color', '#fff' ),
+			'overlay-opacity'      => $this->get_popup_meta_field( 'cherry-overlay-opacity', 50 ),
+			'overlay-image'        => $this->get_popup_meta_field( 'cherry-overlay-image', '' ),
+			'open-appear-event'    => $this->get_popup_meta_field( 'cherry-popup-open-appear-event', 'page-load' ),
+			'load-open-delay'      => $this->get_popup_meta_field( 'cherry-page-load-open-delay', 1 ),
+			'inactive-time'        => $this->get_popup_meta_field( 'cherry-user-inactive-time', 1 ),
+			'page-scrolling-value' => $this->get_popup_meta_field( 'cherry-page-scrolling-value', 5 ),
+			'close-appear-event'   => $this->get_popup_meta_field( 'cherry-popup-close-appear-event', 'outside-viewport' ),
+			'alert-text'           => $this->get_popup_meta_field( 'cherry-alert-text', 'Stop' ),
+			'template'             => $this->options['template'],
+		);
 
+		cherry_popups_init()->register_style(
+			array(
+				'selector'    => sprintf( '.cherry-popup-%1$s .cherry-popup-container', $this->options['id'] ),
+				'declaration' => array(
+					'width'  => $this->popup_settings['width'] . 'px',
+					'height' => ( 'auto' === $this->popup_settings['height'] ) ? $this->popup_settings['height'] : $this->popup_settings['height'] . 'px',
+				)
+			)
+		);
+
+	}
+
+	/**
+	 * Render PopUp
+	 *
+	 * @return string html string
+	 */
+	public function render_popup() {
+		$this->enqueue_styles();
+		$this->enqueue_scripts();
+
+
+		// Item template.
+		$template = $this->get_template_by_name( $this->options['template'], 'cherry-popup' );
+
+		$macros = '/%%.+?%%/';
+		$callbacks = $this->setup_template_data( $this->options );
+
+		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation hide-state', $this->options['id'], $this->popup_settings['show-hide-animation'] );
+
+		$popup_settings_encode = json_encode( $this->popup_settings );
+
+		$html = sprintf( '<div class="%1$s" data-popup-settings=\'%2$s\'>', $container_class, $popup_settings_encode );
+			$html .= '<div class="cherry-popup-overlay"></div>';
+			$html .= '<div class="cherry-popup-container">';
+				$html .= '<div class="cherry-popup-container__inner">';
+					$html .= '<div class="cherry-popup-close-button"><span class="dashicons dashicons-no"></span></div>';
+
+					$template_content = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
+					$html .= $template_content;
+				$html .= '</div>';
+			$html .= '</div>';
 		// Close wrapper.
 		$html .= '</div>';
 
@@ -95,7 +139,24 @@ class Cherry_Popups_Data {
 		}
 
 		echo $html;
+	}
 
+	/**
+	 * Get meta field data.
+	 *
+	 * @param  string  $name    Field name.
+	 * @param  boolean $default Default value.
+	 * @return mixed
+	 */
+	private function get_popup_meta_field( $name = '', $default = false ) {
+
+		$data = get_post_meta( $this->options['id'], $name, true );
+
+		if ( empty( $data ) ){
+			return $default;
+		}
+
+		return $data;
 	}
 
 	/**
@@ -105,7 +166,7 @@ class Cherry_Popups_Data {
 	 * @param array $atts Output attributes.
 	 */
 	function setup_template_data( $atts ) {
-		require_once( CHERRY_PROJECTS_DIR . 'includes/public/class-cherry-popups-template-callbacks.php' );
+		require_once( CHERRY_POPUPS_DIR . 'includes/public/class-popups-template-callbacks.php' );
 
 		$callbacks = new Cherry_Popups_Template_Callbacks( $atts );
 
@@ -135,7 +196,7 @@ class Cherry_Popups_Data {
 	 */
 	public function get_template_by_name( $template, $shortcode ) {
 		$file       = '';
-		$default    = CHERRY_POPUPS_DIR . 'templates/shortcodes/' . $shortcode . '/default.tmpl';
+		$default    = CHERRY_POPUPS_DIR . 'templates/shortcodes/' . $shortcode . '/default-theme-popup.tmpl';
 		$upload_dir = wp_upload_dir();
 		$upload_dir = trailingslashit( $upload_dir['basedir'] );
 		$subdir     = 'templates/shortcodes/' . $shortcode . '/' . $template;
@@ -146,7 +207,7 @@ class Cherry_Popups_Data {
 		 * @since 1.0.0
 		 * @param string $content.
 		 */
-		$content = apply_filters( 'cherry_popups_fallback_template', '<div class="inner-wrapper"></div>' );
+		$content = apply_filters( 'cherry_popups_fallback_template', '%%TITLE%%' );
 
 		if ( file_exists( $upload_dir . $subdir ) ) {
 			$file = $upload_dir . $subdir;
@@ -157,6 +218,8 @@ class Cherry_Popups_Data {
 		} else {
 			$file = $default;
 		}
+
+		$file = wp_normalize_path( $file );
 
 		if ( ! empty( $file ) ) {
 			$content = self::get_contents( $file );
@@ -239,8 +302,7 @@ class Cherry_Popups_Data {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'dashicons' );
-		//wp_enqueue_style( 'magnific-popup', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/css/magnific-popup.css', array(), '1.1.0' );
-		//wp_enqueue_style( 'cherry-projects-styles', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/css/styles.css', array(), CHERRY_PROJECTS_VERSION );
+		wp_enqueue_style( 'cherry-popups-styles', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/css/min/cherry-popups-styles.min.css', array(), CHERRY_POPUPS_VERSION );
 	}
 
 	/**
@@ -249,14 +311,10 @@ class Cherry_Popups_Data {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {
-		//wp_enqueue_script( 'waypoints', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/js/jquery.waypoints.min.js', array( 'jquery' ), CHERRY_PROJECTS_VERSION, true );
-		//wp_enqueue_script( 'imagesloaded', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/js/imagesloaded.pkgd.min.js', array( 'jquery' ), CHERRY_PROJECTS_VERSION, true );
-		//wp_enqueue_script( 'magnific-popup', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/js/jquery.magnific-popup.min.js', array( 'jquery' ), '1.1.0', true );
-		//wp_enqueue_script( 'cherry-projects-plugin', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/js/cherry-projects-plugin.js', array( 'jquery' ), CHERRY_PROJECTS_VERSION, true );
-		//wp_enqueue_script( 'cherry-projects-scripts', trailingslashit( CHERRY_PROJECTS_URI ) . 'public/assets/js/cherry-projects-scripts.js', array( 'jquery' ), CHERRY_PROJECTS_VERSION, true );
+		wp_enqueue_script( 'cherry-popups-plugin', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/js/cherry-popups-plugin.js', array( 'jquery' ), CHERRY_POPUPS_VERSION, true );
+		wp_enqueue_script( 'cherry-popups-scripts', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/js/cherry-popups-scripts.js', array( 'jquery', 'cherry-popups-plugin' ), CHERRY_POPUPS_VERSION, true );
 
-		// Ajax js object portfolio_type_ajax.
-		//wp_localize_script( 'cherry-projects-scripts', 'cherryProjectsObjects', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'cherry-popups-scripts', 'cherryPopupDunamicStyles', cherry_popups_init()->get_dynamic_styles() );
 	}
 
 }

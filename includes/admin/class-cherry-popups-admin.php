@@ -45,6 +45,9 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 
 			// Load admin JavaScripts.
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+			// Initialization of modules.
+			add_action( 'after_setup_theme', array( $this, 'init_modules' ), 3 );
 		}
 
 		/**
@@ -62,6 +65,45 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 		}
 
 		/**
+		 * Run initialization of modules.
+		 *
+		 * @since 1.0.0
+		 * @access public
+		 * @return void
+		 */
+		public function init_modules() {
+			$sys_messages = array(
+				'invalid_base_data' => esc_html__( 'Unable to process the request without nonche or server error', 'cherry-popups' ),
+				'no_right'          => esc_html__( 'No right for this action', 'cherry-popups' ),
+				'invalid_nonce'     => esc_html__( 'Stop CHEATING!!!', 'cherry-popups' ),
+				'access_is_allowed' => esc_html__( 'Access is allowed','cherry-popups' ),
+				'wait_processing'   => esc_html__( 'Please wait, processing the previous request' ),
+			);
+
+			$options_ajax_handler = cherry_popups()->get_core()->init_module(
+				'cherry-handler',
+				array(
+					'id'           => 'cherry_save_options_ajax',
+					'action'       => 'cherry_save_options_ajax',
+					'capability'   =>'manage_options',
+					'callback'     => array( $this , 'cherry_save_options' ),
+					'sys_messages' => $sys_messages,
+				)
+			);
+
+			$options_ajax_handler = cherry_popups()->get_core()->init_module(
+				'cherry-handler',
+				array(
+					'id'           => 'cherry_restore_options_ajax',
+					'action'       => 'cherry_restore_options_ajax',
+					'capability'   =>'manage_options',
+					'callback'     => array( $this , 'cherry_restore_options' ),
+					'sys_messages' => $sys_messages,
+				)
+			);
+		}
+
+		/**
 		 * Register the admin menu.
 		 *
 		 * @since 1.0.0
@@ -75,9 +117,34 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 				esc_html__( 'Settings', 'cherry-popups' ),
 				'edit_theme_options',
 				'cherry-popups-options',
-				array( 'Blank_Plugin_Options_Page', 'get_instance' )
+				array( 'Popups_Options_Page', 'get_instance' )
 			);
 		}
+
+		/**
+		 * Save options
+		 *
+		 * @since 1.0.0
+		 */
+		public function cherry_save_options() {
+
+			if( ! empty( $_REQUEST['data'] ) ){
+				$data = $_REQUEST['data'];
+				cherry_popups()->save_options( CHERRY_OPTIONS_NAME, $data );
+			}
+		}
+
+		/**
+		 * Restore options
+		 *
+		 * @since 1.0.0
+		 */
+		public function cherry_restore_options() {
+			$default_options = get_option( CHERRY_OPTIONS_NAME . '_default' );
+			cherry_popups()->save_options( CHERRY_OPTIONS_NAME, $default_options );
+		}
+
+
 
 		/**
 		 * Enqueue admin stylesheets.
@@ -115,6 +182,14 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 					CHERRY_POPUPS_VERSION,
 					true
 				);
+
+				$options_page_settings = array(
+					'save_message'    => esc_html__( 'Options have been saved', 'cherry-popups' ),
+					'restore_message' => esc_html__( 'Settings have been restored, page will be reloaded', 'cherry-projects' ),
+					'redirect_url'    => menu_page_url( 'cherry-popups-options', false ),
+				);
+
+				wp_localize_script( 'cherry-popups-admin-scripts', 'cherryPopupnSettings', $options_page_settings );
 			}
 		}
 

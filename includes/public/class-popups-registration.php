@@ -67,7 +67,6 @@ class Cherry_Popups_Registration {
 			'editor',
 			'thumbnail',
 			'revisions',
-			'post-formats',
 		);
 
 		$args = array(
@@ -105,11 +104,6 @@ class Cherry_Popups_Registration {
 		if ( CHERRY_POPUPS_NAME != $typenow ) {
 			return;
 		}
-
-		$args = apply_filters( 'cherry_popups_add_post_formats_support', array( 'image', 'audio', 'video', ) );
-
-		add_post_type_support( CHERRY_POPUPS_NAME, 'post-formats', $args );
-		add_theme_support( 'post-formats', $args );
 	}
 
 	/**

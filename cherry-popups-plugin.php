@@ -56,6 +56,21 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		public $cherry_utility = null;
 
 		/**
+		 * Default options
+		 *
+		 * @var array
+		 */
+		public $default_options = array(
+			'enable-popups'            => 'true',
+			'mobile-enable-popups'     => 'true',
+			'disable-logged-users'     => 'false',
+			'default-open-page-popup'  => 'disable',
+			'open-page-popup-display'  => array(),
+			'default-close-page-popup' => 'disable',
+			'close-page-popup-display' => array(),
+		);
+
+		/**
 		 * Sets up needed actions/filters for the plugin to initialize.
 		 *
 		 * @since 1.0.0
@@ -63,6 +78,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 * @return void
 		 */
 		public function __construct() {
+
 			// Set the constants needed by the plugin.
 			$this->constants();
 
@@ -132,6 +148,13 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			define( 'CHERRY_POPUPS_SLUG', basename( dirname( __FILE__ ) ) );
 
 			/**
+			 * Set the name for the 'meta_key' value in the 'wp_postmeta' table.
+			 *
+			 * @since 1.0.0
+			 */
+			define( 'CHERRY_POPUPS_POSTMETA', 'cherry-popups' );
+
+			/**
 			 * Set constant path to the plugin directory.
 			 *
 			 * @since 1.0.0
@@ -144,6 +167,14 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 * @since 1.0.0
 			 */
 			define( 'CHERRY_POPUPS_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+
+
+			/**
+			 * Set constant DB option field.
+			 *
+			 * @since 1.0.0
+			 */
+			define( 'CHERRY_OPTIONS_NAME', 'cherry_popups_options' );
 		}
 
 		/**
@@ -153,6 +184,8 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 */
 		function includes() {
 			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/public/class-popups-registration.php' );
+			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/public/class-popups-data.php' );
+			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/public/class-popups-init.php' );
 		}
 
 		/**
@@ -204,6 +237,12 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 					'cherry-utility' => array(
 						'autoload' => false,
 					),
+					'cherry-handler' => array(
+						'autoload' => false,
+					),
+					'cherry-post-meta' => array(
+						'autoload' => false,
+					),
 				),
 			) );
 
@@ -236,6 +275,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		public function admin() {
 			if ( is_admin() ) {
 				require_once( CHERRY_POPUPS_DIR . 'includes/admin/class-cherry-popups-admin.php' );
+				require_once( CHERRY_POPUPS_DIR . 'includes/admin/class-cherry-popups-meta-boxes.php' );
 			}
 		}
 
@@ -282,7 +322,67 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_enqueue_script( 'blank-plugin' );
+			wp_enqueue_script( 'cherry-popups-scripts' );
+		}
+
+		/**
+		 * Option field exist check
+		 *
+		 * @since 1.0.0
+		 */
+		public static function is_db_option_exist( $option_name ) {
+
+			( false == get_option( $option_name ) ) ? $is_exist = false : $is_exist = true;
+
+			return $is_exist;
+		}
+
+		/**
+		 *
+		 * Save options to DB
+		 *
+		 * @since 1.0.0
+		 */
+		public function save_options( $option_name, $options ) {
+
+			$options = array_merge( $this->default_options, $options );
+			update_option( $option_name, $options );
+		}
+
+		/**
+		 * Get option value
+		 *
+		 * @since 1.0.0
+		 */
+		public function get_option( $option_name, $option_default = false ) {
+
+			$cached = wp_cache_get( $option_name, CHERRY_OPTIONS_NAME );
+
+			if ( $cached ) {
+				return $cached;
+			}
+
+			if ( self::is_db_option_exist( CHERRY_OPTIONS_NAME ) ) {
+				$current_options = get_option( CHERRY_OPTIONS_NAME );
+
+				if ( array_key_exists( $option_name, $current_options ) ) {
+					wp_cache_set( $option_name, $current_options[ $option_name ], CHERRY_OPTIONS_NAME );
+
+					return $current_options[ $option_name ];
+				}
+			} else {
+				$default_options = $this->default_options;
+
+				if ( array_key_exists( $option_name, $default_options ) ) {
+					wp_cache_set( $option_name, $default_options[ $option_name ], CHERRY_OPTIONS_NAME );
+
+					return $default_options[ $option_name ];
+				}
+			}
+
+			wp_cache_set( $option_name, $option_default, CHERRY_OPTIONS_NAME );
+
+			return $option_default;
 		}
 
 		/**
@@ -292,7 +392,19 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 * @access public
 		 * @return void
 		 */
-		public function activation() {}
+		public function activation() {
+			if ( ! self::is_db_option_exist( CHERRY_OPTIONS_NAME ) ) {
+				$this->save_options( CHERRY_OPTIONS_NAME, $this->default_options );
+			}
+
+			if ( ! self::is_db_option_exist( CHERRY_OPTIONS_NAME . '_default' ) ) {
+				$this->save_options( CHERRY_OPTIONS_NAME . '_default', $this->default_options );
+			}
+
+			Cherry_Popups_Registration::register();
+
+			flush_rewrite_rules();
+		}
 
 		/**
 		 * On plugin deactivation.

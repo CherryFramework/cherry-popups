@@ -37,14 +37,6 @@ class Cherry_Popups_Template_Callbacks {
 	public $post_meta = null;
 
 	/**
-	 * Term data meta.
-	 *
-	 * @since 1.0.0
-	 * @var   array
-	 */
-	public $term_data = null;
-
-	/**
 	 * Class constructor.
 	 *
 	 * @since 1.0.0
@@ -78,7 +70,6 @@ class Cherry_Popups_Template_Callbacks {
 	public function clear_data() {
 		$this->post_meta = null;
 	}
-
 
 	/**
 	 * Get post title.
@@ -114,9 +105,10 @@ class Cherry_Popups_Template_Callbacks {
 		 * @since 1.0.0
 		 * @var array
 		 */
-		$settings = apply_filters( 'cherry-projects-title-settings', $settings );
+		$settings = apply_filters( 'cherry-popup-title-settings', $settings );
 
-		$title = cherry_projects()->projects_data->cherry_utility->attributes->get_title( $settings );
+		//$title = cherry_popups_init()->cherry_utility->attributes->get_title( $settings );
+		$title = 'lorem';
 
 		return $title;
 	}
