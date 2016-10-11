@@ -71,6 +71,7 @@ class Cherry_Popups_Data {
 
 		var_dump(get_post_meta( $this->options['id'], '', true ));
 		$this->popup_settings = array(
+			'id'                   => $this->options['id'],
 			'use'                  => $this->options['use'],
 			'show-hide-animation'  => $this->get_popup_meta_field( 'cherry-show-hide-animation', 'simple-fade' ),
 			'base-theme'           => $this->get_popup_meta_field( 'cherry-popup-base-theme', 'theme-1' ),
@@ -80,6 +81,7 @@ class Cherry_Popups_Data {
 			'overlay-color'        => $this->get_popup_meta_field( 'cherry-overlay-color', '#fff' ),
 			'overlay-opacity'      => $this->get_popup_meta_field( 'cherry-overlay-opacity', 50 ),
 			'overlay-image'        => $this->get_popup_meta_field( 'cherry-overlay-image', '' ),
+			'overlay-close-area'   => $this->get_popup_meta_field( 'cherry-overlay-close-area', 'true' ),
 			'open-appear-event'    => $this->get_popup_meta_field( 'cherry-popup-open-appear-event', 'page-load' ),
 			'load-open-delay'      => $this->get_popup_meta_field( 'cherry-page-load-open-delay', 1 ),
 			'inactive-time'        => $this->get_popup_meta_field( 'cherry-user-inactive-time', 1 ),
@@ -117,16 +119,16 @@ class Cherry_Popups_Data {
 		$macros = '/%%.+?%%/';
 		$callbacks = $this->setup_template_data( $this->options );
 
-		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation hide-state', $this->options['id'], $this->popup_settings['show-hide-animation'] );
+		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation', $this->options['id'], $this->popup_settings['show-hide-animation'] );
 
 		$popup_settings_encode = json_encode( $this->popup_settings );
 
 		$html = sprintf( '<div class="%1$s" data-popup-settings=\'%2$s\'>', $container_class, $popup_settings_encode );
 			$html .= '<div class="cherry-popup-overlay"></div>';
 			$html .= '<div class="cherry-popup-container">';
+				$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
 				$html .= '<div class="cherry-popup-container__inner">';
 					$html .= '<div class="cherry-popup-close-button"><span class="dashicons dashicons-no"></span></div>';
-
 					$template_content = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
 					$html .= $template_content;
 				$html .= '</div>';

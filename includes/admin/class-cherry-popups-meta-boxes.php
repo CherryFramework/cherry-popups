@@ -214,6 +214,20 @@ class Cherry_Popups_Meta_Boxes {
 					'label'              => '',
 					'master'             => 'overlay-type-image',
 				),
+				$prefix . 'overlay-close-area' => array(
+					'type'         => 'switcher',
+					'parent'       => 'overlay_tab',
+					'title'        => esc_html__( 'Overlay close clicking', 'cherry-popups' ),
+					'description'  => esc_html__( 'Clicking on the overlay closes the popup', 'cherry-popups' ),
+					'value'        => 'true',
+					'toggle'       => array(
+						'true_toggle'  => 'Enable',
+						'false_toggle' => 'Disable',
+					),
+					'style'        => 'normal',
+					'class'        => '',
+					'label'        => '',
+				),
 				$prefix . 'popup-open-appear-event' => array(
 					'type'          => 'radio',
 					'parent'        => 'open_page_tab',

@@ -3,7 +3,8 @@
 	var methods = {
 		init : function( options ) {
 
-			var settings = {
+			var self = this,
+				settings = {
 				call: function() {}
 			}
 
@@ -13,11 +14,21 @@
 				}
 
 				var $this         = $( this ),
-					popupSettings = $this.data( 'popup-settings' );
+					popupSettings = $this.data( 'popup-settings' ),
+					popupsLocalStorageData = getLocalStorageData() || {};
 
 					console.log(popupSettings);
 
 				( function () {
+
+					if ( ! popupsLocalStorageData.hasOwnProperty( popupSettings['id'] ) ) {
+						popupsLocalStorageData[ popupSettings['id'] ] = true;
+					}
+
+					console.log(popupsLocalStorageData[ popupSettings['id'] ]);
+
+					setLocalStorageData( popupsLocalStorageData );
+					setLocalStorageData( {} );
 
 					switch( popupSettings['use'] ) {
 						case 'open-page':
@@ -28,6 +39,7 @@
 							break;
 					}
 
+					checkEvents();
 
 					closePopupEvent( popupSettings['load-open-delay'] );
 
@@ -74,12 +86,48 @@
 						var button = event.currentTarget,
 							$parentPopup = $( button ).closest( '.cherry-popup' );
 
-							//$this.toggleClass( 'hide-animation show-animation' );
+							$this.toggleClass( 'hide-animation show-animation' );
 
-							$parentPopup.remove();
+							clearTimeout( timeout );
+							timeout = setTimeout( function() {
+								$parentPopup.remove();
+							}, 500 );
+					} );
 
-							/*clearTimeout( timeout );
-							timeout = setTimeout( function() { }, 500 );*/
+
+					$this.on( 'click', '.cherry-popup-overlay', function( event ) {
+						var overlay = event.currentTarget,
+							$parentPopup = $( overlay ).closest( '.cherry-popup' );
+
+							$this.toggleClass( 'hide-animation show-animation' );
+
+							clearTimeout( timeout );
+							timeout = setTimeout( function() {
+								$parentPopup.remove();
+							}, 500 );
+					} );
+
+				}
+
+				/**
+				 * Add check events function
+				 *
+				 * @return {void}
+				 */
+				function checkEvents() {
+					$this.on( 'click', '.cherry-popup-show-again-check', function( event ) {
+						var check = event.currentTarget;
+
+						if ( ! $( check ).hasClass( 'checked' ) ) {
+							$( check ).addClass( 'checked' );
+							popupsLocalStorageData[ popupSettings['id'] ] = false;
+						} else {
+							$( check ).removeClass( 'checked' );
+							popupsLocalStorageData[ popupSettings['id'] ] = true;
+						}
+						console.log(popupsLocalStorageData);
+						setLocalStorageData( popupsLocalStorageData );
+
 					} );
 				}
 
@@ -95,7 +143,6 @@
 					openDelay = openDelay * 1000;
 
 					$( window ).on( 'load', function() {
-						//$this.removeClass( 'hide-state' );
 						setTimeout( function() {
 							$this.addClass( 'show-animation' );
 						}, openDelay );
@@ -112,10 +159,7 @@
 
 					setTimeout( function() {
 						if ( isInactive ) {
-							$this.removeClass( 'hide-state' );
-							setTimeout( function() {
-								$this.addClass( 'show-animation' );
-							}, 1 );
+							$this.addClass( 'show-animation' );
 						}
 					}, inactiveDelay );
 
@@ -137,16 +181,25 @@
 
 						if ( scrolledProgress > scrollingValue ) {
 							$( window ).off( 'scroll.cherryPopupScrollEvent resize.cherryPopupResizeEvent' );
-
-							$this.removeClass( 'hide-state' );
-							setTimeout( function() {
-								$this.addClass( 'show-animation' );
-							}, 1 );
-
-							//$this.removeClass( 'hide-state' );
-							//$this.addClass( 'show-state' );
+							$this.addClass( 'show-animation' );
 						}
 					} );
+				}
+
+				function getLocalStorageData() {
+					try {
+						return JSON.parse( localStorage.getItem( 'popupsLocalStorageData' ) );
+					} catch ( e ) {
+						return false;
+					}
+				}
+
+				function setLocalStorageData( object ) {
+					try {
+						localStorage.setItem( 'popupsLocalStorageData', JSON.stringify( object ) );
+					} catch ( e ) {
+						return false;
+					}
 				}
 
 			});

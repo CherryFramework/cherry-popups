@@ -1,5 +1,6 @@
 @import "variables";
 @import "tm_mixins";
+@import "animation-layout";
 
 .cherry-popup-wrapper{
 	display: flex;
@@ -10,9 +11,6 @@
 	top: 0;
 	left: 0;
 	z-index: 999;
-	&.hide-state{
-		//display: none;
-	}
 	.cherry-popup-container{
 		flex: 0 1 auto;
 		align-self: center;
@@ -22,7 +20,7 @@
 		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 		z-index: 2;
 		&__inner{
-			padding: 20px;
+			padding: 40px 20px 40px 20px;
 			position: relative;
 		}
 	}
@@ -48,142 +46,47 @@
 			color: $red_color;
 		}
 	}
-
-	&.simple-fade-animation{
-		display: none;
-		.cherry-popup-container{
-
-			animation: simple-fade 2s 1;
-			animation-delay: 0.3s;
-			animation-fill-mode: both;
-			animation-play-state: paused;
-		}
-		.cherry-popup-overlay{
-			display: none;
-			animation: simple-fade 2s 1;
-			animation-fill-mode: both;
-			animation-play-state: paused;
-		}
-		&.show-animation{
-			.cherry-popup-container{
-				display: block;
-				animation-play-state: running;
-			}
-			.cherry-popup-overlay{
-				display: block;
-				animation-play-state: running;
-			}
-		}
-		&.hide-animation{
-			.cherry-popup-container{
-
-			}
-			.cherry-popup-overlay{
-
+	.cherry-popup-show-again-check{
+		display: flex;
+		height: 20px;
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+		cursor: pointer;
+		user-select: none;
+		.marker{
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			background-color: $grey_color_2;
+			margin-right: 5px;
+			border-radius: 2px;
+			transition: all 300ms ease-in-out;
+			span{
+				width: 20px;
+				height: 20px;
+				font-size: 22px;
+				color: #ffffff;
+				display: none;
+				&:before{
+					position: relative;
+					left: -2px;
+					top: -1px;
+				}
 			}
 		}
-	}
-
-	/*&.simple-fade-animation{
-		.cherry-popup-container{
-			@include opacity(0);
-			@include multiTranslate(translateY(50px));
+		.label{
+			display: inline-block;
+			font-size: 12px;
+			line-height: 20px;
 		}
-		.cherry-popup-overlay{
-			@include opacity(0);
-		}
-		&.show-animation{
-			.cherry-popup-container{
-				@include opacity(1);
-				@include multiTranslate(translateY(0px));
-				@include transition(all 0.5s cubic-bezier(.29,.65,.64,.97) 0.2s);
-			}
-			.cherry-popup-overlay{
-				@include opacity(1);
-				@include transition(all 0.5s ease);
+		&.checked{
+			.marker{
+				background-color: $green_color;
+				span{
+					display: block;
+				}
 			}
 		}
-		&.hide-animation{
-			.cherry-popup-container{
-				@include opacity(0);
-				@include multiTranslate(translateY(-50px));
-				@include transition(all 0.3s cubic-bezier(.58,.22,.41,.79));
-			}
-			.cherry-popup-overlay{
-				@include opacity(0);
-				@include transition(all 0.3s ease);
-			}
-		}
-	}*/
-
-
-	&.simple-scale-animation{
-		@include perspective(1000px);
-		@include perspective-origin(50% 50%);
-		&.show-animation{
-			.cherry-popup-container{
-				@include opacity(1);
-				@include multiTranslate(translateY(0px) translateZ(0px) rotateX(0deg));
-				@include transition(all 0.5s cubic-bezier(.29,.65,.64,.97) 0.5s);
-			}
-			.cherry-popup-overlay{
-				@include opacity(1);
-				@include transition(all 0.5s ease);
-			}
-		}
-		&.hide-animation{
-			.cherry-popup-container{
-				@include preserve-3d();
-				@include opacity(0);
-				@include multiTranslate(translateY(-30px) translateZ(-1500px) rotateX(45deg));
-				@include transition(all 0.3s ease);
-			}
-			.cherry-popup-overlay{
-				@include opacity(0);
-				@include transition(all 0.3s ease);
-			}
-		}
-	}
-	&.move-up-animation{
-		@include perspective(1000px);
-		@include perspective-origin(50% 50%);
-		.cherry-popup-container{
-			@include opacity(0);
-			@include multiTranslate(translateY(100px) rotateX(25deg) translateZ(-1500px));
-		}
-		.cherry-popup-overlay{
-			@include opacity(0);
-		}
-		&.show-animation{
-			.cherry-popup-container{
-				@include opacity(1);
-				@include multiTranslate(translateY(0px) rotateX(0deg) translateZ(0px));
-				@include transition(all 0.5s cubic-bezier(.29,.65,.64,.97) 0.2s);
-			}
-			.cherry-popup-overlay{
-				@include opacity(1);
-				@include transition(all 0.5s ease);
-			}
-		}
-		&.hide-animation{
-			.cherry-popup-container{
-				@include opacity(0);
-				@include multiTranslate(translateY(-100px) rotateX(0deg) translateZ(0px));
-				@include transition(all 0.3s cubic-bezier(.59,.26,.41,.78));
-			}
-			.cherry-popup-overlay{
-				@include opacity(0);
-				@include transition(all 0.3s ease 0.2s);
-			}
-		}
-	}
-}
-
-@keyframes simple-fade {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
 	}
 }
