@@ -10,7 +10,7 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-	z-index: 999;
+	z-index: 9999;
 	.cherry-popup-container{
 		flex: 0 1 auto;
 		align-self: center;
@@ -87,6 +87,35 @@
 					display: block;
 				}
 			}
+		}
+	}
+	&.overlay-disabled-type{
+		pointer-events: none;
+		.cherry-popup-overlay{
+			display: none;
+		}
+		.cherry-popup-container{
+			pointer-events: all;
+		}
+	}
+	&.overlay-image-type{
+		.cherry-popup-overlay{
+			background-size: cover;
+		}
+	}
+	&.layout-type-center-fullwidth{
+		.cherry-popup-container{
+			align-self: center;
+		}
+	}
+	&.layout-type-center{
+		.cherry-popup-container{
+			align-self: center;
+		}
+	}
+	&.layout-type-bottom{
+		.cherry-popup-container{
+			align-self: flex-end;
 		}
 	}
 }

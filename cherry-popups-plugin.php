@@ -56,6 +56,13 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		public $cherry_utility = null;
 
 		/**
+		 * Dynamic_css module instance.
+		 *
+		 * @var null
+		 */
+		public $dynamic_css = null;
+
+		/**
 		 * Default options
 		 *
 		 * @var array
@@ -243,6 +250,9 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 					'cherry-post-meta' => array(
 						'autoload' => false,
 					),
+					'cherry-dynamic-css' => array(
+						'autoload' => false,
+					),
 				),
 			) );
 
@@ -263,6 +273,8 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 
 			$this->get_core()->init_module( 'cherry-utility' );
 			$this->cherry_utility = $this->get_core()->modules['cherry-utility']->utility;
+
+			$this->dynamic_css = $this->get_core()->init_module( 'cherry-dynamic-css', array() );
 		}
 
 		/**

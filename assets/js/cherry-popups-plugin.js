@@ -13,22 +13,25 @@
 					$.extend( settings, options );
 				}
 
-				var $this         = $( this ),
-					popupSettings = $this.data( 'popup-settings' ),
-					popupsLocalStorageData = getLocalStorageData() || {};
-
+				var $this                  = $( this ),
+					popupSettings          = $this.data( 'popup-settings' ),
+					popupsLocalStorageData = getLocalStorageData() || {},
+					popupAvailable         = popupsLocalStorageData[ popupSettings['id'] ] || 'enable';
 					console.log(popupSettings);
-
 				( function () {
+					//localStorage.removeItem('popupsLocalStorageData');
 
-					if ( ! popupsLocalStorageData.hasOwnProperty( popupSettings['id'] ) ) {
-						popupsLocalStorageData[ popupSettings['id'] ] = true;
+					if ( 'disable' === popupAvailable ) {
+						$this.remove();
+						return false;
 					}
 
-					console.log(popupsLocalStorageData[ popupSettings['id'] ]);
+					// Check and create popup data in localStorage
+					if ( ! popupsLocalStorageData.hasOwnProperty( popupSettings['id'] ) ) {
+						popupsLocalStorageData[ popupSettings['id'] ] = 'enable';
+					}
 
 					setLocalStorageData( popupsLocalStorageData );
-					setLocalStorageData( {} );
 
 					switch( popupSettings['use'] ) {
 						case 'open-page':
@@ -39,8 +42,10 @@
 							break;
 					}
 
+					// Add check again button event
 					checkEvents();
 
+					// Add close button event
 					closePopupEvent( popupSettings['load-open-delay'] );
 
 				} )();
@@ -72,6 +77,14 @@
 				 */
 				function addCloseEventsFunction() {
 
+					switch( popupSettings['close-appear-event'] ) {
+						case 'outside-viewport':
+							viewportLeaveEvent();
+							break;
+						case 'page-focusout':
+							pageFocusoutEvent();
+							break;
+					}
 				}
 
 				/**
@@ -94,7 +107,6 @@
 							}, 500 );
 					} );
 
-
 					$this.on( 'click', '.cherry-popup-overlay', function( event ) {
 						var overlay = event.currentTarget,
 							$parentPopup = $( overlay ).closest( '.cherry-popup' );
@@ -106,7 +118,6 @@
 								$parentPopup.remove();
 							}, 500 );
 					} );
-
 				}
 
 				/**
@@ -116,16 +127,17 @@
 				 */
 				function checkEvents() {
 					$this.on( 'click', '.cherry-popup-show-again-check', function( event ) {
-						var check = event.currentTarget;
+						var check = event.currentTarget,
+							popupsLocalStorageData = getLocalStorageData() || {};
 
 						if ( ! $( check ).hasClass( 'checked' ) ) {
 							$( check ).addClass( 'checked' );
-							popupsLocalStorageData[ popupSettings['id'] ] = false;
+							popupsLocalStorageData[ popupSettings['id'] ] = 'disable';
 						} else {
 							$( check ).removeClass( 'checked' );
-							popupsLocalStorageData[ popupSettings['id'] ] = true;
+							popupsLocalStorageData[ popupSettings['id'] ] = 'enable';
 						}
-						console.log(popupsLocalStorageData);
+
 						setLocalStorageData( popupsLocalStorageData );
 
 					} );
@@ -150,6 +162,11 @@
 					} );
 				}
 
+				/**
+				 * [userInactiveEvent description]
+				 * @param  {[type]} inactiveDelay [description]
+				 * @return {[type]}               [description]
+				 */
 				function userInactiveEvent( inactiveDelay ) {
 					var inactiveDelay = +inactiveDelay || 0,
 						timeout = null,
@@ -168,6 +185,11 @@
 					} );
 				}
 
+				/**
+				 * [scrollPageEvent description]
+				 * @param  {[type]} scrollingValue [description]
+				 * @return {[type]}                [description]
+				 */
 				function scrollPageEvent( scrollingValue ) {
 					var scrollingValue = +scrollingValue || 0,
 						isShowed = false;
@@ -186,6 +208,36 @@
 					} );
 				}
 
+				/**
+				 * Viewport leave event
+				 *
+				 * @return {void}
+				 */
+				function viewportLeaveEvent() {
+					$( document ).on( 'mouseleave', 'body', function( event ) {
+						if ( 0 > event.pageY ) {
+							$this.addClass( 'show-animation' );
+						}
+					} );
+				}
+
+				/**
+				 * Page focus out event.
+				 *
+				 * @return {void}
+				 */
+				function pageFocusoutEvent() {
+					$( window ).on( 'blur', function( event ) {
+						console.log(event);
+						$this.addClass( 'show-animation' );
+					} );
+				}
+
+				/**
+				 * Get localStorage data.
+				 *
+				 * @return {object|boolean}
+				 */
 				function getLocalStorageData() {
 					try {
 						return JSON.parse( localStorage.getItem( 'popupsLocalStorageData' ) );
@@ -194,6 +246,11 @@
 					}
 				}
 
+				/**
+				 * Set localStorage data.
+				 *
+				 * @return {object|boolean}
+				 */
 				function setLocalStorageData( object ) {
 					try {
 						localStorage.setItem( 'popupsLocalStorageData', JSON.stringify( object ) );

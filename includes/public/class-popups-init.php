@@ -94,49 +94,6 @@ class Cherry_Popups_Init {
 	}
 
 	/**
-	 * [set_style description]
-	 * @param array $style_rule [description]
-	 */
-	public function register_style( $style_rule = array() ) {
-
-		$selector = $style_rule['selector'];
-		$declaration = $style_rule['declaration'];
-
-		// New lines are saved as || in CSS Custom settings, remove them
-		$declaration = preg_replace( '/(\|\|)/i', '', $declaration );
-
-		if ( array_key_exists( $selector, $this->dynamic_styles ) ) {
-
-			$declaration = wp_parse_args( $this->dynamic_styles[ $selector ], $declaration );
-		}
-
-		$this->dynamic_styles[ $selector ] = $declaration;
-
-	}
-
-	/**
-	 * [get_dunamic_styles description]
-	 * @return [type] [description]
-	 */
-	public function get_dynamic_styles() {
-		$dynamic_styles = '';
-
-		if ( ! is_array( $this->dynamic_styles ) || empty( $this->dynamic_styles ) ) {
-			return false;
-		}
-
-		foreach ( $this->dynamic_styles as $selector => $declaration ) {
-			$dynamic_styles .= sprintf( '%1$s{', $selector ) . "\n";
-			foreach ( $declaration as $property => $value ) {
-				$dynamic_styles .= "\t" . sprintf( '%1$s: %2$s;', $property, $value ) . "\n";
-			}
-			$dynamic_styles .= "}\n";
-		}
-
-		return $dynamic_styles;
-	}
-
-	/**
 	 * Get cherry popups query
 	 *
 	 * @since 1.0.0

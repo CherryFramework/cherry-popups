@@ -8,7 +8,6 @@
 		},
 
 		readyRender: function () {
-			$( 'head' ).append( '<style title="cherry-dynamic-css-styles" type="text/css">' + window.cherryPopupDunamicStyles + '</style>' );
 			this.popupsPluginInit();
 		},
 

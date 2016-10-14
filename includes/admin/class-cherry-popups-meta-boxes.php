@@ -87,6 +87,29 @@ class Cherry_Popups_Meta_Boxes {
 					'title'       => esc_html__( '"Close" page settings', 'cherry-popups' ),
 					'description' => esc_html__( '"Close" page settings', 'cherry-popups' ),
 				),
+				$prefix . 'layout-type' => array(
+					'type'          => 'radio',
+					'parent'        => 'general_tab',
+					'title'         => esc_html__( 'Popup layout type', 'cherry-popups' ),
+					'description'   => esc_html__( 'Choose popup layout type', 'cherry-popups' ),
+					'value'         => 'center',
+					'class'         => '',
+					'display_input' => false,
+					'options'       => array(
+						'center' => array(
+							'label'   => esc_html__( 'Center', 'cherry-popups' ),
+							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/layout-type-center.svg',
+						),
+						'center-fullwidth' => array(
+							'label'   => esc_html__( 'Center & fullwidth', 'cherry-popups' ),
+							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/layout-type-center-fullwidth.svg',
+						),
+						'bottom' => array(
+							'label'   => esc_html__( 'Bottom & fullwidth', 'cherry-popups' ),
+							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/layout-type-bottom.svg',
+						),
+					),
+				),
 				$prefix . 'show-hide-animation' => array(
 					'type'          => 'radio',
 					'parent'        => 'general_tab',
@@ -106,7 +129,7 @@ class Cherry_Popups_Meta_Boxes {
 						),
 						'move-up' => array(
 							'label'   => esc_html__( 'Move Up', 'cherry-popups' ),
-							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/hover-scale.svg',
+							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/hover-move-up.svg',
 						),
 					),
 				),
@@ -161,6 +184,22 @@ class Cherry_Popups_Meta_Boxes {
 					'value'       => 400,
 					'master'      => 'popup-auto-height-false'
 				),
+				$prefix . 'container-color' => array(
+					'type'        => 'colorpicker',
+					'parent'      => 'overlay_tab',
+					'title'       => esc_html__( 'Container background color', 'cherry-popups' ),
+					'description' => esc_html__( 'Set the color of popup container', 'cherry-popups' ),
+					'value'       => '#fff',
+				),
+				$prefix . 'container-opacity' => array(
+					'type'        => 'slider',
+					'parent'      => 'overlay_tab',
+					'title'       => esc_html__( 'Container opacity', 'cherry-popups' ),
+					'description' => esc_html__( 'Set the opacity(%) of popup container', 'cherry-popups' ),
+					'max_value'   => 100,
+					'min_value'   => 0,
+					'value'       => 100,
+				),
 				$prefix . 'overlay-type' => array(
 					'type'          => 'radio',
 					'parent'        => 'overlay_tab',
@@ -173,9 +212,9 @@ class Cherry_Popups_Meta_Boxes {
 							'label' => esc_html__( 'Disabled', 'cherry-popups' ),
 							'slave' => 'overlay-type-disabled',
 						),
-						'default' => array(
-							'label' => esc_html__( 'Default', 'cherry-popups' ),
-							'slave' => 'overlay-type-default',
+						'fill-color' => array(
+							'label' => esc_html__( 'Fill color', 'cherry-popups' ),
+							'slave' => 'overlay-type-fill-color',
 						),
 						'image' => array(
 							'label' => esc_html__( 'Image', 'cherry-popups' ),
@@ -189,7 +228,7 @@ class Cherry_Popups_Meta_Boxes {
 					'title'       => esc_html__( 'Overlay background color', 'cherry-popups' ),
 					'description' => esc_html__( 'Set the color of popup overlay', 'cherry-popups' ),
 					'value'       => '#000',
-					'master'      => 'overlay-type-default',
+					'master'      => 'overlay-type-fill-color',
 				),
 				$prefix . 'overlay-opacity' => array(
 					'type'        => 'slider',
@@ -199,7 +238,7 @@ class Cherry_Popups_Meta_Boxes {
 					'max_value'   => 100,
 					'min_value'   => 0,
 					'value'       => 50,
-					'master'      => 'overlay-type-default',
+					'master'      => 'overlay-type-fill-color',
 				),
 				$prefix . 'overlay-image' => array(
 					'type'               => 'media',
@@ -290,30 +329,11 @@ class Cherry_Popups_Meta_Boxes {
 					'options'       => array(
 						'outside-viewport' => array(
 							'label' => esc_html__( 'Outside viewport', 'cherry-popups' ),
-							'slave' => 'popup-close-appear-event-outside-viewport',
 						),
-						'page-leave' => array(
-							'label' => esc_html__( 'Try leave page', 'cherry-popups' ),
-							'slave' => 'popup-close-appear-event-page-leave',
-						),
-						'external-link' => array(
-							'label' => esc_html__( 'External link location', 'cherry-popups' ),
-							'slave' => 'popup-close-appear-event-external-link',
+						'page-focusout' => array(
+							'label' => esc_html__( 'Page unfocus', 'cherry-popups' ),
 						),
 					),
-				),
-				$prefix . 'alert-text' => array(
-					'type'        => 'textarea',
-					'parent'      => 'close_page_tab',
-					'title'       => esc_html__( 'JavaScript Alert Box Text', 'cherry-popups' ),
-					'description' => esc_html__( 'Only for "leave page" popups.', 'cherry-popups' ),
-					'value'       => '',
-					'placeholder' => esc_html__( 'Input Text', 'blank-plugin' ),
-					'rows'        => '10',
-					'cols'        => '20',
-					'class'       => '',
-					'label'       => '',
-					'master'      => 'popup-close-appear-event-page-leave',
 				),
 			),
 		) );
