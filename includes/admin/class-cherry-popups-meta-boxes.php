@@ -205,7 +205,7 @@ class Cherry_Popups_Meta_Boxes {
 					'parent'        => 'overlay_tab',
 					'title'         => esc_html__( 'Type of overlay', 'cherry-popups' ),
 					'description'   => esc_html__( 'Select ype of overlay', 'cherry-popups' ),
-					'value'         => 'default',
+					'value'         => 'fill-color',
 					'display-input' => true,
 					'options'       => array(
 						'disabled' => array(

@@ -107,8 +107,8 @@ class Cherry_Popups_Template_Callbacks {
 		 */
 		$settings = apply_filters( 'cherry-popup-title-settings', $settings );
 
-		//$title = cherry_popups_init()->cherry_utility->attributes->get_title( $settings );
-		$title = 'lorem';
+		$title = cherry_popups_init()->cherry_utility->attributes->get_title( $settings );
+		//$title = 'lorem';
 
 		return $title;
 	}

@@ -178,7 +178,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 				wp_enqueue_script(
 					'cherry-popups-admin-scripts',
 					esc_url( CHERRY_POPUPS_URI . 'assets/admin/js/min/cherry-popups-admin-scripts.min.js' ),
-					array( 'cherry-js-core' ),
+					array( 'cherry-js-core', 'cherry-handler-js' ),
 					CHERRY_POPUPS_VERSION,
 					true
 				);

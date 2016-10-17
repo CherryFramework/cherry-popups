@@ -15,12 +15,8 @@
 		saveOptionsInstance: null,
 		resetOptionsInstance: null,
 
-		cherryHadlerInit: function () {
-
-			$( document ).on( 'CherryHandlerInit', this.init.bind( this ) );
-		},
-
 		init: function () {
+
 			this.saveOptionsInstance = new CherryJsCore.CherryAjaxHandler(
 				{
 					handlerId: this.saveHandlerId,
@@ -89,6 +85,6 @@
 
 	}
 
-	CherryJsCore.cherryPopupsBackScripts.cherryHadlerInit();
+	CherryJsCore.cherryPopupsBackScripts.init();
 } ( jQuery, window.CherryJsCore ) );
 

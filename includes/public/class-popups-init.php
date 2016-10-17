@@ -44,7 +44,7 @@ class Cherry_Popups_Init {
 	public function __construct() {
 
 		// Page popup initialization
-		add_action( 'wp_footer', array( $this, 'page_popup_init') );
+		add_action( 'wp_footer', array( $this, 'page_popup_init' ) );
 
 		add_action( 'after_setup_theme', array( $this, 'set_cherry_utility' ), 10 );
 	}
@@ -56,31 +56,154 @@ class Cherry_Popups_Init {
 	 * @return void
 	 */
 	public function page_popup_init() {
+
+		$enable_popups = cherry_popups()->get_option( 'enable-popups', 'true' );
+		$enable_popups_mobile = cherry_popups()->get_option( 'mobile-enable-popups', 'true' );
+		$enable_logged_user = cherry_popups()->get_option( 'enable-logged-users', 'false' );
+
+		// Check if global popups enable.
+		if ( 'false' === $enable_popups ) {
+			return false;
+		}
+
+		// Check if global modile popups enable.
+		if ( 'false' === $enable_popups_mobile && is_mobile() ) {
+			return false;
+		}
+
+		// Check if global disable logged user popups enable.
+		if ( 'false' === $enable_logged_user && is_user_logged_in() ) {
+			return false;
+		}
+
 		$page_id = get_the_ID();
 
-		$this->page_meta = get_post_meta( $page_id, '', true );
 		$open_page_popup_id = get_post_meta( $page_id, 'cherry-open-page-popup', true );
 		$close_page_popup_id = get_post_meta( $page_id, 'cherry-close-page-popup', true );
 
-		if ( 'disable' !== $open_page_popup_id ) {
-			$open_popup = new Cherry_Popups_Data(
-				array(
-					'id'  => $open_page_popup_id,
-					'use' => 'open-page',
-				)
-			);
-			$open_popup->render_popup();
+		$this->render_open_popup( $open_page_popup_id );
+
+		$this->render_close_popup( $close_page_popup_id );
+	}
+
+	/**
+	 * Render open popup
+	 *
+	 * @param  string $popup_id Popup id
+	 * @return void
+	 */
+	public function render_open_popup( $popup_id = 'disable' ) {
+		$default_open_popup_id = cherry_popups()->get_option( 'default-open-page-popup', 'disable' );
+		$open_page_popup_display = cherry_popups()->get_option( 'open-page-popup-display', array() );
+
+		if ( 'disable' !== $popup_id && $this->is_static() ) {
+			$this->render_popup( $popup_id, 'open-page' );
+
+			return false;
 		}
 
-		if ( 'disable' !== $close_page_popup_id ) {
+		if ( 'disable' == $default_open_popup_id ) {
+			return false;
+		}
+
+		if ( empty( $open_page_popup_display ) ) {
+			return false;
+		}
+
+		if ( 'true' === $open_page_popup_display['home'] && is_home() ) {
+			$this->render_popup( $default_open_popup_id, 'open-page' );
+		}
+
+		if ( 'true' === $open_page_popup_display['pages'] && $this->is_static() ) {
+			$this->render_popup( $default_open_popup_id, 'open-page' );
+		}
+
+		if ( 'true' === $open_page_popup_display['posts'] && is_single() ) {
+			$this->render_popup( $default_open_popup_id, 'open-page' );
+		}
+
+		if ( 'true' === $open_page_popup_display['other'] && ( is_archive() || is_tax() ) ) {
+			$this->render_popup( $default_open_popup_id, 'open-page' );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Render close popup
+	 *
+	 * @param  string $popup_id Popup id.
+	 * @return void
+	 */
+	public function render_close_popup( $popup_id = 'disable' ) {
+		$default_close_popup_id = cherry_popups()->get_option( 'default-close-page-popup', 'disable' );
+		$close_page_popup_display = cherry_popups()->get_option( 'close-page-popup-display', array() );
+
+		if ( 'disable' !== $popup_id && $this->is_static() ) {
+			$this->render_popup( $popup_id, 'close-page' );
+
+			return false;
+		}
+
+		if ( 'disable' == $default_close_popup_id ) {
+			return false;
+		}
+
+		if ( empty( $close_page_popup_display ) ) {
+			return false;
+		}
+
+		if ( 'true' === $close_page_popup_display['home'] && is_home() ) {
+			$this->render_popup( $default_close_popup_id, 'close-page' );
+		}
+
+		if ( 'true' === $close_page_popup_display['pages'] && $this->is_static() ) {
+			$this->render_popup( $default_close_popup_id, 'close-page' );
+		}
+
+		if ( 'true' === $close_page_popup_display['posts'] && is_single() ) {
+			$this->render_popup( $default_close_popup_id, 'close-page' );
+		}
+
+		if ( 'true' === $close_page_popup_display['other'] && ( is_archive() || is_tax() ) ) {
+			$this->render_popup( $default_close_popup_id, 'close-page' );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Render popup instance
+	 *
+	 * @param  string $popup_id   Popup id.
+	 * @param  string $popup_type Popup type.
+	 * @return void|false
+	 */
+	public function render_popup( $popup_id = 'disable', $popup_type = 'open-page' ) {
+		if ( 'disable' !== $popup_id ) {
 			$close_popup = new Cherry_Popups_Data(
 				array(
-					'id'  => $close_page_popup_id,
-					'use' => 'close-page',
+					'id'  => $popup_id,
+					'use' => $popup_type,
 				)
 			);
 			$close_popup->render_popup();
+		} else {
+			return false;
 		}
+	}
+
+	/**
+	 * Static page check
+	 *
+	 * @return boolean
+	 */
+	public function is_static() {
+		if ( is_page() && ! is_home() ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
