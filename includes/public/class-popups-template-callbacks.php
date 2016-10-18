@@ -37,6 +37,14 @@ class Cherry_Popups_Template_Callbacks {
 	public $post_meta = null;
 
 	/**
+	 * Current popup id.
+	 *
+	 * @since 1.0.0
+	 * @var   array
+	 */
+	public $popup_id = null;
+
+	/**
 	 * Class constructor.
 	 *
 	 * @since 1.0.0
@@ -67,9 +75,10 @@ class Cherry_Popups_Template_Callbacks {
 	 *
 	 * @return void
 	 */
-	public function clear_data() {
+	public function clear_meta() {
 		$this->post_meta = null;
 	}
+
 
 	/**
 	 * Get post title.
@@ -89,14 +98,14 @@ class Cherry_Popups_Template_Callbacks {
 		}
 
 		$settings = array(
-			'visible'		=> true,
-			'length'		=> $attr['number_of_words'],
-			'trimmed_type'	=> 'word',
-			'ending'		=> '&hellip;',
-			'html'			=> $html,
-			'class'			=> '',
-			'title'			=> '',
-			'echo'			=> false,
+			'visible'      => true,
+			'length'       => $attr['number_of_words'],
+			'trimmed_type' => 'word',
+			'ending'       => '&hellip;',
+			'html'         => $html,
+			'class'        => '',
+			'title'        => '',
+			'echo'         => false,
 		);
 
 		/**
@@ -107,9 +116,25 @@ class Cherry_Popups_Template_Callbacks {
 		 */
 		$settings = apply_filters( 'cherry-popup-title-settings', $settings );
 
-		$title = cherry_popups_init()->cherry_utility->attributes->get_title( $settings );
-		//$title = 'lorem';
+		$title = cherry_popups_init()->cherry_utility->attributes->get_title( $settings, 'post', $this->popup_id );
 
 		return $title;
+	}
+
+	/**
+	 * Get post content.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_content( $attr = array() ) {
+		$post_data = get_post( $this->popup_id );
+
+		$default_attr = array( 'number_of_words' => -1, 'ending' => '&hellip;' );
+
+		$attr = wp_parse_args( $attr, $default_attr );
+
+		$content = do_shortcode( $post_data->post_content );
+
+		return $content;
 	}
 }

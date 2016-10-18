@@ -111,6 +111,7 @@ class Cherry_Popups_Data {
 
 		$macros = '/%%.+?%%/';
 		$callbacks = $this->setup_template_data( $this->options );
+		$callbacks->popup_id = $this->options['id'];
 
 		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s', $this->options['id'], $this->popup_settings['show-hide-animation'], $this->popup_settings['overlay-type'], $this->popup_settings['layout-type'] );
 
@@ -218,7 +219,8 @@ class Cherry_Popups_Data {
 		$callbacks = new Cherry_Popups_Template_Callbacks( $atts );
 
 		$data = array(
-			'title' => array( $callbacks, 'get_title' ),
+			'title'   => array( $callbacks, 'get_title' ),
+			'content' => array( $callbacks, 'get_content' ),
 		);
 
 		/**
