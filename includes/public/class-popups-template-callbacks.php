@@ -129,11 +129,21 @@ class Cherry_Popups_Template_Callbacks {
 	public function get_content( $attr = array() ) {
 		$post_data = get_post( $this->popup_id );
 
-		$default_attr = array( 'number_of_words' => -1, 'ending' => '&hellip;' );
+		$default_attr = array( 'number_of_words' => -1, );
 
 		$attr = wp_parse_args( $attr, $default_attr );
+		var_dump($post_data->post_content);
+		$content = do_shortcode(  );
 
-		$content = do_shortcode( $post_data->post_content );
+		ob_start();
+
+		$content = $post_data->post_content;
+		$content = apply_filters( 'the_content', $content );
+		$content = str_replace( ']]>', ']]&gt;', $content );
+		echo $content;
+		$content = ob_get_contents();
+
+		ob_end_clean();
 
 		return $content;
 	}
