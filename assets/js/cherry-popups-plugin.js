@@ -2,7 +2,6 @@
 ( function( $ ) {
 	var methods = {
 		init : function( options ) {
-
 			var self = this,
 				settings = {
 				call: function() {}
@@ -13,10 +12,15 @@
 					$.extend( settings, options );
 				}
 
-				var $this                  = $( this ),
-					popupSettings          = $this.data( 'popup-settings' ),
-					popupsLocalStorageData = getLocalStorageData() || {},
-					popupAvailable         = popupsLocalStorageData[ popupSettings['id'] ] || 'enable';
+				var $this                   = $( this ),
+					popupSettings           = $this.data( 'popup-settings' ),
+					popupsLocalStorageData  = getLocalStorageData() || {},
+					popupAvailable          = popupsLocalStorageData[ popupSettings['id'] ] || 'enable',
+					$subscribeForm          = $( '.cherry-popup-subscribe', $this ),
+					$subscribeFormMessage   = null,
+					cherrySubscribeFormAjax = null,
+					subscribeFormAjaxId     = 'cherry_subscribe_form_ajax';
+
 					console.log(popupSettings);
 				( function () {
 					//localStorage.removeItem('popupsLocalStorageData');
@@ -47,6 +51,19 @@
 
 					// Add close button event
 					closePopupEvent( popupSettings['load-open-delay'] );
+
+					// Subscribe form check
+					if ( $subscribeForm[0] ) {
+						$subscribeFormMessage = $( '.cherry-popup-subscribe__message', $subscribeForm );
+						cherrySubscribeFormAjax = new CherryJsCore.CherryAjaxHandler(
+							{
+								handlerId: subscribeFormAjaxId,
+								successCallback: subscribeFormAjaxSuccessCallback
+							}
+						);
+
+						$subscribeForm.on( 'click', '.cherry-popup-subscribe__submit', subscribeFormAjax );
+					}
 
 				} )();
 
@@ -228,9 +245,48 @@
 				 */
 				function pageFocusoutEvent() {
 					$( window ).on( 'blur', function( event ) {
-						console.log(event);
 						$this.addClass( 'show-animation' );
 					} );
+				}
+
+				/**
+				 * Subscribe submit form click event
+				 *
+				 * @param  {object} event Click event.
+				 * @return {void}
+				 */
+				function subscribeFormAjax( event ) {
+					var $button    = $( event.currentTarget ),
+						$input     = $( '.cherry-popup-subscribe__input', $subscribeForm ),
+						$message   = $( '.cherry-popup-subscribe__message', $subscribeForm ),
+						inputValue = $input.val();
+
+					cherrySubscribeFormAjax.sendData( { 'mail': inputValue } );
+				}
+
+				/**
+				 * Subscribe form ajax success callback
+				 *
+				 * @param  {object} data Success data.
+				 * @return {void}
+				 */
+				function subscribeFormAjaxSuccessCallback( data ) {
+					var successType = data.type,
+						message     = data.message || '',
+						timeout     = null;
+
+					if ( 'success' === successType ) {
+						$subscribeFormMessage.addClass( 'success-type' );
+					}
+					$( 'span', $subscribeFormMessage ).html( message );
+					$subscribeFormMessage.slideDown( 300 );
+
+					timeout = setTimeout( function() {
+						$subscribeFormMessage.slideUp( 300, function() {
+							$subscribeFormMessage.removeClass( 'success-type' );
+							clearTimeout( timeout );
+						} );
+					}, 3000 );
 				}
 
 				/**

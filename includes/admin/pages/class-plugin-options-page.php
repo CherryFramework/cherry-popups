@@ -129,12 +129,12 @@ if ( ! class_exists( 'Popups_Options_Page' ) ) {
 					'close_page_tab' => array(
 						'parent'      => 'tab_vertical',
 						'title'       => esc_html__( 'Close page settings', 'cherry-popups' ),
-						'description' => esc_html__( 'Third tab description.', 'cherry-popups' ),
+						'description' => esc_html__( 'Close page default popups settings', 'cherry-popups' ),
 					),
 					'mailing_options' => array(
 						'parent'      => 'tab_vertical',
 						'title'       => esc_html__( 'Mailing List Manager', 'cherry-popups' ),
-						'description' => esc_html__( 'Fourth tab description.', 'cherry-popups' ),
+						'description' => esc_html__( 'MailChimp settings', 'cherry-popups' ),
 					),
 				)
 			);
@@ -189,7 +189,7 @@ if ( ! class_exists( 'Popups_Options_Page' ) ) {
 						'parent'       => 'general_tab',
 						'title'        => esc_html__( 'Enable for logged users', 'cherry-popups' ),
 						'description'  => esc_html__( 'All popup will not be displayed for logged users', 'cherry-popups' ),
-						'value'        => cherry_popups()->get_option( 'disable-logged-users', 'false' ),
+						'value'        => cherry_popups()->get_option( 'enable-logged-users', 'true' ),
 						'toggle'       => array(
 							'true_toggle'  => 'Yes',
 							'false_toggle' => 'No',
@@ -253,6 +253,24 @@ if ( ! class_exists( 'Popups_Options_Page' ) ) {
 							'posts' => esc_html__( 'Posts', 'cherry-popups' ),
 							'other' => esc_html__( 'Categories, Archive and other', 'cherry-popups' ),
 						),
+					),
+					'mailchimp-api-key' => array(
+						'type'         => 'text',
+						'parent'       => 'mailing_options',
+						'title'        => esc_html__( 'MailChimp API key', 'cherry-popups' ),
+						'description'  => sprintf( '%1$s <a href="http://kb.mailchimp.com/integrations/api-integrations/about-api-keys">%2$s</a>', esc_html__( 'Input your MailChimp API key', 'cherry-popups' ), esc_html__( 'About API Keys', 'cherry-popups' ) ),
+						'value'        => cherry_popups()->get_option( 'mailchimp-api-key', '' ),
+						'class'        => '',
+						'label'        => '',
+					),
+					'mailchimp-list-id' => array(
+						'type'         => 'text',
+						'parent'       => 'mailing_options',
+						'title'        => esc_html__( 'MailChimp list ID', 'cherry-popups' ),
+						'description'  => sprintf( '%1$s <a href="http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id">%2$s</a>', esc_html__( 'MailChimp list ID', 'cherry-popups' ), esc_html__( 'list ID', 'cherry-popups' ) ),
+						'value'        => cherry_popups()->get_option( 'mailchimp-list-id', '' ),
+						'class'        => '',
+						'label'        => '',
 					),
 				)
 			);

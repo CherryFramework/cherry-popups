@@ -32,9 +32,17 @@ class Cherry_Popups_Init {
 	public $cherry_utility = null;
 
 	/**
-	 *
+	 * [$errors description]
+	 * @var array
 	 */
-	public $dynamic_styles = array();
+	public $sys_messages = array();
+
+	/**
+	 * MailChimp API server
+	 *
+	 * @var string
+	 */
+	private $api_server = 'https://%s.api.mailchimp.com/2.0/';
 
 	/**
 	 * Sets up needed actions/filters.
@@ -47,6 +55,116 @@ class Cherry_Popups_Init {
 		add_action( 'wp_footer', array( $this, 'page_popup_init' ) );
 
 		add_action( 'after_setup_theme', array( $this, 'set_cherry_utility' ), 10 );
+	}
+
+	/**
+	 * Set cherry utility object
+	 *
+	 * @return void
+	 */
+	public function set_cherry_utility() {
+		cherry_popups()->get_core()->init_module( 'cherry-utility' );
+		$this->cherry_utility = cherry_popups()->get_core()->modules['cherry-utility']->utility;
+
+		$this->sys_messages = array(
+			'invalid_mail'      => esc_html__( 'Please, provide valid mail', 'cherry-popups' ),
+			'mailchimp'         => esc_html__( 'Please, set up MailChimp API key and List ID', 'cherry-popups' ),
+			'internal'          => esc_html__( 'Internal error. Please, try again later', 'cherry-popups' ),
+			'server_error'      => esc_html__( 'Server error. Please, try again later', 'cherry-popups' ),
+			'mailchimp_success' => esc_html__( 'Success', 'cherry-popups' ),
+		);
+
+		cherry_popups()->get_core()->init_module(
+			'cherry-handler',
+			array(
+				'id'           => 'cherry_subscribe_form_ajax',
+				'action'       => 'cherry_subscribe_form_ajax',
+				'is_public'    => true,
+				'callback'     => array( $this , 'cherry_subscribe_form_ajax' ),
+			)
+		);
+	}
+
+	/**
+	 * Proccesing subscribe form ajax
+	 *
+	 * @return void
+	 */
+	public function cherry_subscribe_form_ajax() {
+		$data = ( ! empty( $_POST['data'] ) ) ? $_POST['data'] : false;
+
+		if ( ! $data ) {
+			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
+		}
+
+		$mail = $data['mail'];
+
+		if ( empty( $mail ) || ! is_email( $mail ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['invalid_mail'] ) );
+		}
+
+		$args = array(
+			'email' => array(
+				'email' => $mail,
+			),
+			'double_optin' => false,
+		);
+
+
+		$response = $this->api_call( 'lists/subscribe', $args );
+
+		if ( false === $response ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mailchimp'] ) );
+		}
+
+		$response = json_decode( $response, true );
+
+		if ( empty( $response ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['internal'] ) );
+		}
+
+		if ( isset( $response['status'] ) && 'error' == $response['status'] ) {
+			wp_send_json( array( 'type' => 'error', 'message' => esc_html( $response['error'] ) ) );
+		}
+
+		wp_send_json( array( 'type' => 'success', 'message' =>  $this->sys_messages['mailchimp_success'] ) );
+	}
+
+	/**
+	 * Make remote request to mailchimp API
+	 *
+	 * @param  string $method API method to call.
+	 * @param  array  $args   API call arguments.
+	 * @return array|bool
+	 */
+	public function api_call( $method, $args = array() ) {
+
+		if ( ! $method ) {
+			return false;
+		}
+
+		$api_key = cherry_popups()->get_option( 'mailchimp-api-key', '' );
+		$list_id = cherry_popups()->get_option( 'mailchimp-list-id', '' );
+
+		if ( ! $api_key || ! $list_id ) {
+			return false;
+		}
+
+		$key_data = explode( '-', $api_key );
+
+		if ( empty( $key_data ) || ! isset( $key_data[1] ) ) {
+			return false;
+		}
+
+		$this->api_server = sprintf( $this->api_server, $key_data[1] );
+
+		$url      = esc_url( trailingslashit( $this->api_server . $method ) );
+		$defaults = array( 'apikey' => $api_key, 'id' => $list_id );
+		$data     = json_encode( array_merge( $defaults, $args ) );
+
+		$request = wp_remote_post( $url, array( 'body' => $data ) );
+
+		return wp_remote_retrieve_body( $request );
 	}
 
 	/**
@@ -84,6 +202,7 @@ class Cherry_Popups_Init {
 		$this->render_open_popup( $open_page_popup_id );
 
 		$this->render_close_popup( $close_page_popup_id );
+
 	}
 
 	/**
@@ -98,7 +217,6 @@ class Cherry_Popups_Init {
 
 		if ( 'disable' !== $popup_id && $this->is_static() ) {
 			$this->render_popup( $popup_id, 'open-page' );
-
 			return false;
 		}
 
@@ -180,6 +298,7 @@ class Cherry_Popups_Init {
 	 * @return void|false
 	 */
 	public function render_popup( $popup_id = 'disable', $popup_type = 'open-page' ) {
+
 		if ( 'disable' !== $popup_id ) {
 			$close_popup = new Cherry_Popups_Data(
 				array(
@@ -204,16 +323,6 @@ class Cherry_Popups_Init {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Set cherry utility object
-	 *
-	 * @return void
-	 */
-	public function set_cherry_utility() {
-		cherry_popups()->get_core()->init_module( 'cherry-utility' );
-		$this->cherry_utility = cherry_popups()->get_core()->modules['cherry-utility']->utility;
 	}
 
 	/**

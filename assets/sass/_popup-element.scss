@@ -1,0 +1,42 @@
+@import "variables";
+@import "tm_mixins";
+
+.cherry-popup-title{
+	margin-bottom: 20px;
+}
+.cherry-popup-content{
+	margin-bottom: 20px;
+}
+.cherry-popup-subscribe{
+	&__form{
+
+	}
+	&__input-group{
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	&__input{
+		flex: 1 1 auto;
+	}
+	&__submit{
+		flex: 0 1 auto;
+		padding: 10px 20px;
+		margin-left: 10px;
+		border-width: 2px;
+		border-style: solid;
+		border-color: $dark_color_1;
+		color: $dark_color_1;
+		cursor: pointer;
+	}
+	&__message{
+		display: none;
+			span{
+				color: $red_color;
+			}
+			&.success-type{
+				span{
+					color: $green_color;
+				}
+			}
+	}
+}

@@ -49,10 +49,7 @@
 			this.resetOptionsInstance.send();
 		},
 
-		saveSuccessCallback: function() {
-			this.enableButton( this.saveButtonId );
-			CherryJsCore.cherryHandlerUtils.noticeCreate( 'success-notice', cherryPopupnSettings.save_message );
-		},
+		!
 
 		restoreSuccessCallback: function() {
 			this.enableButton( this.resetButtonId );

@@ -1,6 +1,8 @@
 @import "variables";
 @import "tm_mixins";
 @import "animation-layout";
+@import "base-styles";
+@import "popup-element";
 
 .cherry-popup-wrapper{
 	display: flex;
@@ -14,14 +16,53 @@
 	.cherry-popup-container{
 		flex: 0 1 auto;
 		align-self: center;
+		position: relative;
 		min-width: 300px;
 		min-height: 300px;
+		max-height: 90%;
+		padding: 50px 0;
 		background-color: rgba( 255, 255, 255, 1);
 		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 		z-index: 2;
 		&__inner{
-			padding: 40px 20px 40px 20px;
+			overflow-y: auto;
 			position: relative;
+			margin: 0 18px 0 20px;
+			height: 100%;
+			&::-webkit-scrollbar {
+				width: 4px;
+				height: 4px;
+			}
+			&::-webkit-scrollbar-button {
+				width: 0px;
+				height: 0px;
+			}
+			&::-webkit-scrollbar-thumb {
+				background: $dark_color_1;
+				border: 0px none $dark_color_1;
+				border-radius: 4px;
+			}
+			&::-webkit-scrollbar-thumb:hover {
+				background: $dark_color_2;
+			}
+			&::-webkit-scrollbar-thumb:active {
+				background: $dark_color_2;
+			}
+			&::-webkit-scrollbar-track {
+				background-color: rgba(0, 0, 0, 0.2);
+				border: 0px none #ffffff;
+				border-radius: 4px;
+			}
+			&::-webkit-scrollbar-track:hover {
+			}
+			&::-webkit-scrollbar-track:active {
+			}
+			&::-webkit-scrollbar-corner {
+				background: transparent;
+			}
+		}
+		.container-image-type{
+			background-size: cover;
 		}
 	}
 	.cherry-popup-overlay{
@@ -29,6 +70,8 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
+		top: 0;
+		left: 0;
 		background-color: rgba( 0, 0, 0, 0.5);
 		z-index: 1;
 	}
@@ -40,7 +83,7 @@
 		top: 10px;
 		right: 10px;
 		cursor: pointer;
-		color: $blue_color;
+		color: $dark_color_1;
 		@include transition(all 0.3s ease);
 		&:hover{
 			color: $red_color;

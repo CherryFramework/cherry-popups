@@ -91,11 +91,7 @@ class Cherry_Popups_Template_Callbacks {
 
 		$attr = wp_parse_args( $attr, $default_attr );
 
-		$html = '<h3 %1$s><a href="%2$s" %3$s rel="bookmark">%4$s</a></h3>';
-
-		if ( is_single() ) {
-			$html = '<h3 %1$s>%4$s</h3>';
-		}
+		$html = '<h3 %1$s>%4$s</h3>';
 
 		$settings = array(
 			'visible'      => true,
@@ -116,9 +112,11 @@ class Cherry_Popups_Template_Callbacks {
 		 */
 		$settings = apply_filters( 'cherry-popup-title-settings', $settings );
 
-		$title = cherry_popups_init()->cherry_utility->attributes->get_title( $settings, 'post', $this->popup_id );
+		$html = '<div class="cherry-popup-title">';
+			$html .= cherry_popups_init()->cherry_utility->attributes->get_title( $settings, 'post', $this->popup_id );
+		$html .= '</div>';
 
-		return $title;
+		return $html;
 	}
 
 	/**
@@ -132,19 +130,43 @@ class Cherry_Popups_Template_Callbacks {
 		$default_attr = array( 'number_of_words' => -1, );
 
 		$attr = wp_parse_args( $attr, $default_attr );
-		var_dump($post_data->post_content);
-		$content = do_shortcode(  );
 
 		ob_start();
+		?><div class="cherry-popup-content"><?php
 
 		$content = $post_data->post_content;
 		$content = apply_filters( 'the_content', $content );
 		$content = str_replace( ']]>', ']]&gt;', $content );
 		echo $content;
+		?></div><?php
 		$content = ob_get_contents();
 
 		ob_end_clean();
 
 		return $content;
 	}
+
+	/**
+	 * Get subscribe form.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_subscribe_form( $attr = array() ) {
+		$default_attr = array();
+
+		$attr = wp_parse_args( $attr, $default_attr );
+
+		$html = '<div class="cherry-popup-subscribe">';
+			$html .= '<form method="POST" action="#" class="cherry-popup-subscribe__form">';
+				$html .= '<div class="cherry-popup-subscribe__message"><span></span></div>';
+				$html .= '<div class="cherry-popup-subscribe__input-group">';
+					$html .= '<input class="cherry-popup-subscribe__input" type="email" name="subscribe-mail" value="" placeholder="Email">';
+					$html .= '<div class="cherry-popup-subscribe__submit">Submit</div>';
+				$html .= '</div>';
+			$html .= '</form>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
 }

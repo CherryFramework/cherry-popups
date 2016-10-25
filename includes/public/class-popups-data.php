@@ -74,12 +74,14 @@ class Cherry_Popups_Data {
 			'use'                  => $this->options['use'],
 			'layout-type'          => $this->get_popup_meta_field( 'cherry-layout-type', 'center' ),
 			'show-hide-animation'  => $this->get_popup_meta_field( 'cherry-show-hide-animation', 'simple-fade' ),
-			'base-theme'           => $this->get_popup_meta_field( 'cherry-popup-base-theme', 'theme-1' ),
+			'base-style'           => $this->get_popup_meta_field( 'cherry-popup-base-style', 'light' ),
 			'width'                => $this->get_popup_meta_field( 'cherry-popup-width', 600 ),
-			'height'               => ! filter_var( $auto_height, FILTER_VALIDATE_BOOLEAN ) ? $this->get_popup_meta_field( 'cherry-popup-height', 600 ) : 'auto',
+			'height'               => $this->get_popup_meta_field( 'cherry-popup-height', 400 ),
+			'container-bg-type'    => $this->get_popup_meta_field( 'cherry-container-bg-type', 'fill-color' ),
 			'container-color'      => $this->get_popup_meta_field( 'cherry-container-color', '#fff' ),
-			'container-opacity'    => $this->get_popup_meta_field( 'cherry-overlay-opacity', 100 ),
-			'overlay-type'         => $this->get_popup_meta_field( 'cherry-overlay-type', 'default' ),
+			'container-opacity'    => $this->get_popup_meta_field( 'cherry-container-opacity', 100 ),
+			'container-image'      => $this->get_popup_meta_field( 'cherry-container-image', '' ),
+			'overlay-type'         => $this->get_popup_meta_field( 'cherry-overlay-type', 'fill-color' ),
 			'overlay-color'        => $this->get_popup_meta_field( 'cherry-overlay-color', '#000' ),
 			'overlay-opacity'      => $this->get_popup_meta_field( 'cherry-overlay-opacity', 50 ),
 			'overlay-image'        => $this->get_popup_meta_field( 'cherry-overlay-image', '' ),
@@ -105,7 +107,6 @@ class Cherry_Popups_Data {
 		$this->enqueue_styles();
 		$this->enqueue_scripts();
 
-
 		// Item template.
 		$template = $this->get_template_by_name( $this->options['template'], 'cherry-popup' );
 
@@ -113,19 +114,21 @@ class Cherry_Popups_Data {
 		$callbacks = $this->setup_template_data( $this->options );
 		$callbacks->popup_id = $this->options['id'];
 
-		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s', $this->options['id'], $this->popup_settings['show-hide-animation'], $this->popup_settings['overlay-type'], $this->popup_settings['layout-type'] );
+		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s %5$s-style', $this->options['id'], $this->popup_settings['show-hide-animation'], $this->popup_settings['overlay-type'], $this->popup_settings['layout-type'], $this->popup_settings['base-style'] );
 
 		$popup_settings_encode = json_encode( $this->popup_settings );
 
 		$html = sprintf( '<div class="%1$s" data-popup-settings=\'%2$s\'>', $container_class, $popup_settings_encode );
 			$html .= '<div class="cherry-popup-overlay"></div>';
-			$html .= '<div class="cherry-popup-container">';
-				$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
+			$html .= sprintf( '<div class="%1$s container-%2$s-type">', 'cherry-popup-container', $this->popup_settings['container-bg-type'] );
 				$html .= '<div class="cherry-popup-container__inner">';
-					$html .= '<div class="cherry-popup-close-button"><span class="dashicons dashicons-no"></span></div>';
-					$template_content = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
-					$html .= $template_content;
+					$html .= '<div class="cherry-popup-container__dynamic">';
+						$template_content = preg_replace_callback( $macros, array( $this, 'replace_callback' ), $template );
+						$html .= $template_content;
+					$html .= '</div>';
 				$html .= '</div>';
+				$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
+				$html .= '<div class="cherry-popup-close-button"><span class="dashicons dashicons-no"></span></div>';
 			$html .= '</div>';
 		// Close wrapper.
 		$html .= '</div>';
@@ -144,24 +147,39 @@ class Cherry_Popups_Data {
 	 */
 	public function generate_dynamic_styles(){
 
+		$container_styles = array();
+
+		// Container styles
 		switch ( $this->popup_settings['layout-type'] ) {
 			case 'center-fullwidth':
 			case 'bottom':
-				$width = '100%';
+				$container_styles['width'] = '100%';
 				break;
 			case 'center':
-				$width = $this->popup_settings['width'] . 'px';
+				$container_styles['width'] = $this->popup_settings['width'] . 'px';
 				break;
+		}
+
+		$container_styles['height'] = $this->popup_settings['height'] . 'px';
+
+		switch ( $this->popup_settings['container-bg-type'] ) {
+			case 'fill-color':
+				$rgb_array = $this->hex_to_rgb( $this->popup_settings['container-color'] );
+				$opacity = intval( $this->popup_settings['container-opacity'] ) / 100;
+				$container_styles['background-color'] = sprintf( 'rgba(%1$s,%2$s,%3$s,%4$s);', $rgb_array[0], $rgb_array[1], $rgb_array[2], $opacity );
+			break;
+			case 'image':
+				$image_data = wp_get_attachment_image_src( $this->popup_settings['container-image'], 'full' );
+				$container_styles['background-image'] = sprintf( 'url(%1$s);', $image_data[0] );
+			break;
 		}
 
 		cherry_popups()->dynamic_css->add_style(
 			sprintf( '.cherry-popup-%1$s .cherry-popup-container', $this->options['id'] ),
-			array(
-				'width'  => $width,
-				'height' => ( 'auto' === $this->popup_settings['height'] ) ? $this->popup_settings['height'] : $this->popup_settings['height'] . 'px',
-			)
+			$container_styles
 		);
 
+		// Overlay styles
 		switch ( $this->popup_settings['overlay-type'] ) {
 			case 'fill-color':
 				$rgb_array = $this->hex_to_rgb( $this->popup_settings['overlay-color'] );
@@ -219,8 +237,9 @@ class Cherry_Popups_Data {
 		$callbacks = new Cherry_Popups_Template_Callbacks( $atts );
 
 		$data = array(
-			'title'   => array( $callbacks, 'get_title' ),
-			'content' => array( $callbacks, 'get_content' ),
+			'title'         => array( $callbacks, 'get_title' ),
+			'content'       => array( $callbacks, 'get_content' ),
+			'subscribeform' => array( $callbacks, 'get_subscribe_form' ),
 		);
 
 		/**
@@ -374,7 +393,7 @@ class Cherry_Popups_Data {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'dashicons' );
-		wp_enqueue_style( 'cherry-popups-styles', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/css/min/cherry-popups-styles.min.css', array(), CHERRY_POPUPS_VERSION );
+		wp_enqueue_style( 'cherry-popups-styles' );
 	}
 
 	/**
@@ -383,8 +402,7 @@ class Cherry_Popups_Data {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( 'cherry-popups-plugin', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/js/cherry-popups-plugin.js', array( 'jquery' ), CHERRY_POPUPS_VERSION, true );
-		wp_enqueue_script( 'cherry-popups-scripts', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/js/cherry-popups-scripts.js', array( 'jquery', 'cherry-popups-plugin' ), CHERRY_POPUPS_VERSION, true );
+		wp_enqueue_script( 'cherry-popups-scripts' );
 	}
 
 }

@@ -309,10 +309,11 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 */
 		public function register_assets() {
 			// Register stylesheets.
-			wp_register_style( 'cherry-popups-styles', esc_url( CHERRY_POPUPS_URI . 'assets/css/min/cherry-popups-styles.min.css' ), array(), CHERRY_POPUPS_VERSION, 'all' );
+			wp_register_style( 'cherry-popups-styles', esc_url( CHERRY_POPUPS_URI . 'assets/css/cherry-popups-styles.css' ), array(), CHERRY_POPUPS_VERSION, 'all' );
 
 			// Register JavaScripts.
-			wp_register_script( 'cherry-popups-scripts',esc_url( CHERRY_POPUPS_URI . 'assets/js/min/cherry-popups-scripts.min.js' ), array( 'cherry-js-core' ), CHERRY_POPUPS_VERSION, true );
+			wp_register_script( 'cherry-popups-plugin', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/js/cherry-popups-plugin.js', array( 'jquery', 'cherry-handler-js' ), CHERRY_POPUPS_VERSION, true );
+			wp_register_script( 'cherry-popups-scripts', trailingslashit( CHERRY_POPUPS_URI ) . 'assets/js/cherry-popups-scripts.js', array( 'jquery', 'cherry-popups-plugin' ), CHERRY_POPUPS_VERSION, true );
 		}
 
 		/**
