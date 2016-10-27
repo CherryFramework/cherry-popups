@@ -106,7 +106,6 @@ class Cherry_Popups_Data {
 	public function render_popup() {
 		$this->enqueue_styles();
 		$this->enqueue_scripts();
-
 		// Item template.
 		$template = $this->get_template_by_name( $this->options['template'], 'cherry-popup' );
 
@@ -114,7 +113,15 @@ class Cherry_Popups_Data {
 		$callbacks = $this->setup_template_data( $this->options );
 		$callbacks->popup_id = $this->options['id'];
 
-		$container_class = sprintf( 'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s %5$s-style', $this->options['id'], $this->popup_settings['show-hide-animation'], $this->popup_settings['overlay-type'], $this->popup_settings['layout-type'], $this->popup_settings['base-style'] );
+		$container_class = sprintf(
+			'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s %5$s-style %6$s-type',
+			$this->options['id'],
+			$this->popup_settings['show-hide-animation'],
+			$this->popup_settings['overlay-type'],
+			$this->popup_settings['layout-type'],
+			$this->popup_settings['base-style'],
+			$this->popup_settings['use']
+		);
 
 		$popup_settings_encode = json_encode( $this->popup_settings );
 

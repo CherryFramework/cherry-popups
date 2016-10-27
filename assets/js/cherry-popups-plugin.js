@@ -13,6 +13,7 @@
 				}
 
 				var $this                   = $( this ),
+					$window                 = $( window ),
 					popupSettings           = $this.data( 'popup-settings' ),
 					popupsLocalStorageData  = getLocalStorageData() || {},
 					popupAvailable          = popupsLocalStorageData[ popupSettings['id'] ] || 'enable',
@@ -21,10 +22,7 @@
 					cherrySubscribeFormAjax = null,
 					subscribeFormAjaxId     = 'cherry_subscribe_form_ajax';
 
-					console.log(popupSettings);
 				( function () {
-					//localStorage.removeItem('popupsLocalStorageData');
-
 					if ( 'disable' === popupAvailable ) {
 						$this.remove();
 						return false;
@@ -180,9 +178,10 @@
 				}
 
 				/**
-				 * [userInactiveEvent description]
-				 * @param  {[type]} inactiveDelay [description]
-				 * @return {[type]}               [description]
+				 * User Inactivity event
+				 *
+				 * @param  {int} inactiveDelay [description]
+				 * @return {void}
 				 */
 				function userInactiveEvent( inactiveDelay ) {
 					var inactiveDelay = +inactiveDelay || 0,
@@ -197,15 +196,16 @@
 						}
 					}, inactiveDelay );
 
-					$( 'body' ).on( 'click focus resize keyup', function() {
+					$( document ).on( 'click focus resize keyup scroll', function() {
 						isInactive = false;
 					} );
 				}
 
 				/**
-				 * [scrollPageEvent description]
-				 * @param  {[type]} scrollingValue [description]
-				 * @return {[type]}                [description]
+				 * Scrolling Page Event
+				 *
+				 * @param  {int} scrollingValue Scrolling porgress value
+				 * @return {void}
 				 */
 				function scrollPageEvent( scrollingValue ) {
 					var scrollingValue = +scrollingValue || 0,
@@ -218,11 +218,11 @@
 							scrolledHeight   = documentHeight - windowHeight,
 							scrolledProgress = Math.max( 0, Math.min( 1, $window.scrollTop() / scrolledHeight ) ) * 100;
 
-						if ( scrolledProgress > scrollingValue ) {
+						if ( scrolledProgress >= scrollingValue ) {
 							$( window ).off( 'scroll.cherryPopupScrollEvent resize.cherryPopupResizeEvent' );
 							$this.addClass( 'show-animation' );
 						}
-					} );
+					} ).trigger( 'scroll.cherryPopupScrollEvent' );
 				}
 
 				/**
@@ -231,9 +231,13 @@
 				 * @return {void}
 				 */
 				function viewportLeaveEvent() {
+					var pageY = 0;
 					$( document ).on( 'mouseleave', 'body', function( event ) {
-						if ( 0 > event.pageY ) {
-							$this.addClass( 'show-animation' );
+						if ( ! $( '.open-page-type' )[0] ) {
+							pageY = event.pageY - $window.scrollTop();
+							if ( 0 > pageY ) {
+								$this.addClass( 'show-animation' );
+							}
 						}
 					} );
 				}
@@ -245,7 +249,9 @@
 				 */
 				function pageFocusoutEvent() {
 					$( window ).on( 'blur', function( event ) {
-						$this.addClass( 'show-animation' );
+						if ( ! $( '.open-page-type' )[0] ) {
+							$this.addClass( 'show-animation' );
+						}
 					} );
 				}
 

@@ -80,7 +80,7 @@ class Cherry_Popups_Registration {
 			'show_in_admin_bar'   => false,
 			'capability_type'     => 'post',
 			'menu_position'       => null,
-			'menu_icon'           => ( version_compare( $GLOBALS['wp_version'], '3.8', '>=' ) ) ? 'dashicons-welcome-add-page' : '',
+			'menu_icon'           => ( version_compare( $GLOBALS['wp_version'], '3.8', '>=' ) ) ? CHERRY_POPUPS_URI . 'assets/img/svg/cherry-popup-icon.svg' : '',
 			'can_export'          => true,
 			'has_archive'         => true,
 			'taxonomies'          => array( 'post_format' )

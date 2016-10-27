@@ -76,7 +76,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 				'invalid_base_data' => esc_html__( 'Unable to process the request without nonche or server error', 'cherry-popups' ),
 				'no_right'          => esc_html__( 'No right for this action', 'cherry-popups' ),
 				'invalid_nonce'     => esc_html__( 'Stop CHEATING!!!', 'cherry-popups' ),
-				'access_is_allowed' => esc_html__( 'Access is allowed','cherry-popups' ),
+				'access_is_allowed' => '',
 				'wait_processing'   => esc_html__( 'Please wait, processing the previous request' ),
 			);
 

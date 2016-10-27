@@ -152,7 +152,10 @@ class Cherry_Popups_Template_Callbacks {
 	 * @since 1.0.0
 	 */
 	public function get_subscribe_form( $attr = array() ) {
-		$default_attr = array();
+		$default_attr = array(
+			'submit_text'      => esc_html__( 'Subscribe', 'cherry-projects' ),
+			'placeholder_text' => esc_html__( 'Your email', 'cherry-projects' ),
+		);
 
 		$attr = wp_parse_args( $attr, $default_attr );
 
@@ -160,8 +163,8 @@ class Cherry_Popups_Template_Callbacks {
 			$html .= '<form method="POST" action="#" class="cherry-popup-subscribe__form">';
 				$html .= '<div class="cherry-popup-subscribe__message"><span></span></div>';
 				$html .= '<div class="cherry-popup-subscribe__input-group">';
-					$html .= '<input class="cherry-popup-subscribe__input" type="email" name="subscribe-mail" value="" placeholder="Email">';
-					$html .= '<div class="cherry-popup-subscribe__submit">Submit</div>';
+					$html .= '<input class="cherry-popup-subscribe__input" type="email" name="subscribe-mail" value="" placeholder="' . $attr['placeholder_text'] . '">';
+					$html .= '<div class="cherry-popup-subscribe__submit">' . $attr['submit_text'] . '</div>';
 				$html .= '</div>';
 			$html .= '</form>';
 		$html .= '</div>';

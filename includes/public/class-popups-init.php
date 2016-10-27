@@ -86,88 +86,6 @@ class Cherry_Popups_Init {
 	}
 
 	/**
-	 * Proccesing subscribe form ajax
-	 *
-	 * @return void
-	 */
-	public function cherry_subscribe_form_ajax() {
-		$data = ( ! empty( $_POST['data'] ) ) ? $_POST['data'] : false;
-
-		if ( ! $data ) {
-			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
-		}
-
-		$mail = $data['mail'];
-
-		if ( empty( $mail ) || ! is_email( $mail ) ) {
-			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['invalid_mail'] ) );
-		}
-
-		$args = array(
-			'email' => array(
-				'email' => $mail,
-			),
-			'double_optin' => false,
-		);
-
-
-		$response = $this->api_call( 'lists/subscribe', $args );
-
-		if ( false === $response ) {
-			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mailchimp'] ) );
-		}
-
-		$response = json_decode( $response, true );
-
-		if ( empty( $response ) ) {
-			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['internal'] ) );
-		}
-
-		if ( isset( $response['status'] ) && 'error' == $response['status'] ) {
-			wp_send_json( array( 'type' => 'error', 'message' => esc_html( $response['error'] ) ) );
-		}
-
-		wp_send_json( array( 'type' => 'success', 'message' =>  $this->sys_messages['mailchimp_success'] ) );
-	}
-
-	/**
-	 * Make remote request to mailchimp API
-	 *
-	 * @param  string $method API method to call.
-	 * @param  array  $args   API call arguments.
-	 * @return array|bool
-	 */
-	public function api_call( $method, $args = array() ) {
-
-		if ( ! $method ) {
-			return false;
-		}
-
-		$api_key = cherry_popups()->get_option( 'mailchimp-api-key', '' );
-		$list_id = cherry_popups()->get_option( 'mailchimp-list-id', '' );
-
-		if ( ! $api_key || ! $list_id ) {
-			return false;
-		}
-
-		$key_data = explode( '-', $api_key );
-
-		if ( empty( $key_data ) || ! isset( $key_data[1] ) ) {
-			return false;
-		}
-
-		$this->api_server = sprintf( $this->api_server, $key_data[1] );
-
-		$url      = esc_url( trailingslashit( $this->api_server . $method ) );
-		$defaults = array( 'apikey' => $api_key, 'id' => $list_id );
-		$data     = json_encode( array_merge( $defaults, $args ) );
-
-		$request = wp_remote_post( $url, array( 'body' => $data ) );
-
-		return wp_remote_retrieve_body( $request );
-	}
-
-	/**
 	 * Page popup initialization
 	 *
 	 * @since 1.0.0
@@ -202,7 +120,6 @@ class Cherry_Popups_Init {
 		$this->render_open_popup( $open_page_popup_id );
 
 		$this->render_close_popup( $close_page_popup_id );
-
 	}
 
 	/**
@@ -300,16 +217,98 @@ class Cherry_Popups_Init {
 	public function render_popup( $popup_id = 'disable', $popup_type = 'open-page' ) {
 
 		if ( 'disable' !== $popup_id ) {
-			$close_popup = new Cherry_Popups_Data(
+			$popup = new Cherry_Popups_Data(
 				array(
 					'id'  => $popup_id,
 					'use' => $popup_type,
 				)
 			);
-			$close_popup->render_popup();
+			$popup->render_popup();
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Proccesing subscribe form ajax
+	 *
+	 * @return void
+	 */
+	public function cherry_subscribe_form_ajax() {
+		$data = ( ! empty( $_POST['data'] ) ) ? $_POST['data'] : false;
+
+		if ( ! $data ) {
+			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
+		}
+
+		$mail = $data['mail'];
+
+		if ( empty( $mail ) || ! is_email( $mail ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['invalid_mail'] ) );
+		}
+
+		$args = array(
+			'email' => array(
+				'email' => $mail,
+			),
+			'double_optin' => false,
+		);
+
+
+		$response = $this->api_call( 'lists/subscribe', $args );
+
+		if ( false === $response ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mailchimp'] ) );
+		}
+
+		$response = json_decode( $response, true );
+
+		if ( empty( $response ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['internal'] ) );
+		}
+
+		if ( isset( $response['status'] ) && 'error' == $response['status'] ) {
+			wp_send_json( array( 'type' => 'error', 'message' => esc_html( $response['error'] ) ) );
+		}
+
+		wp_send_json( array( 'type' => 'success', 'message' =>  $this->sys_messages['mailchimp_success'] ) );
+	}
+
+	/**
+	 * Make remote request to mailchimp API
+	 *
+	 * @param  string $method API method to call.
+	 * @param  array  $args   API call arguments.
+	 * @return array|bool
+	 */
+	public function api_call( $method, $args = array() ) {
+
+		if ( ! $method ) {
+			return false;
+		}
+
+		$api_key = cherry_popups()->get_option( 'mailchimp-api-key', '' );
+		$list_id = cherry_popups()->get_option( 'mailchimp-list-id', '' );
+
+		if ( ! $api_key || ! $list_id ) {
+			return false;
+		}
+
+		$key_data = explode( '-', $api_key );
+
+		if ( empty( $key_data ) || ! isset( $key_data[1] ) ) {
+			return false;
+		}
+
+		$this->api_server = sprintf( $this->api_server, $key_data[1] );
+
+		$url      = esc_url( trailingslashit( $this->api_server . $method ) );
+		$defaults = array( 'apikey' => $api_key, 'id' => $list_id );
+		$data     = json_encode( array_merge( $defaults, $args ) );
+
+		$request = wp_remote_post( $url, array( 'body' => $data ) );
+
+		return wp_remote_retrieve_body( $request );
 	}
 
 	/**

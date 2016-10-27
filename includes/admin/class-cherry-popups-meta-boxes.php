@@ -275,7 +275,7 @@ class Cherry_Popups_Meta_Boxes {
 				$prefix . 'overlay-close-area' => array(
 					'type'         => 'switcher',
 					'parent'       => 'overlay_tab',
-					'title'        => esc_html__( 'Overlay close clicking', 'cherry-popups' ),
+					'title'        => esc_html__( 'Use Overlay as close button', 'cherry-popups' ),
 					'description'  => esc_html__( 'Clicking on the overlay closes the popup', 'cherry-popups' ),
 					'value'        => 'true',
 					'toggle'       => array(
