@@ -91,7 +91,7 @@ class Cherry_Popups_Data {
 			'inactive-time'        => $this->get_popup_meta_field( 'cherry-user-inactive-time', 1 ),
 			'page-scrolling-value' => $this->get_popup_meta_field( 'cherry-page-scrolling-value', 5 ),
 			'close-appear-event'   => $this->get_popup_meta_field( 'cherry-popup-close-appear-event', 'outside-viewport' ),
-			'template'             => $this->options['template'],
+			'template'             => $this->get_popup_meta_field( 'cherry-popup-template', 'default-popup.tmpl' ),
 		);
 
 		$this->generate_dynamic_styles();
@@ -106,9 +106,9 @@ class Cherry_Popups_Data {
 	public function render_popup() {
 		$this->enqueue_styles();
 		$this->enqueue_scripts();
-		// Item template.
-		$template = $this->get_template_by_name( $this->options['template'], 'cherry-popup' );
 
+		// Item template.
+		$template = $this->get_template_by_name( $this->popup_settings['template'], 'cherry-popup' );
 		$macros = '/%%.+?%%/';
 		$callbacks = $this->setup_template_data( $this->options );
 		$callbacks->popup_id = $this->options['id'];
@@ -271,7 +271,7 @@ class Cherry_Popups_Data {
 	 */
 	public function get_template_by_name( $template, $shortcode ) {
 		$file       = '';
-		$default    = CHERRY_POPUPS_DIR . 'templates/shortcodes/' . $shortcode . '/default-theme-popup.tmpl';
+		$default    = CHERRY_POPUPS_DIR . 'templates/shortcodes/' . $shortcode . '/default-popup.tmpl';
 		$upload_dir = wp_upload_dir();
 		$upload_dir = trailingslashit( $upload_dir['basedir'] );
 		$subdir     = 'templates/shortcodes/' . $shortcode . '/' . $template;
@@ -282,11 +282,11 @@ class Cherry_Popups_Data {
 		 * @since 1.0.0
 		 * @param string $content.
 		 */
-		$content = apply_filters( 'cherry_popups_fallback_template', '%%TITLE%%' );
+		$content = apply_filters( 'cherry_popups_fallback_template', '%%TITLE%%%%CONTENT%%%%SUBSCRIBEFORM%%' );
 
 		if ( file_exists( $upload_dir . $subdir ) ) {
 			$file = $upload_dir . $subdir;
-		} elseif ( $theme_template = locate_template( array( 'cherry-popups/' . $template ) ) ) {
+		} elseif ( $theme_template = locate_template( array( 'cherry-popup/' . $template ) ) ) {
 			$file = $theme_template;
 		} elseif ( file_exists( CHERRY_POPUPS_DIR . $subdir ) ) {
 			$file = CHERRY_POPUPS_DIR . $subdir;

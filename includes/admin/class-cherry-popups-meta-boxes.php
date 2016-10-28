@@ -82,10 +82,16 @@ class Cherry_Popups_Meta_Boxes {
 					'description' => esc_html__( '"Open" page settings', 'cherry-popups' ),
 				),
 				'close_page_tab' => array(
-					'element' => 'settings',
+					'element'     => 'settings',
 					'parent'      => 'tab_vertical',
 					'title'       => esc_html__( '"Close" page settings', 'cherry-popups' ),
 					'description' => esc_html__( '"Close" page settings', 'cherry-popups' ),
+				),
+				'advanced_tab' => array(
+					'element'     => 'settings',
+					'parent'      => 'tab_vertical',
+					'title'       => esc_html__( 'Advanced settings', 'cherry-popups' ),
+					'description' => esc_html__( 'Popup advanced settings', 'cherry-popups' ),
 				),
 				$prefix . 'layout-type' => array(
 					'type'          => 'radio',
@@ -354,6 +360,14 @@ class Cherry_Popups_Meta_Boxes {
 						),
 					),
 				),
+				$prefix . 'popup-template' => array(
+					'type'          => 'text',
+					'parent'        => 'advanced_tab',
+					'title'         => esc_html__( 'Template', 'cherry-popups' ),
+					'description'   => esc_html__( 'Popup content template', 'cherry-popups' ),
+					'value'         => 'default-popup.tmpl',
+				),
+
 			),
 		) );
 
