@@ -95,7 +95,6 @@ class Cherry_Popups_Data {
 		);
 
 		$this->generate_dynamic_styles();
-
 	}
 
 	/**
@@ -108,7 +107,8 @@ class Cherry_Popups_Data {
 		$this->enqueue_scripts();
 
 		// Item template.
-		$template = $this->get_template_by_name( $this->popup_settings['template'], 'cherry-popup' );
+		$template = $this->get_template_by_name( $this->popup_settings['template'], 'cherry-popups' );
+
 		$macros = '/%%.+?%%/';
 		$callbacks = $this->setup_template_data( $this->options );
 		$callbacks->popup_id = $this->options['id'];
@@ -286,7 +286,7 @@ class Cherry_Popups_Data {
 
 		if ( file_exists( $upload_dir . $subdir ) ) {
 			$file = $upload_dir . $subdir;
-		} elseif ( $theme_template = locate_template( array( 'cherry-popup/' . $template ) ) ) {
+		} elseif ( $theme_template = locate_template( array( 'cherry-popups/' . $template ) ) ) {
 			$file = $theme_template;
 		} elseif ( file_exists( CHERRY_POPUPS_DIR . $subdir ) ) {
 			$file = CHERRY_POPUPS_DIR . $subdir;

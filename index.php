@@ -2,7 +2,7 @@
 /**
  * Silence is golden.
  *
- * @package    Blank_Plugin
+ * @package    Cherry_Popups
  * @subpackage index
  * @author     Cherry Team
  * @license    GPL-3.0+

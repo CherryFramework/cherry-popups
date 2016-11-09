@@ -32,7 +32,8 @@ class Cherry_Popups_Init {
 	public $cherry_utility = null;
 
 	/**
-	 * [$errors description]
+	 * System message.
+	 *
 	 * @var array
 	 */
 	public $sys_messages = array();

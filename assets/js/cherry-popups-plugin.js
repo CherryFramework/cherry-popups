@@ -169,7 +169,7 @@
 
 					openDelay = openDelay * 1000;
 
-					$( window ).on( 'load', function() {
+					$( document ).on( 'ready', function() {
 						setTimeout( function() {
 							$this.addClass( 'show-animation' );
 						}, openDelay );
