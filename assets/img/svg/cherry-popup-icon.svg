@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24.5px"
-	 height="20.5px" viewBox="-3.428 -3.402 24.5 20.5" enable-background="new -3.428 -3.402 24.5 20.5" xml:space="preserve">
-<g id="Layer_2_1_" display="none">
-	<rect x="-3.428" y="0" display="inline" width="22.5" height="20"/>
-</g>
-<g id="Layer_3_1_">
-	<g>
-		<path fill="#9EA3A8" d="M18.572,14.098c0,1.65-1.35,3-3,3h-16c-1.65,0-3-1.35-3-3v-12c0-1.65,1.35-3,3-3h16c1.65,0,3,1.35,3,3
-			V14.098z"/>
-	</g>
-</g>
-<g id="Layer_4_1_">
-	<polygon fill="#FFFFFF" points="19.456,-3.402 17.571,-1.517 15.687,-3.401 14.072,-1.786 15.956,0.099 14.072,1.983 15.687,3.598 
-		17.571,1.714 19.456,3.598 21.072,1.983 19.187,0.099 21.072,-1.786 	"/>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="21.967px" height="16px" viewBox="1.989 2.724 21.967 16" enable-background="new 1.989 2.724 21.967 16"
+	 xml:space="preserve">
+<g id="Layer_2_2_" display="none">
+	<rect x="0" y="0" display="inline" width="26.662" height="22.625"/>
 </g>
 <g id="Layer_1">
+	<g id="Layer_2_1_" display="none">
+		<rect x="-3.703" y="-0.758" display="inline" width="22.5" height="20"/>
+	</g>
 	<g id="Layer_4" display="none">
-		<rect x="-0.026" y="-0.472" display="inline" fill="#B4B9BE" width="28" height="22"/>
+		<rect x="4.415" y="1.326" display="inline" fill="#B4B9BE" width="28" height="22"/>
 	</g>
 	<g id="Layer_5" display="none">
 	</g>
 	<g>
-		<polygon fill="#0073AA" points="1.987,15.098 -2.428,10.854 1.987,6.609 6.402,10.854 		"/>
-		<polygon opacity="0.6" fill="#04597A" enable-background="new    " points="1.984,10.883 1.984,15.098 6.372,10.883 		"/>
+		<polygon fill="#0073AA" points="6.846,18.724 1.989,13.874 6.846,9.023 11.702,13.874 		"/>
+		<polygon opacity="0.6" fill="#04597A" enable-background="new    " points="6.843,13.907 6.843,18.724 11.669,13.907 		"/>
 		<g>
-			<polygon fill="#0073AA" points="13.157,15.098 8.742,10.854 13.157,6.609 17.572,10.854 			"/>
+			<polygon fill="#0073AA" points="19.133,18.724 14.276,13.874 19.133,9.023 23.989,13.874 			"/>
 		</g>
-		<polygon opacity="0.6" fill="#04597A" enable-background="new    " points="13.154,10.883 13.154,15.098 17.542,10.883 		"/>
-		<polygon fill="#FFFFFF" points="7.572,9.588 3.157,5.343 7.572,1.098 11.987,5.343 		"/>
-		<polygon fill="#C6C6C6" points="7.572,1.098 7.562,1.109 7.562,9.577 7.572,9.588 11.987,5.343 		"/>
+		<polygon opacity="0.6" fill="#04597A" enable-background="new    " points="19.13,13.907 19.13,18.724 23.956,13.907 		"/>
+		<polygon fill="#FFFFFF" points="12.989,12.427 8.133,7.576 12.989,2.724 17.846,7.576 		"/>
+		<polygon fill="#C6C6C6" points="12.989,2.724 12.978,2.737 12.978,12.415 12.989,12.427 17.846,7.576 		"/>
 	</g>
 	<g id="Layer_3" display="none">
 	</g>
