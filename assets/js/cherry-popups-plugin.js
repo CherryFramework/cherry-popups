@@ -1,11 +1,10 @@
 // CherryPortfolioPlugin plugin
-( function( $ ) {
+( function( $, CherryJsCore ) {
 	var methods = {
 		init: function( options ) {
-			var self = this,
-				settings = {
-					call: function() {}
-				};
+			var settings = {
+				call: function() {}
+			};
 
 			return this.each( function() {
 				var $this                   = $( this ),
@@ -172,14 +171,14 @@
 				 * @return {void}
 				 */
 				function pageLoadEvent( openDelay ) {
-					var openDelay = +openDelay || 0;
+					var delay = +openDelay || 0;
 
-					openDelay = openDelay * 1000;
+					delay = delay * 1000;
 
 					$( document ).on( 'ready', function() {
 						setTimeout( function() {
 							$this.addClass( 'show-animation' );
-						}, openDelay );
+						}, delay );
 
 					} );
 				}
@@ -191,17 +190,16 @@
 				 * @return {void}
 				 */
 				function userInactiveEvent( inactiveDelay ) {
-					var inactiveDelay = +inactiveDelay || 0,
-						timeout = null,
+					var delay      = +inactiveDelay || 0,
 						isInactive = true;
 
-					inactiveDelay = inactiveDelay * 1000;
+					delay = delay * 1000;
 
 					setTimeout( function() {
 						if ( isInactive ) {
 							$this.addClass( 'show-animation' );
 						}
-					}, inactiveDelay );
+					}, delay );
 
 					$( document ).on( 'click focus resize keyup scroll', function() {
 						isInactive = false;
@@ -215,8 +213,7 @@
 				 * @return {void}
 				 */
 				function scrollPageEvent( scrollingValue ) {
-					var scrollingValue = +scrollingValue || 0,
-						isShowed = false;
+					var scrolledValue  = +scrollingValue || 0;
 
 					$( window ).on( 'scroll.cherryPopupScrollEvent resize.cherryPopupResizeEvent', function() {
 						var $window          = $( window ),
@@ -225,7 +222,7 @@
 							scrolledHeight   = documentHeight - windowHeight,
 							scrolledProgress = Math.max( 0, Math.min( 1, $window.scrollTop() / scrolledHeight ) ) * 100;
 
-						if ( scrolledProgress >= scrollingValue ) {
+						if ( scrolledProgress >= scrolledValue ) {
 							$( window ).off( 'scroll.cherryPopupScrollEvent resize.cherryPopupResizeEvent' );
 							$this.addClass( 'show-animation' );
 						}
@@ -239,6 +236,7 @@
 				 */
 				function viewportLeaveEvent() {
 					var pageY = 0;
+
 					$( document ).on( 'mouseleave', 'body', function( event ) {
 						if ( ! $( '.open-page-type' )[0] ) {
 							pageY = event.pageY - $window.scrollTop();
@@ -255,7 +253,7 @@
 				 * @return {void}
 				 */
 				function pageFocusoutEvent() {
-					$( window ).on( 'blur', function( event ) {
+					$( window ).on( 'blur', function() {
 						if ( ! $( '.open-page-type' )[0] ) {
 							$this.addClass( 'show-animation' );
 						}
@@ -269,9 +267,7 @@
 				 * @return {void}
 				 */
 				function subscribeFormAjax( event ) {
-					var $button    = $( event.currentTarget ),
-						$input     = $( '.cherry-popup-subscribe__input', $subscribeForm ),
-						$message   = $( '.cherry-popup-subscribe__message', $subscribeForm ),
+					var $input     = $( '.cherry-popup-subscribe__input', $subscribeForm ),
 						inputValue = $input.val();
 
 					cherrySubscribeFormAjax.sendData( { 'mail': inputValue } );
@@ -331,7 +327,7 @@
 			});
 		},
 		destroy: function() {},
-		update: function( content ) {}
+		update: function() {}
 	};
 
 	$.fn.cherryPopupsPlugin = function( method ) {
@@ -344,4 +340,4 @@
 		}
 	};
 
-} )( jQuery );
+} )( jQuery, window.CherryJsCore );

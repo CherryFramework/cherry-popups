@@ -1,4 +1,4 @@
-( function( $ ) {
+( function( $, CherryJsCore ) {
 	'use strict';
 
 	CherryJsCore.utilites.namespace( 'cherryPopupsFrontScripts' );
@@ -10,5 +10,5 @@
 		}
 	};
 	CherryJsCore.cherryPopupsFrontScripts.init();
-}( jQuery ) );
+}( jQuery, window.CherryJsCore ) );
 

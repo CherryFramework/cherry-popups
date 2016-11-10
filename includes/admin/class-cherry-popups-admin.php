@@ -189,7 +189,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 					'redirect_url'    => menu_page_url( 'cherry-popups-options', false ),
 				);
 
-				wp_localize_script( 'cherry-popups-admin-scripts', 'cherryPopupnSettings', $options_page_settings );
+				wp_localize_script( 'cherry-popups-admin-scripts', 'cherryPopupSettings', $options_page_settings );
 			}
 		}
 

@@ -51,9 +51,9 @@
 
 		restoreSuccessCallback: function() {
 			this.enableButton( this.resetButtonId );
-			CherryJsCore.cherryHandlerUtils.noticeCreate( 'success-notice', cherryPopupnSettings.restore_message );
+			CherryJsCore.cherryHandlerUtils.noticeCreate( 'success-notice', window.cherryPopupSettings.restore_message );
 			setTimeout( function() {
-				window.location.href = cherryPopupnSettings.redirect_url;
+				window.location.href = window.cherryPopupSettings.redirect_url;
 			}, 500 );
 		},
 
