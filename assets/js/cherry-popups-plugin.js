@@ -266,7 +266,7 @@
 				 * @param  {object} event Click event.
 				 * @return {void}
 				 */
-				function subscribeFormAjax( event ) {
+				function subscribeFormAjax() {
 					var $input     = $( '.cherry-popup-subscribe__input', $subscribeForm ),
 						inputValue = $input.val();
 
