@@ -77,8 +77,7 @@
 				1000
 			);
 		}
-
-	}
+	};
 
 	CherryJsCore.cherryPopupsBackScripts.init();
 }( jQuery, window.CherryJsCore ) );

@@ -99,7 +99,7 @@
 				 */
 				function addCloseEventsFunction() {
 
-					switch( popupSettings['close-appear-event'] ) {
+					switch ( popupSettings['close-appear-event'] ) {
 						case 'outside-viewport':
 							viewportLeaveEvent();
 							break;
