@@ -228,7 +228,7 @@ class Cherry_Popups_Meta_Boxes {
 					'type'         => 'switcher',
 					'parent'       => 'general_tab',
 					'title'        => esc_html__( 'Show once', 'cherry-popups' ),
-					'description'  => esc_html__( 'PopUp will appear just once. You will not see it again when you close it.', 'cherry-popups' ),
+					'description'  => esc_html__( 'PopUp will appears just once and won’t come up when you close it.', 'cherry-popups' ),
 					'value'        => 'false',
 					'toggle'       => array(
 						'true_toggle'  => 'Enable',

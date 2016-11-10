@@ -1,7 +1,7 @@
 // CherryPortfolioPlugin plugin
 ( function( $ ) {
 	var methods = {
-		init : function( options ) {
+		init: function( options ) {
 			var self = this,
 				settings = {
 					call: function() {}
@@ -36,7 +36,7 @@
 
 					setLocalStorageData( popupsLocalStorageData );
 
-					switch( popupSettings.use ) {
+					switch ( popupSettings.use ) {
 						case 'open-page':
 							addOpenEventsFunction();
 							break;

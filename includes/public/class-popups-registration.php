@@ -86,7 +86,6 @@ class Cherry_Popups_Registration {
 			'taxonomies'          => array( 'post_format' ),
 		);
 
-
 		$args = apply_filters( 'cherry_popups_post_type_args', $args );
 
 		register_post_type( CHERRY_POPUPS_NAME, $args );

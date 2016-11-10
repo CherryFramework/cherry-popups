@@ -1,7 +1,7 @@
 ( function( $, CherryJsCore ) {
-	"use strict";
+	'use strict';
 
-	CherryJsCore.utilites.namespace('cherryPopupsBackScripts');
+	CherryJsCore.utilites.namespace( 'cherryPopupsBackScripts' );
 	CherryJsCore.cherryPopupsBackScripts = {
 
 		saveHandlerId: 'cherry_save_options_ajax',
@@ -15,7 +15,7 @@
 		saveOptionsInstance: null,
 		resetOptionsInstance: null,
 
-		init: function () {
+		init: function() {
 
 			this.saveOptionsInstance = new CherryJsCore.CherryAjaxHandler(
 				{
@@ -33,7 +33,7 @@
 			this.addEvents();
 		},
 
-		addEvents: function () {
+		addEvents: function() {
 			$( 'body' )
 				.on( 'click', this.saveButtonId, this.saveOptionsHandler.bind( this ) )
 				.on( 'click', this.resetButtonId, this.resetOptionsHandler.bind( this ) );
@@ -75,11 +75,10 @@
 					clearTimeout( timer );
 				},
 				1000
-			)
+			);
 		}
 
 	}
 
 	CherryJsCore.cherryPopupsBackScripts.init();
-} ( jQuery, window.CherryJsCore ) );
-
+}( jQuery, window.CherryJsCore ) );
