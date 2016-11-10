@@ -1,41 +1,42 @@
-// cherryPortfolioPlugin plugin
+// CherryPortfolioPlugin plugin
 ( function( $ ) {
 	var methods = {
 		init : function( options ) {
 			var self = this,
 				settings = {
-				call: function() {}
-			}
+					call: function() {}
+				};
 
 			return this.each( function() {
-				if ( options ) {
-					$.extend( settings, options );
-				}
-
 				var $this                   = $( this ),
 					$window                 = $( window ),
 					popupSettings           = $this.data( 'popup-settings' ),
 					popupsLocalStorageData  = getLocalStorageData() || {},
-					popupAvailable          = popupsLocalStorageData[ popupSettings['id'] ] || 'enable',
+					popupAvailable          = popupsLocalStorageData[ popupSettings.id ] || 'enable',
 					$subscribeForm          = $( '.cherry-popup-subscribe', $this ),
+					$showAgainCheck         = $( '.cherry-popup-show-again-check', $this ),
 					$subscribeFormMessage   = null,
 					cherrySubscribeFormAjax = null,
 					subscribeFormAjaxId     = 'cherry_subscribe_form_ajax';
 
-				( function () {
+				if ( options ) {
+					$.extend( settings, options );
+				}
+
+				( function() {
 					if ( 'disable' === popupAvailable ) {
 						$this.remove();
 						return false;
 					}
 
 					// Check and create popup data in localStorage
-					if ( ! popupsLocalStorageData.hasOwnProperty( popupSettings['id'] ) ) {
-						popupsLocalStorageData[ popupSettings['id'] ] = 'enable';
+					if ( ! popupsLocalStorageData.hasOwnProperty( popupSettings.id ) ) {
+						popupsLocalStorageData[ popupSettings.id ] = 'enable';
 					}
 
 					setLocalStorageData( popupsLocalStorageData );
 
-					switch( popupSettings['use'] ) {
+					switch( popupSettings.use ) {
 						case 'open-page':
 							addOpenEventsFunction();
 							break;
@@ -45,7 +46,13 @@
 					}
 
 					// Add check again button event
-					checkEvents();
+					if ( 'false' === popupSettings['show-once'] ) {
+						checkEvents();
+					} else {
+						$showAgainCheck.remove();
+						popupsLocalStorageData[ popupSettings.id ] = 'disable';
+						setLocalStorageData( popupsLocalStorageData );
+					}
 
 					// Add close button event
 					closePopupEvent( popupSettings['load-open-delay'] );
@@ -72,7 +79,7 @@
 				 */
 				function addOpenEventsFunction() {
 
-					switch( popupSettings['open-appear-event'] ) {
+					switch ( popupSettings['open-appear-event'] ) {
 						case 'page-load':
 							pageLoadEvent( popupSettings['load-open-delay'] );
 							break;
@@ -147,10 +154,10 @@
 
 						if ( ! $( check ).hasClass( 'checked' ) ) {
 							$( check ).addClass( 'checked' );
-							popupsLocalStorageData[ popupSettings['id'] ] = 'disable';
+							popupsLocalStorageData[ popupSettings.id ] = 'disable';
 						} else {
 							$( check ).removeClass( 'checked' );
-							popupsLocalStorageData[ popupSettings['id'] ] = 'enable';
+							popupsLocalStorageData[ popupSettings.id ] = 'enable';
 						}
 
 						setLocalStorageData( popupsLocalStorageData );
@@ -330,11 +337,11 @@
 	$.fn.cherryPopupsPlugin = function( method ) {
 		if ( methods[method] ) {
 			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ) );
-		} else if ( typeof method === 'object' || ! method ) {
+		} else if ( 'object' === typeof method || ! method ) {
 			return methods.init.apply( this, arguments );
 		} else {
 			$.error( 'Method with name ' + method + ' is not exist for jQuery.cherryPopupsPlugin' );
 		}
-	}//end plugin
+	};
 
 } )( jQuery );

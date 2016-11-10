@@ -49,8 +49,6 @@
 			this.resetOptionsInstance.send();
 		},
 
-		!
-
 		restoreSuccessCallback: function() {
 			this.enableButton( this.resetButtonId );
 			CherryJsCore.cherryHandlerUtils.noticeCreate( 'success-notice', cherryPopupnSettings.restore_message );

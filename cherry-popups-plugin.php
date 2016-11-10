@@ -175,7 +175,6 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 */
 			define( 'CHERRY_POPUPS_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-
 			/**
 			 * Set constant DB option field.
 			 *

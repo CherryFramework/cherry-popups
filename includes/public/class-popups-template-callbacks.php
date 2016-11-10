@@ -127,7 +127,9 @@ class Cherry_Popups_Template_Callbacks {
 	public function get_content( $attr = array() ) {
 		$post_data = get_post( $this->popup_id );
 
-		$default_attr = array( 'number_of_words' => -1, );
+		$default_attr = array(
+			'number_of_words' => -1,
+		);
 
 		$attr = wp_parse_args( $attr, $default_attr );
 

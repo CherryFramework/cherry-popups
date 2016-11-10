@@ -81,6 +81,7 @@ class Cherry_Popups_Data {
 			'container-color'      => $this->get_popup_meta_field( 'cherry-container-color', '#fff' ),
 			'container-opacity'    => $this->get_popup_meta_field( 'cherry-container-opacity', 100 ),
 			'container-image'      => $this->get_popup_meta_field( 'cherry-container-image', '' ),
+			'show-once'            => $this->get_popup_meta_field( 'cherry-show-once', 'false' ),
 			'overlay-type'         => $this->get_popup_meta_field( 'cherry-overlay-type', 'fill-color' ),
 			'overlay-color'        => $this->get_popup_meta_field( 'cherry-overlay-color', '#000' ),
 			'overlay-opacity'      => $this->get_popup_meta_field( 'cherry-overlay-opacity', 50 ),

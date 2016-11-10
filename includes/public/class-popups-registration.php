@@ -83,7 +83,7 @@ class Cherry_Popups_Registration {
 			'menu_icon'           => ( version_compare( $GLOBALS['wp_version'], '3.8', '>=' ) ) ? CHERRY_POPUPS_URI . 'assets/img/svg/cherry-popup-icon.svg' : '',
 			'can_export'          => true,
 			'has_archive'         => true,
-			'taxonomies'          => array( 'post_format' )
+			'taxonomies'          => array( 'post_format' ),
 		);
 
 

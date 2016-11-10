@@ -9,6 +9,11 @@
  * @copyright 2014 Cherry Team
  */
 
+/**
+ * Class for metabox rendering.
+ *
+ * @since 1.0.0
+ */
 class Cherry_Popups_Meta_Boxes {
 
 	/**
@@ -218,6 +223,20 @@ class Cherry_Popups_Meta_Boxes {
 					'max_value'   => 800,
 					'min_value'   => 200,
 					'value'       => 400,
+				),
+				$prefix . 'show-once' => array(
+					'type'         => 'switcher',
+					'parent'       => 'general_tab',
+					'title'        => esc_html__( 'Show once', 'cherry-popups' ),
+					'description'  => esc_html__( 'PopUp will appear just once. You will not see it again when you close it.', 'cherry-popups' ),
+					'value'        => 'false',
+					'toggle'       => array(
+						'true_toggle'  => 'Enable',
+						'false_toggle' => 'Disable',
+					),
+					'style'        => 'normal',
+					'class'        => '',
+					'label'        => '',
 				),
 				$prefix . 'overlay-type' => array(
 					'type'          => 'radio',
