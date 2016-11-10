@@ -20,12 +20,6 @@ class Cherry_Popups_Meta_Boxes {
 	private static $instance = null;
 
 	/**
-	 * [$metabox_format description]
-	 * @var null
-	 */
-	public $metabox_format = null;
-
-	/**
 	 * Sets up the needed actions for adding and saving the meta boxes.
 	 *
 	 * @since 1.0.0
@@ -182,7 +176,7 @@ class Cherry_Popups_Meta_Boxes {
 					'title'       => esc_html__( 'Container background color', 'cherry-popups' ),
 					'description' => esc_html__( 'Set the color of popup container', 'cherry-popups' ),
 					'value'       => '#fff',
-					'master'      =>'container-bg-type-fill-color',
+					'master'      => 'container-bg-type-fill-color',
 				),
 				$prefix . 'container-opacity' => array(
 					'type'        => 'slider',
@@ -192,7 +186,7 @@ class Cherry_Popups_Meta_Boxes {
 					'max_value'   => 100,
 					'min_value'   => 0,
 					'value'       => 100,
-					'master'      =>'container-bg-type-fill-color',
+					'master'      => 'container-bg-type-fill-color',
 				),
 				$prefix . 'container-image' => array(
 					'type'               => 'media',
@@ -421,7 +415,7 @@ class Cherry_Popups_Meta_Boxes {
 				'cherry-popup-shortcode' => array(
 					'type'    => 'html',
 					'element' => 'html',
-					'html'    => '<div class="cherry-popups-shortcode-preview">' . get_the_ID() . '</div>'
+					'html'    => '<div class="cherry-popups-shortcode-preview">' . get_the_ID() . '</div>',
 				),
 			),
 		) );

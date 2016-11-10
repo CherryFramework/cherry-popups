@@ -85,7 +85,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 				array(
 					'id'           => 'cherry_save_options_ajax',
 					'action'       => 'cherry_save_options_ajax',
-					'capability'   =>'manage_options',
+					'capability'   => 'manage_options',
 					'callback'     => array( $this , 'cherry_save_options' ),
 					'sys_messages' => $sys_messages,
 				)
@@ -96,7 +96,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 				array(
 					'id'           => 'cherry_restore_options_ajax',
 					'action'       => 'cherry_restore_options_ajax',
-					'capability'   =>'manage_options',
+					'capability'   => 'manage_options',
 					'callback'     => array( $this , 'cherry_restore_options' ),
 					'sys_messages' => $sys_messages,
 				)
@@ -128,7 +128,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 		 */
 		public function cherry_save_options() {
 
-			if( ! empty( $_REQUEST['data'] ) ){
+			if ( ! empty( $_REQUEST['data'] ) ) {
 				$data = $_REQUEST['data'];
 				cherry_popups()->save_options( CHERRY_OPTIONS_NAME, $data );
 			}

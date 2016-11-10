@@ -152,7 +152,7 @@ class Cherry_Popups_Data {
 	 *
 	 * @return void
 	 */
-	public function generate_dynamic_styles(){
+	public function generate_dynamic_styles() {
 
 		$container_styles = array();
 
@@ -225,7 +225,7 @@ class Cherry_Popups_Data {
 
 		$data = get_post_meta( $this->options['id'], $name, true );
 
-		if ( empty( $data ) ){
+		if ( empty( $data ) ) {
 			return $default;
 		}
 
@@ -380,9 +380,9 @@ class Cherry_Popups_Data {
 		$hex = str_replace( '#', '', $hex );
 
 		if ( 3 == strlen( $hex ) ) {
-			$r = hexdec( substr( $hex, 0, 1 ).substr( $hex, 0, 1 ) );
-			$g = hexdec( substr( $hex, 1, 1 ).substr( $hex, 1, 1 ) );
-			$b = hexdec( substr( $hex, 2, 1 ).substr( $hex, 2, 1 ) );
+			$r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
+			$g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
+			$b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
 		} else {
 			$r = hexdec( substr( $hex, 0, 2 ) );
 			$g = hexdec( substr( $hex, 2, 2 ) );

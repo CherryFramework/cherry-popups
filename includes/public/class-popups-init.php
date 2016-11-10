@@ -90,7 +90,7 @@ class Cherry_Popups_Init {
 	 * Page popup initialization
 	 *
 	 * @since 1.0.0
-	 * @return void
+	 * @return void|boolean
 	 */
 	public function page_popup_init() {
 
@@ -126,8 +126,8 @@ class Cherry_Popups_Init {
 	/**
 	 * Render open popup
 	 *
-	 * @param  string $popup_id Popup id
-	 * @return void
+	 * @param  string $popup_id Popup id.
+	 * @return void|boolean
 	 */
 	public function render_open_popup( $popup_id = 'disable' ) {
 		$default_open_popup_id = cherry_popups()->get_option( 'default-open-page-popup', 'disable' );
@@ -169,7 +169,7 @@ class Cherry_Popups_Init {
 	 * Render close popup
 	 *
 	 * @param  string $popup_id Popup id.
-	 * @return void
+	 * @return void|boolean
 	 */
 	public function render_close_popup( $popup_id = 'disable' ) {
 		$default_close_popup_id = cherry_popups()->get_option( 'default-close-page-popup', 'disable' );
@@ -213,7 +213,7 @@ class Cherry_Popups_Init {
 	 *
 	 * @param  string $popup_id   Popup id.
 	 * @param  string $popup_type Popup type.
-	 * @return void|false
+	 * @return void|boolean
 	 */
 	public function render_popup( $popup_id = 'disable', $popup_type = 'open-page' ) {
 
@@ -255,7 +255,6 @@ class Cherry_Popups_Init {
 			'double_optin' => false,
 		);
 
-
 		$response = $this->api_call( 'lists/subscribe', $args );
 
 		if ( false === $response ) {
@@ -272,7 +271,7 @@ class Cherry_Popups_Init {
 			wp_send_json( array( 'type' => 'error', 'message' => esc_html( $response['error'] ) ) );
 		}
 
-		wp_send_json( array( 'type' => 'success', 'message' =>  $this->sys_messages['mailchimp_success'] ) );
+		wp_send_json( array( 'type' => 'success', 'message' => $this->sys_messages['mailchimp_success'] ) );
 	}
 
 	/**
@@ -405,8 +404,9 @@ class Cherry_Popups_Init {
 	public static function get_instance() {
 
 		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance )
+		if ( null == self::$instance ) {
 			self::$instance = new self;
+		}
 
 		return self::$instance;
 	}
