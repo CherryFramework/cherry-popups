@@ -39,9 +39,11 @@ The plugin offers simplified templating system for .tmpl files. 13 templates are
 * default-subscribe-popup.tmpl - Template for displaying popup without content macros.
 
 Cherry PopUp plugin supports templates, which can be quickly modified using macros:
-* %%TITLE%% - Title of your pop-up window;
-* %%CONTENT%% - General content;
-* %%SUBSCRIBEFORM%% - To place a Mailchimp email subscription form;
+
+* TITLE - Title of your pop-up window;
+* CONTENT - General content;
+* SUBSCRIBEFORM - To place a Mailchimp email subscription form;
+
 All you need is to create a template file with the macros listed above, and upload it to the templates folder.
 
 Standard templates can be rewritten in the theme. For that you need to create cherry-popups folder in the root catalog of the theme and copy the necessary templates in there. You can also add your own templates. For that you need to create a file with .tmpl extension in the same folder.
@@ -51,11 +53,6 @@ You can enable two pop-up windows simultaneously: for example, one at the beginn
 
 = Popup Identification on static page =
 If standard settings are not enough for identifying visible section, there is a metablock that allows you to add a particular popup to any static page.
-
-= Shortcode cherry_popups =
-Shortcode is used to display the popup list with set parameters. Shortcode attributes:
-
-* id (default = '') - popup id
 
 == Installation ==
 
