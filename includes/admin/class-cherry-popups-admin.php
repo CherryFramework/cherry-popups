@@ -158,7 +158,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 			if ( Cherry_Popups_Admin::is_plugin_page() ) {
 				wp_enqueue_style(
 					'cherry-popups-admin-styles',
-					esc_url( CHERRY_POPUPS_URI . 'assets/admin/css/min/cherry-popups-admin-styles.min.css' ),
+					esc_url( CHERRY_POPUPS_URI . 'assets/admin/css/cherry-popups-admin-styles.css' ),
 					array(), CHERRY_POPUPS_VERSION,
 					'all'
 				);
@@ -177,7 +177,7 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 			if ( Cherry_Popups_Admin::is_plugin_page() ) {
 				wp_enqueue_script(
 					'cherry-popups-admin-scripts',
-					esc_url( CHERRY_POPUPS_URI . 'assets/admin/js/min/cherry-popups-admin-scripts.min.js' ),
+					esc_url( CHERRY_POPUPS_URI . 'assets/admin/js/cherry-popups-admin-scripts.js' ),
 					array( 'cherry-js-core', 'cherry-handler-js' ),
 					CHERRY_POPUPS_VERSION,
 					true
