@@ -146,7 +146,7 @@ class Cherry_Popups_Init {
 			return false;
 		}
 
-		if ( 'true' === $open_page_popup_display['home'] && is_home() ) {
+		if ( 'true' === $open_page_popup_display['home'] && is_front_page() ) {
 			$this->render_popup( $default_open_popup_id, 'open-page' );
 		}
 
@@ -317,7 +317,7 @@ class Cherry_Popups_Init {
 	 * @return boolean
 	 */
 	public function is_static() {
-		if ( is_page() && ! is_home() ) {
+		if ( is_page() && ! is_front_page() ) {
 			return true;
 		}
 
