@@ -96,7 +96,7 @@ class Cherry_Popups_Init {
 
 		$enable_popups = cherry_popups()->get_option( 'enable-popups', 'true' );
 		$enable_popups_mobile = cherry_popups()->get_option( 'mobile-enable-popups', 'true' );
-		$enable_logged_user = cherry_popups()->get_option( 'enable-logged-users', 'false' );
+		$enable_logged_user = cherry_popups()->get_option( 'enable-logged-users', 'true' );
 
 		// Check if global popups enable.
 		if ( 'false' === $enable_popups ) {

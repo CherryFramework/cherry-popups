@@ -70,7 +70,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		public $default_options = array(
 			'enable-popups'            => 'true',
 			'mobile-enable-popups'     => 'true',
-			'disable-logged-users'     => 'false',
+			'enable-logged-users'      => 'true',
 			'default-open-page-popup'  => 'disable',
 			'open-page-popup-display'  => array(),
 			'default-close-page-popup' => 'disable',
