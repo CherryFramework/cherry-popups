@@ -1,7 +1,7 @@
 === Cherry PopUps ===
 
 Contributors: TemplateMonster 2002
-Tags: custom post type, popup, subscribe, mailchimp
+Tags: custom post type, popup, subscribe, mailchimp, cherry framework
 Requires at least: 4.5
 Tested up to: 4.5.3
 Stable tag: 1.0.1
