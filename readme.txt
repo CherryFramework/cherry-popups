@@ -137,3 +137,7 @@ Each popup has its own settings which are gathered in Popup settings
 = 1.0.1 =
 
 * Hot fixes
+
+= 1.0.2 =
+
+* Hot fixes
