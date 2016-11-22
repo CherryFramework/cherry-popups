@@ -134,6 +134,7 @@ class Cherry_Popups_Init {
 		$open_page_popup_display = cherry_popups()->get_option( 'open-page-popup-display', array() );
 
 		if ( 'disable' !== $popup_id && $this->is_static() ) {
+
 			$this->render_popup( $popup_id, 'open-page' );
 			return false;
 		}

@@ -60,7 +60,6 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 		public function includes() {
 
 			// Include plugin pages.
-			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/admin/pages/class-plugin-main-page.php' );
 			require_once( trailingslashit( CHERRY_POPUPS_DIR ) . 'includes/admin/pages/class-plugin-options-page.php' );
 		}
 
