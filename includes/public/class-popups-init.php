@@ -133,9 +133,9 @@ class Cherry_Popups_Init {
 		$default_open_popup_id = cherry_popups()->get_option( 'default-open-page-popup', 'disable' );
 		$open_page_popup_display = cherry_popups()->get_option( 'open-page-popup-display', array() );
 
-		if ( 'disable' !== $popup_id && $this->is_static() ) {
-
+		if ( $popup_id && 'disable' !== $popup_id ) {
 			$this->render_popup( $popup_id, 'open-page' );
+
 			return false;
 		}
 
@@ -176,7 +176,7 @@ class Cherry_Popups_Init {
 		$default_close_popup_id = cherry_popups()->get_option( 'default-close-page-popup', 'disable' );
 		$close_page_popup_display = cherry_popups()->get_option( 'close-page-popup-display', array() );
 
-		if ( 'disable' !== $popup_id && $this->is_static() ) {
+		if ( $popup_id && 'disable' !== $popup_id ) {
 			$this->render_popup( $popup_id, 'close-page' );
 
 			return false;
