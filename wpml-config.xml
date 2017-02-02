@@ -4,6 +4,8 @@
 	</custom-types>
 	<custom-fields>
 		<custom-field action="copy">cherry-layout-type</custom-field>
+		<custom-field action="copy">cherry-open-page-popup</custom-field>
+		<custom-field action="copy">cherry-close-page-popup</custom-field>
 		<custom-field action="copy">cherry-show-hide-animation</custom-field>
 		<custom-field action="copy">cherry-popup-base-style</custom-field>
 		<custom-field action="copy">cherry-container-bg-type</custom-field>
