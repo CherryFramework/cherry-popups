@@ -131,6 +131,8 @@ class Cherry_Popups_Init {
 	 */
 	public function render_open_popup( $popup_id = 'disable' ) {
 		$default_open_popup_id = cherry_popups()->get_option( 'default-open-page-popup', 'disable' );
+		$default_open_popup_id = apply_filters( 'wpml_object_id', $default_open_popup_id, CHERRY_POPUPS_NAME, true );
+
 		$open_page_popup_display = cherry_popups()->get_option( 'open-page-popup-display', array() );
 
 		if ( $popup_id && 'disable' !== $popup_id ) {
