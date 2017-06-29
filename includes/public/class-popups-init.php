@@ -84,6 +84,16 @@ class Cherry_Popups_Init {
 				'callback'     => array( $this , 'cherry_subscribe_form_ajax' ),
 			)
 		);
+
+		cherry_popups()->get_core()->init_module(
+			'cherry-handler',
+			array(
+				'id'           => 'cherry_login_form_ajax',
+				'action'       => 'cherry_login_form_ajax',
+				'is_public'    => true,
+				'callback'     => array( $this , 'cherry_login_form_ajax' ),
+			)
+		);
 	}
 
 	/**
@@ -121,6 +131,8 @@ class Cherry_Popups_Init {
 		$this->render_open_popup( $open_page_popup_id );
 
 		$this->render_close_popup( $close_page_popup_id );
+
+		$this->render_avaliable_popups_custom_event();
 	}
 
 	/**
@@ -278,6 +290,20 @@ class Cherry_Popups_Init {
 	}
 
 	/**
+	 * Proccesing login form ajax
+	 *
+	 * @return void
+	 */
+	public function cherry_login_form_ajax() {
+		$data = ( ! empty( $_POST['data'] ) ) ? $_POST['data'] : false;
+
+		if ( ! $data ) {
+			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
+		}
+
+	}
+
+	/**
 	 * Make remote request to mailchimp API
 	 *
 	 * @param  string $method API method to call.
@@ -396,6 +422,56 @@ class Cherry_Popups_Init {
 		wp_reset_postdata();
 
 		return $popups;
+	}
+
+	/**
+	 * Get all avaliable cherry popups
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
+	public function render_avaliable_popups_custom_event() {
+		$popups = array();
+
+		$query = $this->get_query_popups();
+
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) : $query->the_post();
+				$post_id = $query->post->ID;
+
+				$cherryPopupSelector = $this->get_popup_meta_field( $post_id, 'cherry-popup-selector', '' );
+
+				if ( ! empty( $cherryPopupSelector ) ) {
+					$this->render_popup( $post_id, 'custom-event' );
+				}
+
+			endwhile;
+		} else {
+			return false;
+		}
+
+		// Reset the query.
+		wp_reset_postdata();
+
+		//return $popups;
+	}
+
+	/**
+	 * Get meta field data.
+	 *
+	 * @param  string  $name    Field name.
+	 * @param  boolean $default Default value.
+	 * @return mixed
+	 */
+	public function get_popup_meta_field( $id = '', $name = '', $default = false ) {
+
+		$data = get_post_meta( $id, $name, true );
+
+		if ( empty( $data ) ) {
+			return $default;
+		}
+
+		return $data;
 	}
 
 	/**

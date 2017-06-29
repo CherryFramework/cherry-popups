@@ -174,4 +174,34 @@ class Cherry_Popups_Template_Callbacks {
 		return $html;
 	}
 
+	/**
+	 * Get subscribe form.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_login_form( $attr = array() ) {
+		$default_attr = array(
+			'submit_text'          => esc_html__( 'Login in', 'cherry-projects' ),
+			'user_placeholder'     => esc_html__( 'User', 'cherry-projects' ),
+			'password_placeholder' => esc_html__( 'Password', 'cherry-projects' ),
+			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to sign up.', 'cherry-projects' ),
+		);
+
+		$attr = wp_parse_args( $attr, $default_attr );
+
+		$html = '<div class="cherry-popup-login">';
+			$html .= '<form method="POST" action="#" class="cherry-popup-login__form">';
+				$html .= '<div class="cherry-popup-login__message"><span></span></div>';
+				$html .= '<div class="cherry-popup-login__input-group">';
+					$html .= '<input class="cherry-popup-login__user_input" type="text" name="login-user" value="" placeholder="' . $attr['user_placeholder'] . '">';
+					$html .= '<input class="cherry-popup-login__password_input" type="password" name="login-password" value="" placeholder="' . $attr['password_placeholder'] . '">';
+					$html .= '<input class="cherry-popup-login__remember" type="checkbox" name="login-remember" value="">';
+					$html .= '<div class="cherry-popup-login__submit">' . $attr['submit_text'] . '</div>';
+				$html .= '</div>';
+			$html .= '</form>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
 }

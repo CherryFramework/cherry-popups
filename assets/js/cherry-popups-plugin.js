@@ -16,7 +16,10 @@
 					$showAgainCheck         = $( '.cherry-popup-show-again-check', $this ),
 					$subscribeFormMessage   = null,
 					cherrySubscribeFormAjax = null,
-					subscribeFormAjaxId     = 'cherry_subscribe_form_ajax';
+					subscribeFormAjaxId     = 'cherry_subscribe_form_ajax',
+					$loginForm              = $( '.cherry-popup-login', $this ),
+					cherryLoginFormAjax     = null,
+					loginFormAjaxId         = 'cherry_login_form_ajax';
 
 				if ( options ) {
 					$.extend( settings, options );
@@ -44,6 +47,9 @@
 							break;
 					}
 
+					// Custom event for popup openning
+					customEventsFunction();
+
 					// Add check again button event
 					if ( 'false' === popupSettings['show-once'] ) {
 						checkEvents();
@@ -54,7 +60,7 @@
 					}
 
 					// Add close button event
-					closePopupEvent( popupSettings['load-open-delay'] );
+					closePopupEvent();
 
 					// Subscribe form check
 					if ( $subscribeForm[0] ) {
@@ -67,6 +73,11 @@
 						);
 
 						$subscribeForm.on( 'click', '.cherry-popup-subscribe__submit', subscribeFormAjax );
+					}
+
+					// Subscribe form check
+					if ( $loginForm[0] ) {
+
 					}
 
 				} )();
@@ -109,6 +120,30 @@
 				}
 
 				/**
+				 * Custom events functions
+				 *
+				 * @return {void}
+				 */
+				function customEventsFunction() {
+					var eventType = popupSettings['custom-event-type'],
+						selector  = popupSettings['popup-selector'];
+
+					switch( eventType ) {
+						case 'click':
+							$( document ).on( 'click', selector, function( event ) {
+								event.preventDefault();
+								showPopup();
+							} )
+							break;
+						case 'hover':
+							$( document ).on( 'mouseenter', selector, function( event ) {
+								showPopup();
+							} )
+						break;
+					}
+				}
+
+				/**
 				 * Close button event.
 				 *
 				 * @return {void}
@@ -124,7 +159,7 @@
 
 							clearTimeout( timeout );
 							timeout = setTimeout( function() {
-								$parentPopup.remove();
+								$parentPopup.toggleClass( 'waiting-status hide-animation' );
 							}, 500 );
 					} );
 
@@ -136,7 +171,7 @@
 
 							clearTimeout( timeout );
 							timeout = setTimeout( function() {
-								$parentPopup.remove();
+								$parentPopup.toggleClass( 'waiting-status hide-animation' );
 							}, 500 );
 					} );
 				}
@@ -165,6 +200,16 @@
 				}
 
 				/**
+				 * Show Popup
+				 *
+				 * @return {void}
+				 */
+				function showPopup() {
+					$this.removeClass( 'waiting-status' );
+					$this.addClass( 'show-animation' );
+				}
+
+				/**
 				 * Page on load event
 				 *
 				 * @param  {int} openDelay Open delay time.
@@ -177,7 +222,7 @@
 
 					$( document ).on( 'ready', function() {
 						setTimeout( function() {
-							$this.addClass( 'show-animation' );
+							showPopup();
 						}, delay );
 
 					} );
@@ -197,7 +242,7 @@
 
 					setTimeout( function() {
 						if ( isInactive ) {
-							$this.addClass( 'show-animation' );
+							showPopup();
 						}
 					}, delay );
 
@@ -224,7 +269,7 @@
 
 						if ( scrolledProgress >= scrolledValue ) {
 							$( window ).off( 'scroll.cherryPopupScrollEvent resize.cherryPopupResizeEvent' );
-							$this.addClass( 'show-animation' );
+							showPopup();
 						}
 					} ).trigger( 'scroll.cherryPopupScrollEvent' );
 				}
@@ -240,8 +285,9 @@
 					$( document ).on( 'mouseleave', 'body', function( event ) {
 						if ( ! $( '.open-page-type' )[0] ) {
 							pageY = event.pageY - $window.scrollTop();
+
 							if ( 0 > pageY ) {
-								$this.addClass( 'show-animation' );
+								showPopup();
 							}
 						}
 					} );
@@ -255,7 +301,7 @@
 				function pageFocusoutEvent() {
 					$( window ).on( 'blur', function() {
 						if ( ! $( '.open-page-type' )[0] ) {
-							$this.addClass( 'show-animation' );
+							showPopup();
 						}
 					} );
 				}

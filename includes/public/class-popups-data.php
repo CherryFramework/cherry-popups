@@ -92,6 +92,8 @@ class Cherry_Popups_Data {
 			'inactive-time'        => $this->get_popup_meta_field( 'cherry-user-inactive-time', 1 ),
 			'page-scrolling-value' => $this->get_popup_meta_field( 'cherry-page-scrolling-value', 5 ),
 			'close-appear-event'   => $this->get_popup_meta_field( 'cherry-popup-close-appear-event', 'outside-viewport' ),
+			'custom-event-type'    => $this->get_popup_meta_field( 'cherry-custom-event-type', 'click' ),
+			'popup-selector'       => $this->get_popup_meta_field( 'cherry-popup-selector', '' ),
 			'template'             => $this->get_popup_meta_field( 'cherry-popup-template', 'default-popup.tmpl' ),
 		);
 
@@ -135,7 +137,11 @@ class Cherry_Popups_Data {
 						$html .= $template_content;
 					$html .= '</div>';
 				$html .= '</div>';
-				$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
+
+				if ( ! filter_var( $this->popup_settings['show-once'], FILTER_VALIDATE_BOOLEAN )  ) {
+					$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
+				}
+
 				$html .= '<div class="cherry-popup-close-button"><span class="dashicons dashicons-no"></span></div>';
 			$html .= '</div>';
 		// Close wrapper.
@@ -248,6 +254,7 @@ class Cherry_Popups_Data {
 			'title'         => array( $callbacks, 'get_title' ),
 			'content'       => array( $callbacks, 'get_content' ),
 			'subscribeform' => array( $callbacks, 'get_subscribe_form' ),
+			'loginform'     => array( $callbacks, 'get_login_form' ),
 		);
 
 		/**

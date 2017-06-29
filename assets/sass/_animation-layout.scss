@@ -1,37 +1,47 @@
 .cherry-popup-wrapper{
 
-	&.simple-fade-animation{
+	&.simple-fade-animation {
 		display: none;
-		&.show-animation{
+
+		&.show-animation {
 			display: flex;
-			.cherry-popup-container{
+
+			.cherry-popup-container {
 				animation-name: container-simple-fade-in;
 				animation-duration: 0.5s;
 				animation-iteration-count: 1;
 				animation-delay: 0.1s;
 				animation-fill-mode: both;
 			}
-			.cherry-popup-overlay{
+
+			.cherry-popup-overlay {
 				animation-name: simple-fade-in;
 				animation-duration: 0.5s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
 		}
-		&.hide-animation{
+
+		&.hide-animation {
 			display: flex;
-			.cherry-popup-container{
+
+			.cherry-popup-container {
 				animation-name: simple-fade-out;
 				animation-duration: 0.5s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
-			.cherry-popup-overlay{
+
+			.cherry-popup-overlay {
 				animation-name: simple-fade-out;
 				animation-duration: 0.5s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
+		}
+
+		&.waiting-status {
+			display: none;
 		}
 	}
 

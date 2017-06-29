@@ -86,12 +86,19 @@ class Cherry_Popups_Meta_Boxes {
 					'title'       => esc_html__( '"Close" page settings', 'cherry-popups' ),
 					'description' => esc_html__( '"Close" page settings', 'cherry-popups' ),
 				),
+				'custom_opening_event' => array(
+					'element'     => 'settings',
+					'parent'      => 'tab_vertical',
+					'title'       => esc_html__( 'Custom openning event', 'cherry-popups' ),
+					'description' => esc_html__( 'Custom popup openning event', 'cherry-popups' ),
+				),
 				'advanced_tab' => array(
 					'element'     => 'settings',
 					'parent'      => 'tab_vertical',
 					'title'       => esc_html__( 'Advanced settings', 'cherry-popups' ),
 					'description' => esc_html__( 'Popup advanced settings', 'cherry-popups' ),
 				),
+
 				$prefix . 'layout-type' => array(
 					'type'          => 'radio',
 					'parent'        => 'general_tab',
@@ -238,6 +245,7 @@ class Cherry_Popups_Meta_Boxes {
 					'class'        => '',
 					'label'        => '',
 				),
+
 				$prefix . 'overlay-type' => array(
 					'type'          => 'radio',
 					'parent'        => 'overlay_tab',
@@ -305,6 +313,7 @@ class Cherry_Popups_Meta_Boxes {
 					'class'        => '',
 					'label'        => '',
 				),
+
 				$prefix . 'popup-open-appear-event' => array(
 					'type'          => 'radio',
 					'parent'        => 'open_page_tab',
@@ -357,6 +366,7 @@ class Cherry_Popups_Meta_Boxes {
 					'value'       => 5,
 					'master'      => 'popup-open-appear-event-scroll-page',
 				),
+
 				$prefix . 'popup-close-appear-event' => array(
 					'type'          => 'radio',
 					'parent'        => 'close_page_tab',
@@ -373,6 +383,47 @@ class Cherry_Popups_Meta_Boxes {
 						),
 					),
 				),
+
+				$prefix . 'custom-event-type' => array(
+					'type'          => 'radio',
+					'parent'        => 'custom_opening_event',
+					'title'         => esc_html__( 'Custom event type', 'cherry-popups' ),
+					'description'   => esc_html__( 'Define custom event type', 'cherry-popups' ),
+					'value'         => 'click',
+					'display-input' => true,
+					'options'       => array(
+						'click' => array(
+							'label' => esc_html__( 'Click', 'cherry-popups' ),
+						),
+						'hover' => array(
+							'label' => esc_html__( 'Hover', 'cherry-popups' ),
+						),
+					),
+				),
+
+				$prefix . 'popup-selector' => array(
+					'type'          => 'text',
+					'parent'        => 'custom_opening_event',
+					'title'         => esc_html__( 'Selector', 'cherry-popups' ),
+					'description'   => esc_html__( 'jQuery selector for custom event', 'cherry-popups' ),
+					'value'         => '',
+				),
+/*
+				'open-page-popup-display' => array(
+					'type'        => 'checkbox',
+					'parent'      => 'custom_opening_event',
+					'title'       => esc_html__( 'Popup display in:', 'cherry-popups' ),
+					'description' => esc_html__( 'Displaing popup in site pages', 'cherry-popups' ),
+					'class'       => '',
+					'value'       => array( '' ),
+					'options'     => array(
+						'home'        => esc_html__( 'Home', 'cherry-popups' ),
+						'pages'       => esc_html__( 'Pages', 'cherry-popups' ),
+						'posts'       => esc_html__( 'Posts', 'cherry-popups' ),
+						'other'       => esc_html__( 'Categories, Archive and other', 'cherry-popups' ),
+					),
+				),*/
+
 				$prefix . 'popup-template' => array(
 					'type'          => 'text',
 					'parent'        => 'advanced_tab',
@@ -423,7 +474,7 @@ class Cherry_Popups_Meta_Boxes {
 			),
 		) );
 
-		cherry_popups()->get_core()->init_module( 'cherry-post-meta', array(
+		/*cherry_popups()->get_core()->init_module( 'cherry-post-meta', array(
 			'id'            => 'popup-shortcode',
 			'title'         => esc_html__( 'Popup shortcode', 'cherry-popups' ),
 			'page'          => array( CHERRY_POPUPS_NAME ),
@@ -437,7 +488,7 @@ class Cherry_Popups_Meta_Boxes {
 					'html'    => '<div class="cherry-popups-shortcode-preview">' . get_the_ID() . '</div>',
 				),
 			),
-		) );
+		) );*/
 	}
 
 	/**
