@@ -17,6 +17,7 @@
 					$subscribeFormMessage   = null,
 					cherrySubscribeFormAjax = null,
 					subscribeFormAjaxId     = 'cherry_subscribe_form_ajax',
+					$loginFormMessage       = null,
 					$loginForm              = $( '.cherry-popup-login', $this ),
 					cherryLoginFormAjax     = null,
 					loginFormAjaxId         = 'cherry_login_form_ajax';
@@ -77,7 +78,15 @@
 
 					// Subscribe form check
 					if ( $loginForm[0] ) {
+						$loginFormMessage = $( '.cherry-popup-login__message', $loginForm );
+						cherryLoginFormAjax = new CherryJsCore.CherryAjaxHandler(
+							{
+								handlerId: loginFormAjaxId,
+								successCallback: loginFormAjaxSuccessCallback
+							}
+						);
 
+						$loginForm.on( 'click', '.cherry-popup-login__submit', loginFormAjax );
 					}
 
 				} )();
@@ -343,6 +352,50 @@
 						} );
 					}, 3000 );
 				}
+
+				/**
+				 * Login submit form click event
+				 *
+				 * @param  {object} event Click event.
+				 * @return {void}
+				 */
+				function loginFormAjax() {
+					var user = $( '.cherry-popup-login__user_input', $loginForm ).val(),
+						pass = $( '.cherry-popup-login__pass_input', $loginForm ).val(),
+						data = {
+							'user': user,
+							'pass': pass
+						};
+
+					cherryLoginFormAjax.sendData( data );
+				}
+
+				/**
+				 * Login form ajax success callback
+				 *
+				 * @param  {object} data Success data.
+				 * @return {void}
+				 */
+				function loginFormAjaxSuccessCallback( data ) {
+					var successType = data.type,
+						message     = data.message || '',
+						timeout     = null;
+
+					if ( 'success' === successType ) {
+						$loginFormMessage.addClass( 'success-type' );
+					}
+					$( 'span', $loginFormMessage ).html( message );
+					$loginFormMessage.slideDown( 300 );
+
+					timeout = setTimeout( function() {
+						$loginFormMessage.slideUp( 300, function() {
+							$loginFormMessage.removeClass( 'success-type' );
+							window.location.reload();
+							clearTimeout( timeout );
+						} );
+					}, 1000 );
+				}
+
 
 				/**
 				 * Get localStorage data.

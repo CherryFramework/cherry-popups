@@ -67,13 +67,15 @@ class Cherry_Popups_Init {
 		cherry_popups()->get_core()->init_module( 'cherry-utility' );
 		$this->cherry_utility = cherry_popups()->get_core()->modules['cherry-utility']->utility;
 
-		$this->sys_messages = array(
+		$this->sys_messages = apply_filters( 'cherry_popups_sys_messages', array(
 			'invalid_mail'      => esc_html__( 'Please, provide valid mail', 'cherry-popups' ),
 			'mailchimp'         => esc_html__( 'Please, set up MailChimp API key and List ID', 'cherry-popups' ),
 			'internal'          => esc_html__( 'Internal error. Please, try again later', 'cherry-popups' ),
 			'server_error'      => esc_html__( 'Server error. Please, try again later', 'cherry-popups' ),
 			'mailchimp_success' => esc_html__( 'Success', 'cherry-popups' ),
-		);
+			'login_success'     => esc_html__( 'Login successful', 'cherry-popups' ),
+			'login_error'       => esc_html__( 'Login or password is wrong', 'cherry-popups' ),
+		) );
 
 		cherry_popups()->get_core()->init_module(
 			'cherry-handler',
@@ -301,6 +303,18 @@ class Cherry_Popups_Init {
 			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
 		}
 
+		$user_signon = wp_signon( array(
+			'user_login'    => $data['user'],
+			'user_password' => $data['pass'],
+			false
+		), false );
+
+		if ( is_wp_error( $user_signon ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['login_error'] ) );
+		} else {
+			wp_send_json( array( 'type' => 'success', 'message' => $this->sys_messages['login_success'] ) );
+		}
+
 	}
 
 	/**
@@ -452,8 +466,6 @@ class Cherry_Popups_Init {
 
 		// Reset the query.
 		wp_reset_postdata();
-
-		//return $popups;
 	}
 
 	/**

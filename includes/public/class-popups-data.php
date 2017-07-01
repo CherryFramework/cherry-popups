@@ -138,7 +138,7 @@ class Cherry_Popups_Data {
 					$html .= '</div>';
 				$html .= '</div>';
 
-				if ( ! filter_var( $this->popup_settings['show-once'], FILTER_VALIDATE_BOOLEAN )  ) {
+				if ( ! filter_var( $this->popup_settings['show-once'], FILTER_VALIDATE_BOOLEAN ) && empty( $this->popup_settings['popup-selector'] ) ) {
 					$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
 				}
 
