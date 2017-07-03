@@ -77,6 +77,7 @@ class Cherry_Popups_Data {
 			'base-style'           => $this->get_popup_meta_field( 'cherry-popup-base-style', 'light' ),
 			'width'                => $this->get_popup_meta_field( 'cherry-popup-width', 600 ),
 			'height'               => $this->get_popup_meta_field( 'cherry-popup-height', 400 ),
+			'padding'              => $this->get_popup_meta_field( 'cherry-popup-padding', 20 ),
 			'container-bg-type'    => $this->get_popup_meta_field( 'cherry-container-bg-type', 'fill-color' ),
 			'container-color'      => $this->get_popup_meta_field( 'cherry-container-color', '#fff' ),
 			'container-opacity'    => $this->get_popup_meta_field( 'cherry-container-opacity', 100 ),
@@ -139,7 +140,7 @@ class Cherry_Popups_Data {
 				$html .= '</div>';
 
 				if ( ! filter_var( $this->popup_settings['show-once'], FILTER_VALIDATE_BOOLEAN ) && empty( $this->popup_settings['popup-selector'] ) ) {
-					$html .= sprintf( '<div class="cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
+					$html .= sprintf( '<div class="cherry-popup-check cherry-popup-show-again-check"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', esc_html__( 'Don\'t show again' , 'cherry-popups' ) );
 				}
 
 				$html .= '<div class="cherry-popup-close-button"><span class="dashicons dashicons-no"></span></div>';
@@ -191,6 +192,13 @@ class Cherry_Popups_Data {
 		cherry_popups()->dynamic_css->add_style(
 			sprintf( '.cherry-popup-%1$s .cherry-popup-container', $this->options['id'] ),
 			$container_styles
+		);
+
+		cherry_popups()->dynamic_css->add_style(
+			sprintf( '.cherry-popup-%1$s .cherry-popup-container__inner', $this->options['id'] ),
+			array(
+				'padding' => $this->popup_settings['padding'] . 'px',
+			)
 		);
 
 		// Overlay styles

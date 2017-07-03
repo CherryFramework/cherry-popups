@@ -20,43 +20,50 @@
 		min-width: 300px;
 		min-height: 300px;
 		max-height: 90%;
-		padding: 50px 0;
 		background-color: rgba( 255, 255, 255, 1);
 		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 		z-index: 2;
 		&__inner{
 			overflow-y: auto;
 			position: relative;
-			margin: 0 18px 0 20px;
 			height: 100%;
+
 			&::-webkit-scrollbar {
 				width: 4px;
 				height: 4px;
 			}
+
 			&::-webkit-scrollbar-button {
 				width: 0px;
 				height: 0px;
 			}
+
 			&::-webkit-scrollbar-thumb {
 				background: $dark_color_1;
 				border: 0px none $dark_color_1;
 				border-radius: 4px;
 			}
+
 			&::-webkit-scrollbar-thumb:hover {
 				background: $dark_color_2;
 			}
+
 			&::-webkit-scrollbar-thumb:active {
 				background: $dark_color_2;
 			}
+
 			&::-webkit-scrollbar-track {
 				background-color: rgba(0, 0, 0, 0.2);
 				border: 0px none #ffffff;
 				border-radius: 4px;
 			}
+
 			&::-webkit-scrollbar-track:hover {
 			}
+
 			&::-webkit-scrollbar-track:active {
 			}
+
 			&::-webkit-scrollbar-corner {
 				background: transparent;
 			}
@@ -75,6 +82,7 @@
 		background-color: rgba( 0, 0, 0, 0.5);
 		z-index: 1;
 	}
+
 	.cherry-popup-close-button{
 		display: block;
 		width: 20px;
@@ -89,15 +97,14 @@
 			color: $red_color;
 		}
 	}
-	.cherry-popup-show-again-check{
+
+	.cherry-popup-check {
 		display: flex;
 		height: 20px;
-		position: absolute;
-		bottom: 10px;
-		left: 10px;
 		cursor: pointer;
 		user-select: none;
-		.marker{
+
+		.marker {
 			width: 20px;
 			height: 20px;
 			display: inline-block;
@@ -105,25 +112,29 @@
 			margin-right: 5px;
 			border-radius: 2px;
 			transition: all 300ms ease-in-out;
-			span{
+
+			span {
 				width: 20px;
 				height: 20px;
 				font-size: 22px;
 				color: #ffffff;
 				display: none;
-				&:before{
+
+				&:before {
 					position: relative;
-					left: -2px;
+					left: -1px;
 					top: -1px;
 				}
 			}
 		}
-		.label{
+
+		.label {
 			display: inline-block;
 			font-size: 12px;
 			line-height: 20px;
 		}
-		&.checked{
+
+		&.checked {
 			.marker{
 				background-color: $green_color;
 				span{
@@ -132,6 +143,13 @@
 			}
 		}
 	}
+
+	.cherry-popup-show-again-check {
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+	}
+
 	&.overlay-disabled-type{
 		pointer-events: none;
 		.cherry-popup-overlay{
@@ -141,21 +159,25 @@
 			pointer-events: all;
 		}
 	}
+
 	&.overlay-image-type{
 		.cherry-popup-overlay{
 			background-size: cover;
 		}
 	}
+
 	&.layout-type-center-fullwidth{
 		.cherry-popup-container{
 			align-self: center;
 		}
 	}
+
 	&.layout-type-center{
 		.cherry-popup-container{
 			align-self: center;
 		}
 	}
+
 	&.layout-type-bottom{
 		.cherry-popup-container{
 			align-self: flex-end;

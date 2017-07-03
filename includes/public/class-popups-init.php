@@ -75,6 +75,8 @@ class Cherry_Popups_Init {
 			'mailchimp_success' => esc_html__( 'Success', 'cherry-popups' ),
 			'login_success'     => esc_html__( 'Login successful', 'cherry-popups' ),
 			'login_error'       => esc_html__( 'Login or password is wrong', 'cherry-popups' ),
+			'login_empty'       => esc_html__( 'Login is empty', 'cherry-popups' ),
+			'pass_empty'        => esc_html__( 'Password is empty', 'cherry-popups' ),
 		) );
 
 		cherry_popups()->get_core()->init_module(
@@ -303,10 +305,18 @@ class Cherry_Popups_Init {
 			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
 		}
 
+		if ( empty( $data['user'] ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['login_empty'] ) );
+		}
+
+		if ( empty( $data['pass'] ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['pass_empty'] ) );
+		}
+
 		$user_signon = wp_signon( array(
 			'user_login'    => $data['user'],
 			'user_password' => $data['pass'],
-			false
+			filter_var( $data['remember'], FILTER_VALIDATE_BOOLEAN ) ? true : false
 		), false );
 
 		if ( is_wp_error( $user_signon ) ) {

@@ -231,6 +231,15 @@ class Cherry_Popups_Meta_Boxes {
 					'min_value'   => 200,
 					'value'       => 400,
 				),
+				$prefix . 'popup-padding' => array(
+					'type'        => 'slider',
+					'parent'      => 'general_tab',
+					'title'       => esc_html__( 'Popup padding', 'cherry-popups' ),
+					'description' => esc_html__( 'Input Popup padding(px)', 'cherry-popups' ),
+					'max_value'   => 500,
+					'min_value'   => 0,
+					'value'       => 20,
+				),
 				$prefix . 'show-once' => array(
 					'type'         => 'switcher',
 					'parent'       => 'general_tab',
@@ -408,21 +417,6 @@ class Cherry_Popups_Meta_Boxes {
 					'description'   => esc_html__( 'jQuery selector for custom event', 'cherry-popups' ),
 					'value'         => '',
 				),
-/*
-				'open-page-popup-display' => array(
-					'type'        => 'checkbox',
-					'parent'      => 'custom_opening_event',
-					'title'       => esc_html__( 'Popup display in:', 'cherry-popups' ),
-					'description' => esc_html__( 'Displaing popup in site pages', 'cherry-popups' ),
-					'class'       => '',
-					'value'       => array( '' ),
-					'options'     => array(
-						'home'        => esc_html__( 'Home', 'cherry-popups' ),
-						'pages'       => esc_html__( 'Pages', 'cherry-popups' ),
-						'posts'       => esc_html__( 'Posts', 'cherry-popups' ),
-						'other'       => esc_html__( 'Categories, Archive and other', 'cherry-popups' ),
-					),
-				),*/
 
 				$prefix . 'popup-template' => array(
 					'type'          => 'text',

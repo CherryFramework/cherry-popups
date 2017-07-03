@@ -181,10 +181,13 @@ class Cherry_Popups_Template_Callbacks {
 	 */
 	public function get_login_form( $attr = array() ) {
 		$default_attr = array(
-			'submit_text'          => esc_html__( 'Login in', 'cherry-projects' ),
-			'user_placeholder'     => esc_html__( 'User', 'cherry-projects' ),
-			'password_placeholder' => esc_html__( 'Password', 'cherry-projects' ),
+			'submit_text'          => esc_html__( 'Log in', 'cherry-projects' ),
+			'user_placeholder'     => esc_html__( 'Enter username', 'cherry-projects' ),
+			'user_label'           => esc_html__( 'User', 'cherry-projects' ),
+			'password_placeholder' => esc_html__( 'Enter Password', 'cherry-projects' ),
+			'password_label'       => esc_html__( 'Password', 'cherry-projects' ),
 			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to sign up.', 'cherry-projects' ),
+			'remember_message'     => esc_html__( 'Remember me', 'cherry-projects' ),
 		);
 
 		$attr = wp_parse_args( $attr, $default_attr );
@@ -193,10 +196,20 @@ class Cherry_Popups_Template_Callbacks {
 			$html .= '<form method="POST" action="#" class="cherry-popup-login__form">';
 				$html .= '<div class="cherry-popup-login__message"><span></span></div>';
 				$html .= '<div class="cherry-popup-login__input-group">';
-					$html .= '<input class="cherry-popup-login__user_input" type="text" name="login-user" value="" placeholder="' . $attr['user_placeholder'] . '">';
-					$html .= '<input class="cherry-popup-login__pass_input" type="password" name="login-password" value="" placeholder="' . $attr['password_placeholder'] . '">';
-					$html .= '<input class="cherry-popup-login__remember" type="checkbox" name="login-remember" value="">';
-					$html .= '<div class="cherry-popup-login__submit">' . $attr['submit_text'] . '</div>';
+					$html .= '<div class="cherry-popup-login__wrap">';
+						$html .= '<label for="cherry-popup-user-input">' . $attr['user_label'] . '</label>';
+						$html .= '<input id="cherry-popup-user-input" class="cherry-popup__input cherry-popup-login__input-user" type="text" name="login-user" value="" placeholder="' . $attr['user_placeholder'] . '">';
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-login__wrap">';
+						$html .= '<label for="cherry-popup-pass-input">' . $attr['password_label'] . '</label>';
+						$html .= '<input id="cherry-popup-pass-input" class="cherry-popup__input cherry-popup-login__input-pass" type="password" name="login-password" value="" placeholder="' . $attr['password_placeholder'] . '">';
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-login__wrap">';
+						$html .= sprintf( '<div class="cherry-popup-check cherry-popup-login__remember"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', $attr['remember_message'] );
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-login__wrap">';
+						$html .= '<div class="cherry-popup-login__login-in">' . $attr['submit_text'] . '</div>';
+					$html .= '</div>';
 				$html .= '</div>';
 			$html .= '</form>';
 		$html .= '</div>';

@@ -63,30 +63,14 @@
 					// Add close button event
 					closePopupEvent();
 
-					// Subscribe form check
+					// Subscribe form init
 					if ( $subscribeForm[0] ) {
-						$subscribeFormMessage = $( '.cherry-popup-subscribe__message', $subscribeForm );
-						cherrySubscribeFormAjax = new CherryJsCore.CherryAjaxHandler(
-							{
-								handlerId: subscribeFormAjaxId,
-								successCallback: subscribeFormAjaxSuccessCallback
-							}
-						);
-
-						$subscribeForm.on( 'click', '.cherry-popup-subscribe__submit', subscribeFormAjax );
+						subscribeFormInit();
 					}
 
-					// Subscribe form check
+					// Subscribe form init
 					if ( $loginForm[0] ) {
-						$loginFormMessage = $( '.cherry-popup-login__message', $loginForm );
-						cherryLoginFormAjax = new CherryJsCore.CherryAjaxHandler(
-							{
-								handlerId: loginFormAjaxId,
-								successCallback: loginFormAjaxSuccessCallback
-							}
-						);
-
-						$loginForm.on( 'click', '.cherry-popup-login__submit', loginFormAjax );
+						loginFormInit();
 					}
 
 				} )();
@@ -315,6 +299,23 @@
 					} );
 				}
 
+				/*
+				 * Subscribe Form Init
+				 *
+				 * @return {void}
+				 */
+				function subscribeFormInit() {
+					$subscribeFormMessage = $( '.cherry-popup-subscribe__message', $subscribeForm );
+					cherrySubscribeFormAjax = new CherryJsCore.CherryAjaxHandler(
+						{
+							handlerId: subscribeFormAjaxId,
+							successCallback: subscribeFormAjaxSuccessCallback
+						}
+					);
+
+					$subscribeForm.on( 'click', '.cherry-popup-subscribe__submit', subscribeFormAjax );
+				}
+
 				/**
 				 * Subscribe submit form click event
 				 *
@@ -353,6 +354,27 @@
 					}, 3000 );
 				}
 
+				/*
+				 * Login Form Init
+				 *
+				 * @return {void}
+				 */
+				function loginFormInit() {
+					$loginFormMessage = $( '.cherry-popup-login__message', $loginForm );
+
+					cherryLoginFormAjax = new CherryJsCore.CherryAjaxHandler(
+						{
+							handlerId: loginFormAjaxId,
+							successCallback: loginFormAjaxSuccessCallback
+						}
+					);
+
+					$loginForm.on( 'click', '.cherry-popup-login__login-in', loginFormAjax );
+					$loginForm.on( 'click', '.cherry-popup-login__remember', function() {
+						$( this ).toggleClass( 'checked' );
+					} );
+				}
+
 				/**
 				 * Login submit form click event
 				 *
@@ -360,11 +382,13 @@
 				 * @return {void}
 				 */
 				function loginFormAjax() {
-					var user = $( '.cherry-popup-login__user_input', $loginForm ).val(),
-						pass = $( '.cherry-popup-login__pass_input', $loginForm ).val(),
+					var user     = $( '.cherry-popup-login__input-user', $loginForm ).val(),
+						pass     = $( '.cherry-popup-login__input-pass', $loginForm ).val(),
+						$remember = $( '.cherry-popup-login__remember', $loginForm ),
 						data = {
 							'user': user,
-							'pass': pass
+							'pass': pass,
+							'remember': $remember.hasClass( 'checked' ) ? 'true' : 'false'
 						};
 
 					cherryLoginFormAjax.sendData( data );
@@ -383,19 +407,20 @@
 
 					if ( 'success' === successType ) {
 						$loginFormMessage.addClass( 'success-type' );
+						window.location.reload();
 					}
+
 					$( 'span', $loginFormMessage ).html( message );
 					$loginFormMessage.slideDown( 300 );
 
 					timeout = setTimeout( function() {
 						$loginFormMessage.slideUp( 300, function() {
 							$loginFormMessage.removeClass( 'success-type' );
-							window.location.reload();
+
 							clearTimeout( timeout );
 						} );
-					}, 1000 );
+					}, 3000 );
 				}
-
 
 				/**
 				 * Get localStorage data.

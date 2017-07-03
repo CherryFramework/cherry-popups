@@ -16,6 +16,7 @@
 
 	&__input-group{
 		display: flex;
+		align-items: center;
 		flex-flow: row nowrap;
 	}
 
@@ -25,13 +26,18 @@
 
 	&__submit{
 		flex: 0 1 auto;
-		padding: 10px 20px;
+		padding: 10px 40px;
 		margin-left: 10px;
-		border-width: 2px;
-		border-style: solid;
-		border-color: $dark_color_1;
-		color: $dark_color_1;
+		color: white;
 		cursor: pointer;
+		background-color: $blue_color;
+		border-radius: 20px;
+		display: inline-block;
+		cursor: pointer;
+
+		&:hover {
+			background-color: $blue_color_h;
+		}
 	}
 
 	&__message{
@@ -50,28 +56,79 @@
 }
 
 .cherry-popup-login{
-	&__form{
+	input[type="text"],
+	input[type="password"], {
+		width: 100%;
+	}
+
+	label {
+		margin-bottom: 0.5em;
+		display: inline-block;
+	}
+
+	&__form {
 
 	}
 
 	&__input-group{
 		display: flex;
-		flex-flow: row nowrap;
+		flex-flow: column nowrap;
+		align-items: stretch;
 	}
 
-	&__input{
-		flex: 1 1 auto;
+	&__wrap {
+		margin-bottom: 1em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 
-	&__submit{
-		flex: 0 1 auto;
-		padding: 10px 20px;
-		margin-left: 10px;
-		border-width: 2px;
-		border-style: solid;
-		border-color: $dark_color_1;
-		color: $dark_color_1;
+	&__login-in {
+		padding: 10px 40px;
+		color: white;
 		cursor: pointer;
+		background-color: $blue_color;
+		border-radius: 20px;
+		display: inline-block;
+
+		&:hover {
+			background-color: $blue_color_h;
+		}
+	}
+
+	&__remember {
+		display: flex;
+		align-items: center;
+
+		&.active {
+			.cherry-popup-login__remember-input {
+				span {
+					display: block;
+				}
+			}
+		}
+
+		&-input {
+			width: 21px;
+			height: 21px;
+			display: inline-block;
+			position: relative;
+			border-radius: 3px;
+			background-color: #f7fafd;
+			border: 1px solid #e0e0e8;
+			margin-right: 5px;
+			cursor: pointer;
+
+			span {
+				top: 0;
+				left: 0;
+				color: $blue_color;
+				display: none;
+			}
+		}
+
+		&-label {}
 	}
 
 	&__message{
