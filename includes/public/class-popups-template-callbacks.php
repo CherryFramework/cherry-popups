@@ -91,7 +91,7 @@ class Cherry_Popups_Template_Callbacks {
 
 		$attr = wp_parse_args( $attr, $default_attr );
 
-		$html = '<h3 %1$s>%4$s</h3>';
+		$html = '<h4 %1$s>%4$s</h4>';
 
 		$settings = array(
 			'visible'      => true,
@@ -180,29 +180,39 @@ class Cherry_Popups_Template_Callbacks {
 	 * @since 1.0.0
 	 */
 	public function get_login_form( $attr = array() ) {
-		$default_attr = array(
+		$default_attr = apply_filters( 'cherry_popup_login_form_defaults_attr', array(
 			'submit_text'          => esc_html__( 'Log in', 'cherry-projects' ),
-			'user_placeholder'     => esc_html__( 'Enter username', 'cherry-projects' ),
-			'user_label'           => esc_html__( 'User', 'cherry-projects' ),
-			'password_placeholder' => esc_html__( 'Enter Password', 'cherry-projects' ),
-			'password_label'       => esc_html__( 'Password', 'cherry-projects' ),
-			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to sign up.', 'cherry-projects' ),
+			'user_placeholder'     => esc_html__( 'Login', 'cherry-projects' ),
+			'password_placeholder' => esc_html__( 'Password', 'cherry-projects' ),
+			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to', 'cherry-projects' ),
+			'sign_up_link'         => esc_html__( 'Sign up.', 'cherry-projects' ),
 			'remember_message'     => esc_html__( 'Remember me', 'cherry-projects' ),
-		);
+			'use_mail'             => esc_html__( 'or use your email', 'cherry-projects' ),
+		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
-
 		$html = '<div class="cherry-popup-login">';
 			$html .= '<form method="POST" action="#" class="cherry-popup-login__form">';
-				$html .= '<div class="cherry-popup-login__message"><span></span></div>';
+
+				if ( function_exists( 'wsl_render_auth_widget' ) ) {
+					$html .= wsl_render_auth_widget( array(
+						'caption'=> '',
+						)
+					);
+					$html .= '<div class="cherry-popup-login__use-mail"><span>' . $attr['use_mail'] . '</span></div>';
+				}
+
 				$html .= '<div class="cherry-popup-login__input-group">';
 					$html .= '<div class="cherry-popup-login__wrap">';
-						$html .= '<label for="cherry-popup-user-input">' . $attr['user_label'] . '</label>';
 						$html .= '<input id="cherry-popup-user-input" class="cherry-popup__input cherry-popup-login__input-user" type="text" name="login-user" value="" placeholder="' . $attr['user_placeholder'] . '">';
 					$html .= '</div>';
 					$html .= '<div class="cherry-popup-login__wrap">';
-						$html .= '<label for="cherry-popup-pass-input">' . $attr['password_label'] . '</label>';
 						$html .= '<input id="cherry-popup-pass-input" class="cherry-popup__input cherry-popup-login__input-pass" type="password" name="login-password" value="" placeholder="' . $attr['password_placeholder'] . '">';
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-login__wrap">';
+						$html .= '<div class="cherry-popup-login__signup-message">';
+							$html .= '<span>' . $attr['sign_up_message'] . '</span><a href="#" class="cherry-popups-signup-link">' . $attr['sign_up_link'] . '</a>';
+						$html .= '</div>';
 					$html .= '</div>';
 					$html .= '<div class="cherry-popup-login__wrap">';
 						$html .= sprintf( '<div class="cherry-popup-check cherry-popup-login__remember"><div class="marker"><span class="dashicons dashicons-yes"></span></div><span class="label">%1$s</span></div>', $attr['remember_message'] );
@@ -211,6 +221,46 @@ class Cherry_Popups_Template_Callbacks {
 						$html .= '<div class="cherry-popup-login__login-in">' . $attr['submit_text'] . '</div>';
 					$html .= '</div>';
 				$html .= '</div>';
+				$html .= '<div class="cherry-popup-login__message"><span></span></div>';
+			$html .= '</form>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * Get register form.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_register_form( $attr = array() ) {
+		$default_attr = apply_filters( 'cherry_popup_register_form_defaults_attr', array(
+			'submit_text'       => esc_html__( 'Sign up', 'cherry-projects' ),
+			'login_placeholder' => esc_html__( 'Login', 'cherry-projects' ),
+			'mail_placeholder'  => esc_html__( 'Mail', 'cherry-projects' ),
+			'have_account'      => esc_html__( 'Already have an account?', 'cherry-projects' ),
+			'login_link'        => esc_html__( 'Log in', 'cherry-projects' ),
+		) );
+
+		$attr = wp_parse_args( $attr, $default_attr );
+
+		$html = '<div class="cherry-popup-register">';
+			$html .= '<form method="POST" action="#" class="cherry-popup-register__form">';
+				$html .= '<div class="cherry-popup-register__input-group">';
+					$html .= '<div class="cherry-popup-register__wrap">';
+						$html .= '<input id="cherry-popup-register-login-input" class="cherry-popup__input cherry-popup-register__input-login" type="text" name="register-login" value="" placeholder="' . $attr['login_placeholder'] . '">';
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-register__wrap">';
+						$html .= '<input id="cherry-popup-register-mail-input" class="cherry-popup__input cherry-popup-login__input-mail" type="email" name="register-mail" value="" placeholder="' . $attr['mail_placeholder'] . '">';
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-register__wrap">';
+						$html .= '<div class="cherry-popup-register__sign-up">' . $attr['submit_text'] . '</div>';
+					$html .= '</div>';
+					$html .= '<div class="cherry-popup-register__wrap">';
+						$html .= '<span>' . $attr['have_account'] . '</span><a href="#" class="cherry-popups-login-link">' . $attr['login_link'] . '</a>';
+					$html .= '</div>';
+				$html .= '</div>';
+				$html .= '<div class="cherry-popup-register__message"><span></span></div>';
 			$html .= '</form>';
 		$html .= '</div>';
 

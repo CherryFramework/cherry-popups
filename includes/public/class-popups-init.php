@@ -56,6 +56,9 @@ class Cherry_Popups_Init {
 		add_action( 'wp_footer', array( $this, 'page_popup_init' ) );
 
 		add_action( 'after_setup_theme', array( $this, 'set_cherry_utility' ), 10 );
+
+		add_action( 'cherry_popups_login_logout_link', array( $this, 'generate_login_logout_link' ) );
+		add_action( 'cherry_popups_sine_up_link', array( $this, 'generate_sine_up_link' ) );
 	}
 
 	/**
@@ -76,7 +79,10 @@ class Cherry_Popups_Init {
 			'login_success'     => esc_html__( 'Login successful', 'cherry-popups' ),
 			'login_error'       => esc_html__( 'Login or password is wrong', 'cherry-popups' ),
 			'login_empty'       => esc_html__( 'Login is empty', 'cherry-popups' ),
+			'mail_empty'        => esc_html__( 'Mail is empty', 'cherry-popups' ),
 			'pass_empty'        => esc_html__( 'Password is empty', 'cherry-popups' ),
+			'register_complete' => esc_html__( 'Registration complete. Please check your email. And Click to login link', 'cherry-popups' ),
+			'register_error'    => esc_html__( 'Current user is already exist. Registration error.', 'cherry-popups' ),
 		) );
 
 		cherry_popups()->get_core()->init_module(
@@ -96,6 +102,16 @@ class Cherry_Popups_Init {
 				'action'       => 'cherry_login_form_ajax',
 				'is_public'    => true,
 				'callback'     => array( $this , 'cherry_login_form_ajax' ),
+			)
+		);
+
+		cherry_popups()->get_core()->init_module(
+			'cherry-handler',
+			array(
+				'id'           => 'cherry_register_form_ajax',
+				'action'       => 'cherry_register_form_ajax',
+				'is_public'    => true,
+				'callback'     => array( $this , 'cherry_register_form_ajax' ),
 			)
 		);
 	}
@@ -313,6 +329,10 @@ class Cherry_Popups_Init {
 			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['pass_empty'] ) );
 		}
 
+		if ( is_user_logged_in() ) {
+			wp_send_json( array( 'type' => 'success', 'message' => $this->sys_messages['login_success'] ) );
+		}
+
 		$user_signon = wp_signon( array(
 			'user_login'    => $data['user'],
 			'user_password' => $data['pass'],
@@ -326,6 +346,36 @@ class Cherry_Popups_Init {
 		}
 
 	}
+
+	/**
+	 * Proccesing register form ajax
+	 *
+	 * @return void
+	 */
+	public function cherry_register_form_ajax() {
+		$data = ( ! empty( $_POST['data'] ) ) ? $_POST['data'] : false;
+
+		if ( ! $data ) {
+			wp_send_json_error( array( 'type' => 'error', 'message' => $this->sys_messages['server_error'] ) );
+		}
+
+		if ( empty( $data['login'] ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['login_empty'] ) );
+		}
+
+		if ( empty( $data['mail'] ) ) {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['mail_empty'] ) );
+		}
+
+		$errors = register_new_user( $data['login'], $data['mail'] );
+
+		if ( ! is_wp_error( $errors ) ) {
+			wp_send_json( array( 'type' => 'success', 'message' => $this->sys_messages['register_complete'] ) );
+		} else {
+			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['register_error'] ) );
+		}
+	}
+
 
 	/**
 	 * Make remote request to mailchimp API
@@ -495,6 +545,47 @@ class Cherry_Popups_Init {
 
 		return $data;
 	}
+
+	/**
+	 * Generating login-logout link
+	 *
+	 * @return string Login-logout link
+	 */
+	public function generate_login_logout_link() {
+		$html = '';
+
+		$defaults = apply_filters( 'cherry-popups-login-loguot-text', array(
+			'logout' =>  esc_html__( 'Logout', 'cherry-popups' ),
+			'login'  =>  esc_html__( 'Login', 'cherry-popups' ),
+		) );
+
+		if ( is_user_logged_in() ) {
+			$html .= '<a class="cherry-popups-logout-link" href="' . wp_logout_url( home_url() ) . '">' . $defaults['logout'] . '</a>';
+		} else {
+			$html .= '<a class="cherry-popups-login-link" href="#">' . $defaults['login'] . '</a>';
+		}
+
+		echo $html;
+	}
+
+	/**
+	 * Generating sine-up link
+	 *
+	 * @return string sine-up link
+	 */
+	public function generate_sine_up_link() {
+		$html = '';
+
+		$defaults = apply_filters( 'cherry-popups-sign-up-text', array(
+			'signup_text' =>  esc_html__( 'Sign Up', 'cherry-popups' ),
+		) );
+
+		$html .= '<a class="cherry-popups-signup-link" href="#">' . $defaults['signup_text'] . '</a>';
+
+		echo $html;
+	}
+
+
 
 	/**
 	 * Returns the instance.

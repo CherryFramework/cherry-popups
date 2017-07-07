@@ -74,6 +74,12 @@ class Cherry_Popups_Meta_Boxes {
 					'title'       => esc_html__( 'Overlay', 'cherry-popups' ),
 					'description' => esc_html__( 'Overlay popup settings', 'cherry-popups' ),
 				),
+				'style_tab' => array(
+					'element'     => 'settings',
+					'parent'      => 'tab_vertical',
+					'title'       => esc_html__( 'Style', 'cherry-popups' ),
+					'description' => esc_html__( 'Styles popup settings', 'cherry-popups' ),
+				),
 				'open_page_tab' => array(
 					'element'     => 'settings',
 					'parent'      => 'tab_vertical',
@@ -120,6 +126,10 @@ class Cherry_Popups_Meta_Boxes {
 							'label'   => esc_html__( 'Bottom & fullwidth', 'cherry-popups' ),
 							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/layout-type-bottom.svg',
 						),
+						'fullwidth' => array(
+							'label'   => esc_html__( 'Fullwidth', 'cherry-popups' ),
+							'img_src' => CHERRY_POPUPS_URI . 'assets/img/svg/layout-type-fullwidth.svg',
+						),
 					),
 				),
 				$prefix . 'show-hide-animation' => array(
@@ -164,81 +174,24 @@ class Cherry_Popups_Meta_Boxes {
 					'label'       => '',
 					'class'       => '',
 				),
-				$prefix . 'container-bg-type' => array(
-					'type'          => 'radio',
-					'parent'        => 'general_tab',
-					'title'         => esc_html__( 'Container background type', 'cherry-popups' ),
-					'description'   => esc_html__( 'Select container background type', 'cherry-popups' ),
-					'value'         => 'fill-color',
-					'display-input' => true,
-					'options'       => array(
-						'fill-color' => array(
-							'label' => esc_html__( 'Fill color', 'cherry-popups' ),
-							'slave' => 'container-bg-type-fill-color',
-						),
-						'image' => array(
-							'label' => esc_html__( 'Image', 'cherry-popups' ),
-							'slave' => 'container-bg-type-image',
-						),
+				$prefix . 'popup-type' => array(
+					'type'        => 'select',
+					'parent'      => 'general_tab',
+					'title'       => esc_html__( 'Popup content type', 'cherry-popups' ),
+					'description' => esc_html__( 'Select popup type', 'cherry-popups' ),
+					'multiple'    => false,
+					'filter'      => true,
+					'value'       => 'default',
+					'options'     => array(
+						'default' => esc_html__( 'Default(Content + Subscribe form)', 'cherry-popups' ),
+						'simple'    => esc_html__( 'Simple(Title + Content)', 'cherry-popups' ),
+						'login'     => esc_html__( 'Login Form', 'cherry-popups' ),
+						'signup'    => esc_html__( 'New User Register Form', 'cherry-popups' ),
+						'subscribe' => esc_html__( 'Subscribe Form', 'cherry-popups' ),
 					),
-				),
-				$prefix . 'container-color' => array(
-					'type'        => 'colorpicker',
-					'parent'      => 'general_tab',
-					'title'       => esc_html__( 'Container background color', 'cherry-popups' ),
-					'description' => esc_html__( 'Set the color of popup container', 'cherry-popups' ),
-					'value'       => '#fff',
-					'master'      => 'container-bg-type-fill-color',
-				),
-				$prefix . 'container-opacity' => array(
-					'type'        => 'slider',
-					'parent'      => 'general_tab',
-					'title'       => esc_html__( 'Container opacity', 'cherry-popups' ),
-					'description' => esc_html__( 'Set the opacity(%) of popup container', 'cherry-popups' ),
-					'max_value'   => 100,
-					'min_value'   => 0,
-					'value'       => 100,
-					'master'      => 'container-bg-type-fill-color',
-				),
-				$prefix . 'container-image' => array(
-					'type'               => 'media',
-					'parent'             => 'general_tab',
-					'title'              => esc_html__( 'Container background image', 'cherry-popups' ),
-					'description'        => esc_html__( 'Set image for container background', 'cherry-popups' ),
-					'value'              => '',
-					'multi_upload'       => false,
-					'library_type'       => 'image',
-					'upload_button_text' => esc_html__( 'Choose Image', 'cherry-popups' ),
-					'class'              => '',
-					'label'              => '',
-					'master'             => 'container-bg-type-image',
-				),
-				$prefix . 'popup-width' => array(
-					'type'        => 'slider',
-					'parent'      => 'general_tab',
-					'title'       => esc_html__( 'Popup width', 'cherry-popups' ),
-					'description' => esc_html__( 'Input Popup width(px)', 'cherry-popups' ),
-					'max_value'   => 1000,
-					'min_value'   => 300,
-					'value'       => 600,
-				),
-				$prefix . 'popup-height' => array(
-					'type'        => 'slider',
-					'parent'      => 'general_tab',
-					'title'       => esc_html__( 'Popup height', 'cherry-popups' ),
-					'description' => esc_html__( 'Input Popup height(px)', 'cherry-popups' ),
-					'max_value'   => 800,
-					'min_value'   => 200,
-					'value'       => 400,
-				),
-				$prefix . 'popup-padding' => array(
-					'type'        => 'slider',
-					'parent'      => 'general_tab',
-					'title'       => esc_html__( 'Popup padding', 'cherry-popups' ),
-					'description' => esc_html__( 'Input Popup padding(px)', 'cherry-popups' ),
-					'max_value'   => 500,
-					'min_value'   => 0,
-					'value'       => 20,
+					'placeholder' => 'Select',
+					'label'       => '',
+					'class'       => '',
 				),
 				$prefix . 'show-once' => array(
 					'type'         => 'switcher',
@@ -321,6 +274,93 @@ class Cherry_Popups_Meta_Boxes {
 					'style'        => 'normal',
 					'class'        => '',
 					'label'        => '',
+				),
+
+				$prefix . 'container-bg-type' => array(
+					'type'          => 'radio',
+					'parent'        => 'style_tab',
+					'title'         => esc_html__( 'Container background type', 'cherry-popups' ),
+					'description'   => esc_html__( 'Select container background type', 'cherry-popups' ),
+					'value'         => 'fill-color',
+					'display-input' => true,
+					'options'       => array(
+						'fill-color' => array(
+							'label' => esc_html__( 'Fill color', 'cherry-popups' ),
+							'slave' => 'container-bg-type-fill-color',
+						),
+						'image' => array(
+							'label' => esc_html__( 'Image', 'cherry-popups' ),
+							'slave' => 'container-bg-type-image',
+						),
+					),
+				),
+				$prefix . 'container-color' => array(
+					'type'        => 'colorpicker',
+					'parent'      => 'style_tab',
+					'title'       => esc_html__( 'Container background color', 'cherry-popups' ),
+					'description' => esc_html__( 'Set the color of popup container', 'cherry-popups' ),
+					'value'       => '#fff',
+					'master'      => 'container-bg-type-fill-color',
+				),
+				$prefix . 'container-opacity' => array(
+					'type'        => 'slider',
+					'parent'      => 'style_tab',
+					'title'       => esc_html__( 'Container opacity', 'cherry-popups' ),
+					'description' => esc_html__( 'Set the opacity(%) of popup container', 'cherry-popups' ),
+					'max_value'   => 100,
+					'min_value'   => 0,
+					'value'       => 100,
+					'master'      => 'container-bg-type-fill-color',
+				),
+				$prefix . 'container-image' => array(
+					'type'               => 'media',
+					'parent'             => 'style_tab',
+					'title'              => esc_html__( 'Container background image', 'cherry-popups' ),
+					'description'        => esc_html__( 'Set image for container background', 'cherry-popups' ),
+					'value'              => '',
+					'multi_upload'       => false,
+					'library_type'       => 'image',
+					'upload_button_text' => esc_html__( 'Choose Image', 'cherry-popups' ),
+					'class'              => '',
+					'label'              => '',
+					'master'             => 'container-bg-type-image',
+				),
+				$prefix . 'popup-width' => array(
+					'type'        => 'slider',
+					'parent'      => 'style_tab',
+					'title'       => esc_html__( 'Popup width', 'cherry-popups' ),
+					'description' => esc_html__( 'Input Popup width(px)', 'cherry-popups' ),
+					'max_value'   => 1000,
+					'min_value'   => 300,
+					'value'       => 620,
+				),
+				$prefix . 'popup-height' => array(
+					'type'        => 'slider',
+					'parent'      => 'style_tab',
+					'title'       => esc_html__( 'Popup height', 'cherry-popups' ),
+					'description' => esc_html__( 'Input Popup height(px)', 'cherry-popups' ),
+					'max_value'   => 800,
+					'min_value'   => 200,
+					'value'       => 560,
+				),
+				$prefix . 'popup-padding' => array(
+					'type'        => 'slider',
+					'parent'      => 'style_tab',
+					'title'       => esc_html__( 'Popup padding', 'cherry-popups' ),
+					'description' => esc_html__( 'Input Popup padding(px)', 'cherry-popups' ),
+					'max_value'   => 500,
+					'min_value'   => 0,
+					'value'       => 40,
+				),
+
+				$prefix . 'border-radius' => array(
+					'type'        => 'slider',
+					'parent'      => 'style_tab',
+					'title'       => esc_html__( 'Popup border radius', 'cherry-popups' ),
+					'description' => esc_html__( 'Define popup border radius(px)', 'cherry-popups' ),
+					'max_value'   => 50,
+					'min_value'   => 0,
+					'value'       => 3,
 				),
 
 				$prefix . 'popup-open-appear-event' => array(
@@ -418,12 +458,12 @@ class Cherry_Popups_Meta_Boxes {
 					'value'         => '',
 				),
 
-				$prefix . 'popup-template' => array(
+				$prefix . 'custom-class' => array(
 					'type'          => 'text',
 					'parent'        => 'advanced_tab',
-					'title'         => esc_html__( 'Template', 'cherry-popups' ),
-					'description'   => esc_html__( 'Popup content template', 'cherry-popups' ),
-					'value'         => 'default-popup.tmpl',
+					'title'         => esc_html__( 'Custom class', 'cherry-popups' ),
+					'description'   => esc_html__( 'Popup custom class', 'cherry-popups' ),
+					'value'         => '',
 				),
 
 			),
@@ -468,21 +508,6 @@ class Cherry_Popups_Meta_Boxes {
 			),
 		) );
 
-		/*cherry_popups()->get_core()->init_module( 'cherry-post-meta', array(
-			'id'            => 'popup-shortcode',
-			'title'         => esc_html__( 'Popup shortcode', 'cherry-popups' ),
-			'page'          => array( CHERRY_POPUPS_NAME ),
-			'context'       => 'side',
-			'priority'      => 'high',
-			'callback_args' => false,
-			'fields'        => array(
-				'cherry-popup-shortcode' => array(
-					'type'    => 'html',
-					'element' => 'html',
-					'html'    => '<div class="cherry-popups-shortcode-preview">' . get_the_ID() . '</div>',
-				),
-			),
-		) );*/
 	}
 
 	/**

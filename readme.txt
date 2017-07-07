@@ -4,7 +4,7 @@ Contributors: TemplateMonster 2002
 Tags: custom post type, popup, subscribe, mailchimp, cherry framework
 Requires at least: 4.5
 Tested up to: 4.7.1
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -140,4 +140,14 @@ Each popup has its own settings which are gathered in Popup settings
 
 = 1.0.2 =
 
+* Hot fixes
+
+= 1.1.0 =
+
+* Add styles settings tab and new avaliable styles options
+* Add new fullwidth popup layout type
+* Add login form popup
+* Add sign up form popup
+* Add subscribe form popup
+* Add custom opening event(click, hover)
 * Hot fixes

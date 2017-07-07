@@ -1,0 +1,166 @@
+@import "variables";
+@import "tm_mixins";
+
+.popup-type-login {
+	.cherry-popup-login {
+		input[type="text"],
+		input[type="password"] {
+			width: 100%;
+		}
+
+		label {
+			margin-bottom: 0.5em;
+			display: inline-block;
+		}
+
+		&__form {
+
+		}
+
+		&__input-group{
+			display: flex;
+			flex-flow: column nowrap;
+			align-items: stretch;
+		}
+
+		&__wrap {
+			display: flex;
+			flex-flow: column nowrap;
+			align-items: center;
+			margin: 0.75em 0;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		&__login-in {
+			padding: 10px 40px;
+			color: white;
+			cursor: pointer;
+			background-color: $blue_color;
+			border-radius: 20px;
+			display: inline-block;
+			font-weight: 600;
+
+			&:hover {
+				background-color: $blue_color_h;
+			}
+		}
+
+		&__remember {
+			display: flex;
+			align-items: center;
+		}
+
+		&__message {
+			margin: 1em 0;
+			text-align: center;
+			display: none;
+
+			span{
+				color: $red_color;
+			}
+
+			&.success-type{
+				span{
+					color: $green_color;
+				}
+			}
+		}
+
+		.cherry-popup-login__signup-message {
+			display: flex;
+			justify-content: center;
+
+			span {
+				margin-right: 5px;
+			}
+		}
+
+		.cherry-popup-login__use-mail {
+			display: flex;
+			align-items: center;
+			margin: 20px 0;
+
+			span {
+				text-align: center;
+				flex: 1 1 auto;
+				margin: 0 25px;
+			}
+
+			&:before {
+				flex: 1 1 auto;
+				display:block;
+				position: relative;
+				height: 1px;
+				background-color: $grey_color_3;
+				content:'';
+			}
+
+			&:after {
+				flex: 1 1 auto;
+				display:block;
+				position: relative;
+				height: 1px;
+				background-color: $grey_color_3;
+				content:'';
+			}
+		}
+	}
+
+	.wp-social-login-widget {
+		.wp-social-login-provider-list {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			a {
+				padding: 10px 40px;
+				margin: 0 10px;
+				color: white;
+				cursor: pointer;
+				background-color: $blue_color;
+				border-radius: 20px;
+				display: inline-block;
+				font-weight: 600;
+				transition: all 0.5s ease;
+
+				&:hover {
+					background-color: $blue_color_h;
+				}
+
+				&.wp-social-login-provider-facebook {
+					background-color: #4E64AD;
+
+					&:hover {
+						background-color: #3d5294;
+					}
+
+					&:before {
+						@include font-awesome-icon();
+						font-size: 16px;
+						margin-right: 8px;
+						content: '\f09a';
+					}
+				}
+
+				&.wp-social-login-provider-google {
+					background-color: #dd4b39;
+
+					&:hover {
+						background-color: #be4233;
+					}
+
+					&:before {
+						@include font-awesome-icon();
+						font-size: 16px;
+						margin-right: 8px;
+						content: '\f1a0';
+					}
+				}
+
+			}
+		}
+	}
+}

@@ -82,6 +82,7 @@ class Cherry_Popups_Data {
 			'container-color'      => $this->get_popup_meta_field( 'cherry-container-color', '#fff' ),
 			'container-opacity'    => $this->get_popup_meta_field( 'cherry-container-opacity', 100 ),
 			'container-image'      => $this->get_popup_meta_field( 'cherry-container-image', '' ),
+			'border-radius'        => $this->get_popup_meta_field( 'cherry-border-radius', 3 ),
 			'show-once'            => $this->get_popup_meta_field( 'cherry-show-once', 'false' ),
 			'overlay-type'         => $this->get_popup_meta_field( 'cherry-overlay-type', 'fill-color' ),
 			'overlay-color'        => $this->get_popup_meta_field( 'cherry-overlay-color', '#000' ),
@@ -96,6 +97,8 @@ class Cherry_Popups_Data {
 			'custom-event-type'    => $this->get_popup_meta_field( 'cherry-custom-event-type', 'click' ),
 			'popup-selector'       => $this->get_popup_meta_field( 'cherry-popup-selector', '' ),
 			'template'             => $this->get_popup_meta_field( 'cherry-popup-template', 'default-popup.tmpl' ),
+			'popup-type'           => $this->get_popup_meta_field( 'cherry-popup-type', 'default' ),
+			'custom-class'         => $this->get_popup_meta_field( 'cherry-custom-class', '' ),
 		);
 
 		$this->generate_dynamic_styles();
@@ -111,20 +114,49 @@ class Cherry_Popups_Data {
 		$this->enqueue_scripts();
 
 		// Item template.
-		$template = $this->get_template_by_name( $this->popup_settings['template'], 'cherry-popups' );
+		if ( isset( $this->popup_settings['popup-type'] ) ) {
+			switch ( $this->popup_settings['popup-type'] ) {
+				case 'default':
+					$template_name = 'default-popup.tmpl';
+					break;
+
+				case 'simple':
+					$template_name = 'default-simple-popup.tmpl';
+					break;
+
+				case 'login':
+					$template_name = 'default-login-popup.tmpl';
+					break;
+
+				case 'signup':
+					$template_name = 'default-signup-popup.tmpl';
+					break;
+
+				case 'subscribe':
+					$template_name = 'default-subscribe-popup.tmpl';
+					break;
+			}
+		} else {
+			$template_name = $this->popup_settings['template'];
+		}
+
+
+		$template = $this->get_template_by_name( $template_name, 'cherry-popups' );
 
 		$macros = '/%%.+?%%/';
 		$callbacks = $this->setup_template_data( $this->options );
 		$callbacks->popup_id = $this->options['id'];
 
 		$container_class = sprintf(
-			'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s %5$s-style %6$s-type',
+			'cherry-popup cherry-popup-wrapper cherry-popup-%1$s %2$s-animation overlay-%3$s-type layout-type-%4$s %5$s-style %6$s-type %7$s popup-type-%8$s',
 			$this->options['id'],
 			$this->popup_settings['show-hide-animation'],
 			$this->popup_settings['overlay-type'],
 			$this->popup_settings['layout-type'],
 			$this->popup_settings['base-style'],
-			$this->popup_settings['use']
+			$this->popup_settings['use'],
+			$this->popup_settings['custom-class'],
+			$this->popup_settings['popup-type']
 		);
 
 		$popup_settings_encode = json_encode( $this->popup_settings );
@@ -188,6 +220,8 @@ class Cherry_Popups_Data {
 				$container_styles['background-image'] = sprintf( 'url(%1$s);', $image_data[0] );
 			break;
 		}
+
+		$container_styles['border-radius'] = $this->popup_settings['border-radius'] . 'px';
 
 		cherry_popups()->dynamic_css->add_style(
 			sprintf( '.cherry-popup-%1$s .cherry-popup-container', $this->options['id'] ),
@@ -263,6 +297,7 @@ class Cherry_Popups_Data {
 			'content'       => array( $callbacks, 'get_content' ),
 			'subscribeform' => array( $callbacks, 'get_subscribe_form' ),
 			'loginform'     => array( $callbacks, 'get_login_form' ),
+			'registerform'  => array( $callbacks, 'get_register_form' ),
 		);
 
 		/**

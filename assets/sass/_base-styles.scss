@@ -1,4 +1,34 @@
 .cherry-popup-wrapper{
+	input[type='text'],
+	input[type='email'],
+	input[type='url'],
+	input[type='password'],
+	input[type='search'],
+	input[type='number'],
+	input[type='tel'],
+	input[type='range'],
+	input[type='date'],
+	input[type='month'],
+	input[type='week'],
+	input[type='time'],
+	input[type='datetime'],
+	input[type='datetime-local'],
+	input[type='color'] {
+		padding: 10px 20px;
+		background-color: white;
+		border-color: $input_border_color;
+		border-radius: 3px;
+		color: #9ba0a3;
+	}
+
+	.cherry-popup-title {
+		text-align: center;
+
+		h4 {
+			color: $grey_color_4;
+			margin: 0;
+		}
+	}
 
 	&.light-style{
 		color: $grey_color_3;
@@ -43,27 +73,27 @@
 	}
 
 	&.dark-style{
-		color: $dark_color_1;
+		color: $grey_color_1;
 		.cherry-popup-close-button{
-			color: $dark_color_1;
+			color: $grey_color_1;
 		}
 		.cherry-popup-show-again-check{
 			.marker{
 				background-color: $grey_color_1;
 			}
 			.label{
-				color: $dark_color_1;
+				color: $grey_color_1;
 			}
 			&.checked{
 				.marker{
-					background-color: $dark_color_1;
+					background-color: $grey_color_1;
 				}
 			}
 		}
 		.cherry-popup-container__inner{
 			&::-webkit-scrollbar-thumb {
-				background-color: $dark_color_1;
-				border: 0px none $dark_color_1;
+				background-color: $grey_color_1;
+				border: 0px none $grey_color_1;
 				border-radius: 4px;
 			}
 			&::-webkit-scrollbar-thumb:hover {
@@ -78,7 +108,7 @@
 		}
 		.cherry-popup-subscribe{
 			&__submit{
-				border-color: $dark_color_1;
+				border-color: $grey_color_1;
 				color: $grey_color_1;
 			}
 		}

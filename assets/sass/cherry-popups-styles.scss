@@ -3,8 +3,10 @@
 @import "animation-layout";
 @import "base-styles";
 @import "popup-element";
+@import "login-form-styles";
+@import "signup-form-styles";
 
-.cherry-popup-wrapper{
+.cherry-popup-wrapper {
 	display: flex;
 	justify-content: center;
 	position: fixed;
@@ -13,7 +15,8 @@
 	top: 0;
 	left: 0;
 	z-index: 9999;
-	.cherry-popup-container{
+
+	.cherry-popup-container {
 		flex: 0 1 auto;
 		align-self: center;
 		position: relative;
@@ -23,7 +26,11 @@
 		background-color: rgba( 255, 255, 255, 1);
 		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 		z-index: 2;
-		&__inner{
+
+		&__inner {
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: center;
 			overflow-y: auto;
 			position: relative;
 			height: 100%;
@@ -72,7 +79,8 @@
 			background-size: cover;
 		}
 	}
-	.cherry-popup-overlay{
+
+	.cherry-popup-overlay {
 		display: block;
 		position: absolute;
 		width: 100%;
@@ -83,16 +91,23 @@
 		z-index: 1;
 	}
 
-	.cherry-popup-close-button{
+	.cherry-popup-close-button {
 		display: block;
-		width: 20px;
-		height: 20px;
+		width: 30px;
+		height: 30px;
 		position: absolute;
 		top: 10px;
 		right: 10px;
 		cursor: pointer;
-		color: $dark_color_1;
+		color: $grey_color_1;
 		@include transition(all 0.3s ease);
+
+		span {
+			width: 30px;
+			height: 30px;
+			font-size: 30px;
+		}
+
 		&:hover{
 			color: $red_color;
 		}
@@ -122,7 +137,7 @@
 
 				&:before {
 					position: relative;
-					left: -1px;
+					left: -2px;
 					top: -1px;
 				}
 			}
@@ -136,7 +151,7 @@
 
 		&.checked {
 			.marker{
-				background-color: $green_color;
+				background-color: $blue_color;
 				span{
 					display: block;
 				}
@@ -181,6 +196,22 @@
 	&.layout-type-bottom{
 		.cherry-popup-container{
 			align-self: flex-end;
+		}
+	}
+
+	&.layout-type-fullwidth{
+		.cherry-popup-container{
+			min-width: 99%;
+			min-height: 98%;
+
+			.cherry-popup-container__inner {
+				align-items: center;
+			}
+
+			.cherry-popup-container__dynamic {
+				width: 30%;
+				min-width: 300px;
+			}
 		}
 	}
 }
