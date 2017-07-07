@@ -122,6 +122,9 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			// Register activation and deactivation hook.
 			register_activation_hook( __FILE__, array( $this, 'activation' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
+
+			// Set default wp solial login icon set
+			apply_filters( 'pre_option_wsl_settings_social_icon_set', 'none' );
 		}
 
 		/**

@@ -116,7 +116,7 @@
 			align-items: center;
 
 			a {
-				padding: 10px 40px;
+				padding: 10px 30px;
 				margin: 0 10px;
 				color: white;
 				cursor: pointer;
@@ -157,6 +157,21 @@
 						font-size: 16px;
 						margin-right: 8px;
 						content: '\f1a0';
+					}
+				}
+
+				&.wp-social-login-provider-twitter {
+					background-color: #6acdef;
+
+					&:hover {
+						background-color: #47b5dc;
+					}
+
+					&:before {
+						@include font-awesome-icon();
+						font-size: 16px;
+						margin-right: 8px;
+						content: '\f099';
 					}
 				}
 

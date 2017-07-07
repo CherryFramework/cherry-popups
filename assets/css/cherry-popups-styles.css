@@ -559,7 +559,7 @@
   -ms-flex-align: center;
   align-items: center; }
   .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a {
-    padding: 10px 40px;
+    padding: 10px 30px;
     margin: 0 10px;
     color: white;
     cursor: pointer;
@@ -597,6 +597,19 @@
         font-size: 16px;
         margin-right: 8px;
         content: '\f1a0'; }
+    .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter {
+      background-color: #6acdef; }
+      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter:hover {
+        background-color: #47b5dc; }
+      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter:before {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 16px;
+        margin-right: 8px;
+        content: '\f099'; }
 
 /* 3d mixins */
 /* end 3d mixins */
