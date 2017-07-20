@@ -137,7 +137,6 @@ class Cherry_Popups_Template_Callbacks {
 		?><div class="cherry-popup-content"><?php
 
 		$content = $post_data->post_content;
-		$content = apply_filters( 'the_content', $content );
 		$content = str_replace( ']]>', ']]&gt;', $content );
 		echo $content;
 		?></div><?php
