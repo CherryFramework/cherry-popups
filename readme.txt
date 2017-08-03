@@ -151,3 +151,7 @@ Each popup has its own settings which are gathered in Popup settings
 * Add subscribe form popup
 * Add custom opening event(click, hover)
 * Hot fixes
+
+= 1.1.1 =
+
+* Hot fixes
