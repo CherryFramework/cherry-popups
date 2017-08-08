@@ -131,6 +131,10 @@
 					var eventType = popupSettings['custom-event-type'],
 						selector  = popupSettings['popup-selector'];
 
+					if ( '' === selector ) {
+						return false;
+					}
+
 					switch( eventType ) {
 						case 'click':
 							$( document ).on( 'click', selector, function( event ) {

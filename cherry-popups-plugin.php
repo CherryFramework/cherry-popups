@@ -3,7 +3,7 @@
  * Plugin Name: Cherry PopUps
  * Plugin URI:  http://www.cherryframework.com/
  * Description: A plugin for WordPress.
- * Version:     1.1.1
+ * Version:     1.1.2
  * Author:      Cherry Team
  * Text Domain: cherry-popups
  * License:     GPL-3.0+
@@ -12,7 +12,7 @@
  *
  * @package Cherry_Popups
  * @author  Cherry Team
- * @version 1.1.1
+ * @version 1.1.2
  * @license GPL-3.0+
  * @copyright  2002-2016, Cherry Team
  */
@@ -141,7 +141,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_POPUPS_VERSION', '1.1.1' );
+			define( 'CHERRY_POPUPS_VERSION', '1.1.2' );
 
 			/**
 			 * Set constant name for the post type name.
