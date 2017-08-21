@@ -495,6 +495,16 @@
   .popup-type-login .cherry-popup-login__message.success-type span {
     color: #48c569; }
 
+.popup-type-login .cherry-popup-login__already-message {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
 .popup-type-login .cherry-popup-login .cherry-popup-login__signup-message {
   display: -webkit-box;
   display: -webkit-flex;

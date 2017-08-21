@@ -69,6 +69,11 @@
 			}
 		}
 
+		&__already-message {
+			display: flex;
+			justify-content: center;
+		}
+
 		.cherry-popup-login__signup-message {
 			display: flex;
 			justify-content: center;

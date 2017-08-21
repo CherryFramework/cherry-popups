@@ -79,7 +79,6 @@ class Cherry_Popups_Template_Callbacks {
 		$this->post_meta = null;
 	}
 
-
 	/**
 	 * Get post title.
 	 *
@@ -138,7 +137,7 @@ class Cherry_Popups_Template_Callbacks {
 
 		$content = $post_data->post_content;
 		$content = str_replace( ']]>', ']]&gt;', $content );
-		echo $content;
+		echo do_shortcode( $content );
 		?></div><?php
 		$content = ob_get_contents();
 
@@ -188,9 +187,17 @@ class Cherry_Popups_Template_Callbacks {
 			'sign_up_link'         => esc_html__( '#', 'cherry-projects' ),
 			'remember_message'     => esc_html__( 'Remember me', 'cherry-projects' ),
 			'use_mail'             => esc_html__( 'or use your login data', 'cherry-projects' ),
+			'already_login_text'   => esc_html__( 'You already login in', 'cherry-projects' ),
 		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
+
+		if ( is_user_logged_in() ) {
+			$html = '<h2 class="cherry-popup-login__already-message"><span>' . $attr['already_login_text'] . '</span></h2>';
+
+			return $html;
+		}
+
 		$html = '<div class="cherry-popup-login">';
 			$html .= '<form method="POST" action="#" class="cherry-popup-login__form">';
 
