@@ -58,7 +58,7 @@ class Cherry_Popups_Init {
 		add_action( 'after_setup_theme', array( $this, 'set_cherry_utility' ), 10 );
 
 		add_action( 'cherry_popups_login_logout_link', array( $this, 'generate_login_logout_link' ) );
-		add_action( 'cherry_popups_sine_up_link', array( $this, 'generate_sine_up_link' ) );
+		add_action( 'cherry_popups_sign_up_link', array( $this, 'generate_sign_up_link' ) );
 	}
 
 	/**
@@ -569,11 +569,11 @@ class Cherry_Popups_Init {
 	}
 
 	/**
-	 * Generating sine-up link
+	 * Generating sign-up link
 	 *
-	 * @return string sine-up link
+	 * @return string sign-up link
 	 */
-	public function generate_sine_up_link() {
+	public function generate_sign_up_link() {
 		$html = '';
 
 		$defaults = apply_filters( 'cherry-popups-sign-up-text', array(
