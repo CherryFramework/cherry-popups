@@ -311,7 +311,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 */
 		public function register_assets() {
 			// Register stylesheets.
-			wp_register_style( 'cherry-popups-font-awesome', esc_url( 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' ), array(), '4.7.0', 'all' );
+			wp_register_style( 'cherry-popups-font-awesome', esc_url( CHERRY_POPUPS_URI . 'assets/css/font-awesome.min.css' ), array(), '4.7.0', 'all' );
 			wp_register_style( 'cherry-popups-styles', esc_url( CHERRY_POPUPS_URI . 'assets/css/cherry-popups-styles.css' ), array(), CHERRY_POPUPS_VERSION, 'all' );
 
 			// Register JavaScripts.
