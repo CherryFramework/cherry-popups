@@ -35,8 +35,8 @@
     .cherry-popup-wrapper.simple-fade-animation.hide-animation .cherry-popup-container {
       -webkit-animation-name: simple-fade-out;
       animation-name: simple-fade-out;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
       -webkit-animation-fill-mode: both;
@@ -44,8 +44,8 @@
     .cherry-popup-wrapper.simple-fade-animation.hide-animation .cherry-popup-overlay {
       -webkit-animation-name: simple-fade-out;
       animation-name: simple-fade-out;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
       -webkit-animation-fill-mode: both;
@@ -94,8 +94,8 @@
     .cherry-popup-wrapper.simple-scale-animation.hide-animation .cherry-popup-container {
       -webkit-animation-name: simple-fade-out;
       animation-name: simple-fade-out;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
       -webkit-animation-fill-mode: both;
@@ -103,8 +103,8 @@
     .cherry-popup-wrapper.simple-scale-animation.hide-animation .cherry-popup-overlay {
       -webkit-animation-name: simple-fade-out;
       animation-name: simple-fade-out;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
       -webkit-animation-fill-mode: both;
@@ -149,8 +149,8 @@
     .cherry-popup-wrapper.move-up-animation.hide-animation .cherry-popup-container {
       -webkit-animation-name: simple-fade-out;
       animation-name: simple-fade-out;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
       -webkit-animation-fill-mode: both;
@@ -158,8 +158,8 @@
     .cherry-popup-wrapper.move-up-animation.hide-animation .cherry-popup-overlay {
       -webkit-animation-name: simple-fade-out;
       animation-name: simple-fade-out;
-      -webkit-animation-duration: 0.5s;
-      animation-duration: 0.5s;
+      -webkit-animation-duration: 0.3s;
+      animation-duration: 0.3s;
       -webkit-animation-iteration-count: 1;
       animation-iteration-count: 1;
       -webkit-animation-fill-mode: both;
@@ -491,6 +491,7 @@
   text-align: center;
   display: none; }
   .popup-type-login .cherry-popup-login__message span {
+    font-size: 18px;
     color: #e54343; }
   .popup-type-login .cherry-popup-login__message.success-type span {
     color: #48c569; }
@@ -683,6 +684,7 @@
   margin: 1em 0;
   text-align: center; }
   .popup-type-signup .cherry-popup-register__message span {
+    font-size: 18px;
     color: #e54343; }
   .popup-type-signup .cherry-popup-register__message.success-type span {
     color: #48c569; }

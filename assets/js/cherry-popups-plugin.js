@@ -23,9 +23,10 @@
 					loginFormAjaxId         = 'cherry_login_form_ajax',
 					$loginFormMessage       = null,
 
+					$registerForm           = $( '.cherry-popup-register', $this ),
+					cherryRegisterFormAjax  = null;
 					registerFormAjaxId      = 'cherry_register_form_ajax',
-					cherryRegisterFormAjax  = null,
-					baseZIndex              = 9999;
+					$registerFormMessage    = null;
 
 				if ( options ) {
 					$.extend( settings, options );
@@ -79,8 +80,8 @@
 					}
 
 					// Register form init
-					if ( $( '.cherry-popup-register', $this )[0] ) {
-						registerFormInit( $( '.cherry-popup-register', $this ) );
+					if ( $registerForm[0] ) {
+						registerFormInit();
 					}
 
 				} )();
@@ -166,7 +167,7 @@
 							clearTimeout( timeout );
 							timeout = setTimeout( function() {
 								hidePopup();
-							}, 500 );
+							}, 300 );
 					} );
 
 					$this.on( 'click', '.cherry-popup-overlay', function( event ) {
@@ -177,7 +178,23 @@
 							clearTimeout( timeout );
 							timeout = setTimeout( function() {
 								hidePopup();
-							}, 500 );
+							}, 300 );
+					} );
+
+					$( document ).on( 'keyup', function( event ) {
+
+						if ( ! $this.hasClass( 'show-animation' ) ) {
+							return false;
+						}
+
+						if ( 27 == event.keyCode && $this.hasClass( 'show-animation' ) ) {
+							$this.toggleClass( 'hide-animation show-animation' );
+
+							clearTimeout( timeout );
+							timeout = setTimeout( function() {
+								hidePopup();
+							}, 300 );
+						}
 					} );
 				}
 
@@ -210,11 +227,24 @@
 				 * @return {void}
 				 */
 				function showPopup() {
-					var openPopupsLength = $('.show-animation').length;
+					var $popupList   = $( '.cherry-popup' );
+
+					$popupList.each( function() {
+						var $popup = $( this ),
+							timeout = null;
+
+						if ( $popup.hasClass( 'show-animation' ) ) {
+							$popup.toggleClass( 'hide-animation show-animation' );
+
+							clearTimeout( timeout );
+							timeout = setTimeout( function() {
+								$popup.toggleClass( 'waiting-status hide-animation' );
+							}, 300 );
+						}
+					});
 
 					$this.removeClass( 'waiting-status' );
 					$this.addClass( 'show-animation' );
-					$this.css( { 'z-index': baseZIndex + openPopupsLength } );
 				}
 
 				/**
@@ -224,7 +254,6 @@
 				 */
 				function hidePopup() {
 					$this.toggleClass( 'waiting-status hide-animation' );
-					$this.css( { 'z-index': baseZIndex } );
 				}
 
 				/**
@@ -376,7 +405,7 @@
 							$subscribeFormMessage.removeClass( 'success-type' );
 							clearTimeout( timeout );
 						} );
-					}, 3000 );
+					}, 6000 );
 				}
 
 				/*
@@ -395,6 +424,13 @@
 					);
 
 					$loginForm.on( 'click', '.cherry-popup-login__login-in', loginFormAjax );
+
+					$loginForm.on( 'keyup', '.cherry-popup-login__input-user, .cherry-popup-login__input-pass', function() {
+						if ( 13 == event.keyCode ) {
+							loginFormAjax();
+						}
+					} );
+
 					$loginForm.on( 'click', '.cherry-popup-login__remember', function() {
 						$( this ).toggleClass( 'checked' );
 					} );
@@ -444,7 +480,7 @@
 
 							clearTimeout( timeout );
 						} );
-					}, 3000 );
+					}, 6000 );
 				}
 
 				/*
@@ -452,45 +488,68 @@
 				 *
 				 * @return {void}
 				 */
-				function registerFormInit( $registerForm ) {
-					var $registerFormMessage = $( '.cherry-popup-register__message', $registerForm );
+				function registerFormInit() {
+					$registerFormMessage = $( '.cherry-popup-register__message', $registerForm );
 
-					$registerForm.on( 'click', '.cherry-popup-register__sign-up', function() {
-						var login = $( '.cherry-popup-register__input-login', $registerForm ).val(),
-							mail  = $( '.cherry-popup-login__input-mail', $registerForm ).val(),
-							data = {
-								'login': login,
-								'mail': mail
-							};
-
-						cherryRegisterFormAjax.sendData( data );
+					cherryRegisterFormAjax = new CherryJsCore.CherryAjaxHandler( {
+						handlerId: registerFormAjaxId,
+						successCallback: registerFormAjaxSuccessCallback
 					} );
 
-					cherryRegisterFormAjax = new CherryJsCore.CherryAjaxHandler(
-						{
-							handlerId: registerFormAjaxId,
-							successCallback: function( data ) {
-								var successType = data.type,
-									message     = data.message || '',
-									timeout     = null;
+					$registerForm.on( 'click', '.cherry-popup-register__sign-up', registerFormAjax );
 
-								if ( 'success' === successType ) {
-									$registerFormMessage.addClass( 'success-type' );
-								}
-
-								$( 'span', $registerFormMessage ).html( message );
-								$registerFormMessage.slideDown( 300 );
-
-								timeout = setTimeout( function() {
-									$registerFormMessage.slideUp( 300, function() {
-										$registerFormMessage.removeClass( 'success-type' );
-
-										clearTimeout( timeout );
-									} );
-								}, 3000 );
-							}
+					$registerForm.on( 'keyup', '.cherry-popup-register__input-login, .cherry-popup-login__input-mail', function() {
+						if ( 13 == event.keyCode ) {
+							registerFormAjax();
 						}
-					);
+					} );
+
+				}
+
+				/**
+				 * Register submit form click event
+				 *
+				 * @param  {object} event Click event.
+				 * @return {void}
+				 */
+				function registerFormAjax() {
+					var login = $( '.cherry-popup-register__input-login', $registerForm ).val(),
+						mail  = $( '.cherry-popup-login__input-mail', $registerForm ).val(),
+						data = {
+							'login': login,
+							'mail': mail
+						};
+
+					cherryRegisterFormAjax.sendData( data );
+				}
+
+				/**
+				 * Register form ajax success callback
+				 *
+				 * @param  {object} data Success data.
+				 * @return {void}
+				 */
+				function registerFormAjaxSuccessCallback( data ) {
+					var $registerFormMessage = $( '.cherry-popup-register__message', $registerForm );
+
+					var successType = data.type,
+						message     = data.message || '',
+						timeout     = null;
+
+					if ( 'success' === successType ) {
+						$registerFormMessage.addClass( 'success-type' );
+					}
+
+					$( 'span', $registerFormMessage ).html( message );
+					$registerFormMessage.slideDown( 300 );
+
+					timeout = setTimeout( function() {
+						$registerFormMessage.slideUp( 300, function() {
+							$registerFormMessage.removeClass( 'success-type' );
+
+							clearTimeout( timeout );
+						} );
+					}, 6000 );
 				}
 
 				/**

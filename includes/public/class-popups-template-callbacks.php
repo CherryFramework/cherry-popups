@@ -256,10 +256,10 @@ class Cherry_Popups_Template_Callbacks {
 			$html .= '<form method="POST" action="#" class="cherry-popup-register__form">';
 				$html .= '<div class="cherry-popup-register__input-group">';
 					$html .= '<div class="cherry-popup-register__wrap">';
-						$html .= '<input id="cherry-popup-register-login-input" class="cherry-popup__input cherry-popup-register__input-login" type="text" name="register-login" value="" placeholder="' . $attr['login_placeholder'] . '">';
+						$html .= '<input id="cherry-popup-register-login-input" class="cherry-popup__input cherry-popup-register__input-login" type="text" name="register-login" value="" placeholder="' . $attr['login_placeholder'] . '" tabindex=1>';
 					$html .= '</div>';
 					$html .= '<div class="cherry-popup-register__wrap">';
-						$html .= '<input id="cherry-popup-register-mail-input" class="cherry-popup__input cherry-popup-login__input-mail" type="email" name="register-mail" value="" placeholder="' . $attr['mail_placeholder'] . '">';
+						$html .= '<input id="cherry-popup-register-mail-input" class="cherry-popup__input cherry-popup-login__input-mail" type="email" name="register-mail" value="" placeholder="' . $attr['mail_placeholder'] . '" tabindex=2>';
 					$html .= '</div>';
 					$html .= '<div class="cherry-popup-register__wrap">';
 						$html .= '<div class="cherry-popup-register__sign-up">' . $attr['submit_text'] . '</div>';

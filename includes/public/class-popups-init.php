@@ -71,18 +71,20 @@ class Cherry_Popups_Init {
 		$this->cherry_utility = cherry_popups()->get_core()->modules['cherry-utility']->utility;
 
 		$this->sys_messages = apply_filters( 'cherry_popups_sys_messages', array(
-			'invalid_mail'      => esc_html__( 'Please, provide valid mail', 'cherry-popups' ),
-			'mailchimp'         => esc_html__( 'Please, set up MailChimp API key and List ID', 'cherry-popups' ),
-			'internal'          => esc_html__( 'Internal error. Please, try again later', 'cherry-popups' ),
-			'server_error'      => esc_html__( 'Server error. Please, try again later', 'cherry-popups' ),
-			'mailchimp_success' => esc_html__( 'Success', 'cherry-popups' ),
-			'login_success'     => esc_html__( 'Login successful', 'cherry-popups' ),
-			'login_error'       => esc_html__( 'Login or password is wrong', 'cherry-popups' ),
-			'login_empty'       => esc_html__( 'Login is empty', 'cherry-popups' ),
-			'mail_empty'        => esc_html__( 'Mail is empty', 'cherry-popups' ),
-			'pass_empty'        => esc_html__( 'Password is empty', 'cherry-popups' ),
-			'register_complete' => esc_html__( 'Registration complete. Please check your email. And Click to login link', 'cherry-popups' ),
-			'register_error'    => esc_html__( 'Current user is already exist. Registration error.', 'cherry-popups' ),
+			'invalid_mail'                => esc_html__( 'Please, provide valid mail', 'cherry-popups' ),
+			'mailchimp'                   => esc_html__( 'Please, set up MailChimp API key and List ID', 'cherry-popups' ),
+			'internal'                    => esc_html__( 'Internal error. Please, try again later', 'cherry-popups' ),
+			'server_error'                => esc_html__( 'Server error. Please, try again later', 'cherry-popups' ),
+			'mailchimp_success'           => esc_html__( 'Success', 'cherry-popups' ),
+			'login_success'               => esc_html__( 'Login successful', 'cherry-popups' ),
+			'login_error'                 => esc_html__( 'Login or password is wrong', 'cherry-popups' ),
+			'login_empty'                 => esc_html__( 'Login is empty', 'cherry-popups' ),
+			'mail_empty'                  => esc_html__( 'Mail is empty', 'cherry-popups' ),
+			'pass_empty'                  => esc_html__( 'Password is empty', 'cherry-popups' ),
+			'register_complete'           => esc_html__( 'Registration complete. Please check your email. And Click to login link', 'cherry-popups' ),
+			'register_error'              => esc_html__( 'Registration error. Current user or user with this mail is already exists', 'cherry-popups' ),
+			'register_error_invalid_user' => esc_html__( 'This username is invalid because it uses illegal characters. Please enter a valid username.', 'cherry-popups' ),
+			'register_error_invalid_mail' => esc_html__( 'The email address isn&#8217;t correct.', 'cherry-popups' ),
 		) );
 
 		cherry_popups()->get_core()->init_module(
@@ -372,6 +374,14 @@ class Cherry_Popups_Init {
 		if ( ! is_wp_error( $errors ) ) {
 			wp_send_json( array( 'type' => 'success', 'message' => $this->sys_messages['register_complete'] ) );
 		} else {
+			if ( array_key_exists( 'invalid_username', $errors->errors ) ) {
+				wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['register_error_invalid_user'] ) );
+			}
+
+			if ( array_key_exists( 'invalid_email', $errors->errors ) ) {
+				wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['register_error_invalid_mail'] ) );
+			}
+
 			wp_send_json( array( 'type' => 'error', 'message' => $this->sys_messages['register_error'] ) );
 		}
 	}
@@ -580,7 +590,9 @@ class Cherry_Popups_Init {
 			'signup_text' =>  esc_html__( 'Sign Up', 'cherry-popups' ),
 		) );
 
-		$html .= '<a class="cherry-popups-signup-link" href="#">' . $defaults['signup_text'] . '</a>';
+		if ( ! is_user_logged_in() ) {
+			$html .= '<a class="cherry-popups-signup-link" href="#">' . $defaults['signup_text'] . '</a>';
+		}
 
 		echo $html;
 	}

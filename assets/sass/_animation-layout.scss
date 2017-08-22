@@ -27,14 +27,14 @@
 
 			.cherry-popup-container {
 				animation-name: simple-fade-out;
-				animation-duration: 0.5s;
+				animation-duration: 0.3s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
 
 			.cherry-popup-overlay {
 				animation-name: simple-fade-out;
-				animation-duration: 0.5s;
+				animation-duration: 0.3s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
@@ -49,6 +49,7 @@
 		display: none;
 		@include perspective(1000px);
 		@include perspective-origin(50% 50%);
+
 		&.show-animation{
 			display: flex;
 			.cherry-popup-container{
@@ -66,17 +67,18 @@
 				animation-fill-mode: both;
 			}
 		}
+
 		&.hide-animation{
 			display: flex;
 			.cherry-popup-container{
 				animation-name: simple-fade-out;
-				animation-duration: 0.5s;
+				animation-duration: 0.3s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
 			.cherry-popup-overlay{
 				animation-name: simple-fade-out;
-				animation-duration: 0.5s;
+				animation-duration: 0.3s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
@@ -87,6 +89,7 @@
 		display: none;
 		@include perspective(1000px);
 		@include perspective-origin(50% 50%);
+
 		&.show-animation{
 			display: flex;
 			.cherry-popup-container{
@@ -103,17 +106,18 @@
 				animation-iteration-count: 1;
 			}
 		}
+
 		&.hide-animation{
 			display: flex;
 			.cherry-popup-container{
 				animation-name: simple-fade-out;
-				animation-duration: 0.5s;
+				animation-duration: 0.3s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
 			.cherry-popup-overlay{
 				animation-name: simple-fade-out;
-				animation-duration: 0.5s;
+				animation-duration: 0.3s;
 				animation-iteration-count: 1;
 				animation-fill-mode: both;
 			}
