@@ -276,6 +276,72 @@
     color: #9ba0a3;
     margin: 0; }
 
+.cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a {
+    padding: 10px 30px;
+    margin: 0 10px;
+    color: white;
+    cursor: pointer;
+    background-color: #298ffc;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 600;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease; }
+    .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a:hover {
+      background-color: #206ff4; }
+    .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-facebook {
+      background-color: #4E64AD; }
+      .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-facebook:hover {
+        background-color: #3d5294; }
+      .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-facebook:before {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 16px;
+        margin-right: 8px;
+        content: '\f09a'; }
+    .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-google {
+      background-color: #dd4b39; }
+      .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-google:hover {
+        background-color: #be4233; }
+      .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-google:before {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 16px;
+        margin-right: 8px;
+        content: '\f1a0'; }
+    .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter {
+      background-color: #6acdef; }
+      .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter:hover {
+        background-color: #47b5dc; }
+      .cherry-popup-wrapper .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter:before {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 16px;
+        margin-right: 8px;
+        content: '\f099'; }
+
 .cherry-popup-wrapper.light-style {
   color: #e5e5e5; }
   .cherry-popup-wrapper.light-style .cherry-popup-close-button {
@@ -369,6 +435,44 @@
   .cherry-popup-wrapper.red-style .cherry-popup-subscribe__submit {
     border-color: #e54343;
     color: #96989a; }
+
+.cherry-popup-spinner {
+  width: 25px;
+  height: 25px;
+  display: none;
+  position: relative;
+  margin-left: 5px; }
+  .cherry-popup-spinner .cherry-double-bounce1,
+  .cherry-popup-spinner .cherry-double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: cherry-doubleBounce 2s infinite ease-in-out;
+    animation: cherry-doubleBounce 2s infinite ease-in-out; }
+  .cherry-popup-spinner .cherry-double-bounce2 {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s; }
+
+@-webkit-keyframes cherry-doubleBounce {
+  0%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes cherry-doubleBounce {
+  0%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1); } }
 
 /* 3d mixins */
 /* end 3d mixins */
@@ -466,12 +570,23 @@
     margin-bottom: 0; }
 
 .popup-type-login .cherry-popup-login__login-in {
-  padding: 10px 40px;
   color: white;
   cursor: pointer;
   background-color: #298ffc;
   border-radius: 20px;
-  display: inline-block;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 10px 40px;
   font-weight: 600; }
   .popup-type-login .cherry-popup-login__login-in:hover {
     background-color: #206ff4; }
@@ -556,72 +671,6 @@
     background-color: #e5e5e5;
     content: ''; }
 
-.popup-type-login .wp-social-login-widget .wp-social-login-provider-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center; }
-  .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a {
-    padding: 10px 30px;
-    margin: 0 10px;
-    color: white;
-    cursor: pointer;
-    background-color: #298ffc;
-    border-radius: 20px;
-    display: inline-block;
-    font-weight: 600;
-    -webkit-transition: all 0.5s ease;
-    transition: all 0.5s ease; }
-    .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a:hover {
-      background-color: #206ff4; }
-    .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-facebook {
-      background-color: #4E64AD; }
-      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-facebook:hover {
-        background-color: #3d5294; }
-      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-facebook:before {
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-size: 16px;
-        margin-right: 8px;
-        content: '\f09a'; }
-    .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-google {
-      background-color: #dd4b39; }
-      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-google:hover {
-        background-color: #be4233; }
-      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-google:before {
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-size: 16px;
-        margin-right: 8px;
-        content: '\f1a0'; }
-    .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter {
-      background-color: #6acdef; }
-      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter:hover {
-        background-color: #47b5dc; }
-      .popup-type-login .wp-social-login-widget .wp-social-login-provider-list a.wp-social-login-provider-twitter:before {
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-size: 16px;
-        margin-right: 8px;
-        content: '\f099'; }
-
 /* 3d mixins */
 /* end 3d mixins */
 .popup-type-signup .cherry-popup-title {
@@ -674,7 +723,18 @@
   cursor: pointer;
   background-color: #298ffc;
   border-radius: 20px;
-  display: inline-block;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   font-weight: 600; }
   .popup-type-signup .cherry-popup-register__sign-up:hover {
     background-color: #206ff4; }
@@ -688,6 +748,44 @@
     color: #e54343; }
   .popup-type-signup .cherry-popup-register__message.success-type span {
     color: #48c569; }
+
+.popup-type-signup .cherry-popup-register .cherry-popup-signup__new-user {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 20px 0; }
+  .popup-type-signup .cherry-popup-register .cherry-popup-signup__new-user span {
+    text-align: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    margin: 0 25px; }
+  .popup-type-signup .cherry-popup-register .cherry-popup-signup__new-user:before {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    display: block;
+    position: relative;
+    height: 1px;
+    background-color: #e5e5e5;
+    content: ''; }
+  .popup-type-signup .cherry-popup-register .cherry-popup-signup__new-user:after {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    display: block;
+    position: relative;
+    height: 1px;
+    background-color: #e5e5e5;
+    content: ''; }
 
 .cherry-popup-wrapper {
   display: -webkit-box;

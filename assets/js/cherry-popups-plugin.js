@@ -245,6 +245,14 @@
 
 					$this.removeClass( 'waiting-status' );
 					$this.addClass( 'show-animation' );
+
+					if ( $( '.cherry-popup-login__input-user', $loginForm )[0] ) {
+						$( '.cherry-popup-login__input-user', $loginForm ).focus();
+					}
+
+					if ( $( '.cherry-popup-register__input-login', $loginForm )[0] ) {
+						$( '.cherry-popup-register__input-login', $loginForm ).focus();
+					}
 				}
 
 				/**
@@ -425,8 +433,8 @@
 
 					$loginForm.on( 'click', '.cherry-popup-login__login-in', loginFormAjax );
 
-					$loginForm.on( 'keyup', '.cherry-popup-login__input-user, .cherry-popup-login__input-pass', function() {
-						if ( 13 == event.keyCode ) {
+					$loginForm.on( 'keyup', '.cherry-popup-login__input-user, .cherry-popup-login__input-pass', function( event ) {
+						if ( 13 == ( event.keyCode ? event.keyCode : event.which ) ) {
 							loginFormAjax();
 						}
 					} );
@@ -452,6 +460,7 @@
 							'remember': $remember.hasClass( 'checked' ) ? 'true' : 'false'
 						};
 
+					$( '.cherry-popup-spinner', $loginForm ).css( { 'display':'block'} );
 					cherryLoginFormAjax.sendData( data );
 				}
 
@@ -465,6 +474,8 @@
 					var successType = data.type,
 						message     = data.message || '',
 						timeout     = null;
+
+					$( '.cherry-popup-spinner', $loginForm ).css( { 'display':'none'} );
 
 					if ( 'success' === successType ) {
 						$loginFormMessage.addClass( 'success-type' );
@@ -498,8 +509,8 @@
 
 					$registerForm.on( 'click', '.cherry-popup-register__sign-up', registerFormAjax );
 
-					$registerForm.on( 'keyup', '.cherry-popup-register__input-login, .cherry-popup-login__input-mail', function() {
-						if ( 13 == event.keyCode ) {
+					$registerForm.on( 'keyup', '.cherry-popup-register__input-login, .cherry-popup-login__input-mail', function( event ) {
+						if ( 13 == ( event.keyCode ? event.keyCode : event.which ) ) {
 							registerFormAjax();
 						}
 					} );
@@ -520,6 +531,7 @@
 							'mail': mail
 						};
 
+					$( '.cherry-popup-spinner', $registerForm ).css( { 'display':'block' } );
 					cherryRegisterFormAjax.sendData( data );
 				}
 
@@ -530,11 +542,12 @@
 				 * @return {void}
 				 */
 				function registerFormAjaxSuccessCallback( data ) {
-					var $registerFormMessage = $( '.cherry-popup-register__message', $registerForm );
-
-					var successType = data.type,
+					var $registerFormMessage = $( '.cherry-popup-register__message', $registerForm ),
+						successType = data.type,
 						message     = data.message || '',
 						timeout     = null;
+
+					$( '.cherry-popup-spinner', $registerForm ).css( { 'display':'none' } );
 
 					if ( 'success' === successType ) {
 						$registerFormMessage.addClass( 'success-type' );
