@@ -248,7 +248,7 @@ class Cherry_Popups_Template_Callbacks {
 			'have_account'      => esc_html__( 'Already have an account?', 'cherry-projects' ),
 			'login_link_text'   => esc_html__( 'Log in', 'cherry-projects' ),
 			'login_link'        => esc_html__( '#', 'cherry-projects' ),
-			'new_user_data'     => esc_html__( 'or use your login and mail', 'cherry-projects' ),
+			'new_user_data'     => esc_html__( 'or fill in your login and email to proceed with registration', 'cherry-projects' ),
 		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
