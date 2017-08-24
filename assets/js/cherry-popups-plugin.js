@@ -250,8 +250,8 @@
 						$( '.cherry-popup-login__input-user', $loginForm ).focus();
 					}
 
-					if ( $( '.cherry-popup-register__input-login', $loginForm )[0] ) {
-						$( '.cherry-popup-register__input-login', $loginForm ).focus();
+					if ( $( '.cherry-popup-register__input-login', $registerForm )[0] ) {
+						$( '.cherry-popup-register__input-login', $registerForm ).focus();
 					}
 				}
 
