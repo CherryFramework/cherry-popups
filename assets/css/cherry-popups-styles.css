@@ -787,6 +787,19 @@
     background-color: #e5e5e5;
     content: ''; }
 
+.popup-type-signup .cherry-popup-register .cherry-popup-signup__login-user {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: 20px 0; }
+  .popup-type-signup .cherry-popup-register .cherry-popup-signup__login-user span {
+    margin: 0 5px; }
+
 .cherry-popup-wrapper {
   display: -webkit-box;
   display: -webkit-flex;

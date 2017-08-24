@@ -248,7 +248,7 @@ class Cherry_Popups_Template_Callbacks {
 			'have_account'      => esc_html__( 'Already have an account?', 'cherry-projects' ),
 			'login_link_text'   => esc_html__( 'Log in', 'cherry-projects' ),
 			'login_link'        => esc_html__( '#', 'cherry-projects' ),
-			'new_user_data'     => esc_html__( 'or fill in your login and email to proceed with registration', 'cherry-projects' ),
+			'new_user_data'     => esc_html__( 'or enter your registration credentials', 'cherry-projects' ),
 		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
@@ -269,11 +269,11 @@ class Cherry_Popups_Template_Callbacks {
 					$html .= '<div class="cherry-popup-register__wrap">';
 						$html .= '<input id="cherry-popup-register-mail-input" class="cherry-popup__input cherry-popup-login__input-mail" type="email" name="register-mail" value="" placeholder="' . $attr['mail_placeholder'] . '" tabindex=2>';
 					$html .= '</div>';
-					$html .= '<div class="cherry-popup-register__wrap">';
-						$html .= '<div class="cherry-popup-register__sign-up"><span>' . $attr['submit_text'] . '</span><div class="cherry-popup-spinner"><div class="cherry-double-bounce1"></div><div class="cherry-double-bounce2"></div></div></div>';
+					$html .= '<div class="cherry-popup-signup__login-user">';
+						$html .= '<span>' . $attr['have_account'] . '</span><a href="' . $attr['login_link'] . '" class="cherry-popups-login-link">' . $attr['login_link_text'] . '</a>';
 					$html .= '</div>';
 					$html .= '<div class="cherry-popup-register__wrap">';
-						$html .= '<span>' . $attr['have_account'] . '</span><a href="' . $attr['login_link'] . '" class="cherry-popups-login-link">' . $attr['login_link_text'] . '</a>';
+						$html .= '<div class="cherry-popup-register__sign-up"><span>' . $attr['submit_text'] . '</span><div class="cherry-popup-spinner"><div class="cherry-double-bounce1"></div><div class="cherry-double-bounce2"></div></div></div>';
 					$html .= '</div>';
 				$html .= '</div>';
 				$html .= '<div class="cherry-popup-register__message"><span></span></div>';
