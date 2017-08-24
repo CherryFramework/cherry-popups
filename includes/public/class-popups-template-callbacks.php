@@ -187,7 +187,7 @@ class Cherry_Popups_Template_Callbacks {
 			'sign_up_link'         => esc_html__( '#', 'cherry-projects' ),
 			'remember_message'     => esc_html__( 'Remember me', 'cherry-projects' ),
 			'use_mail'             => esc_html__( 'or use your login data', 'cherry-projects' ),
-			'already_login_text'   => esc_html__( 'You already login in', 'cherry-projects' ),
+			'already_login_text'   => esc_html__( 'You are currently logged in', 'cherry-projects' ),
 		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
