@@ -183,7 +183,7 @@ class Cherry_Popups_Template_Callbacks {
 			'user_placeholder'     => esc_html__( 'Login', 'cherry-projects' ),
 			'password_placeholder' => esc_html__( 'Password', 'cherry-projects' ),
 			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to', 'cherry-projects' ),
-			'sign_up_link_text'    => esc_html__( 'Sign up.', 'cherry-projects' ),
+			'sign_up_link_text'    => esc_html__( 'Sign up', 'cherry-projects' ),
 			'sign_up_link'         => esc_html__( '#', 'cherry-projects' ),
 			'remember_message'     => esc_html__( 'Remember me', 'cherry-projects' ),
 			'use_mail'             => esc_html__( 'or use your login data', 'cherry-projects' ),
