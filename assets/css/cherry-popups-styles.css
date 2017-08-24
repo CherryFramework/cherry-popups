@@ -713,7 +713,7 @@
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  margin: 1em 0; }
+  margin: 0.75em 0; }
   .popup-type-signup .cherry-popup-register__wrap:last-child {
     margin-bottom: 0; }
 
