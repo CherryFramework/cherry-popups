@@ -30,6 +30,76 @@
 		}
 	}
 
+	.wp-social-login-widget {
+		.wp-social-login-provider-list {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			a {
+				padding: 10px 30px;
+				margin: 0 10px;
+				color: white;
+				cursor: pointer;
+				background-color: $blue_color;
+				border-radius: 20px;
+				display: inline-block;
+				font-weight: 600;
+				transition: all 0.5s ease;
+
+				&:hover {
+					background-color: $blue_color_h;
+				}
+
+				&.wp-social-login-provider-facebook {
+					background-color: #4E64AD;
+
+					&:hover {
+						background-color: #3d5294;
+					}
+
+					&:before {
+						@include font-awesome-icon();
+						font-size: 16px;
+						margin-right: 8px;
+						content: '\f09a';
+					}
+				}
+
+				&.wp-social-login-provider-google {
+					background-color: #dd4b39;
+
+					&:hover {
+						background-color: #be4233;
+					}
+
+					&:before {
+						@include font-awesome-icon();
+						font-size: 16px;
+						margin-right: 8px;
+						content: '\f1a0';
+					}
+				}
+
+				&.wp-social-login-provider-twitter {
+					background-color: #6acdef;
+
+					&:hover {
+						background-color: #47b5dc;
+					}
+
+					&:before {
+						@include font-awesome-icon();
+						font-size: 16px;
+						margin-right: 8px;
+						content: '\f099';
+					}
+				}
+
+			}
+		}
+	}
+
 	&.light-style{
 		color: $grey_color_3;
 		.cherry-popup-close-button{
@@ -193,5 +263,47 @@
 				color: $grey_color_1;
 			}
 		}
+	}
+}
+
+.cherry-popup-spinner{
+	width: 25px;
+	height: 25px;
+	display: none;
+	position: relative;
+	margin-left: 5px;
+
+	.cherry-double-bounce1,
+	.cherry-double-bounce2 {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background-color: white;
+		opacity: 0.6;
+		position: absolute;
+		top: 0;
+		left: 0;
+		animation: cherry-doubleBounce 2s infinite ease-in-out;
+	}
+
+	.cherry-double-bounce2 {
+		animation-delay: -1s;
+	}
+}
+
+@-webkit-keyframes cherry-doubleBounce {
+	0%, 100% {
+		transform: scale(0);
+	}
+	50% {
+		transform: scale(1);
+	}
+}
+@keyframes cherry-doubleBounce {
+	0%, 100% {
+		transform: scale(0);
+	}
+	50% {
+		transform: scale(1);
 	}
 }
