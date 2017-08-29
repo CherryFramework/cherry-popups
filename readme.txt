@@ -18,11 +18,14 @@ Cherry PopUps is a standalone plugin, however it depends on the Cherry Framework
 When it comes to customization, Cherry PopUp offers many options to choose from. You can freely modify the look of your pop-up windows by defining its shape, color scheme, background type, etc.
 Here is a list of options that you can use to reshape your pop-ups:
 
-* Popup layout type: allows you to choose between center, center & full width and bottom & full width views.
+* Popup layout type: allows you to choose between center, center & full width and bottom & full width views;
 * Show/Hide animation: allows you to apply fade, scale or move up animations;
 * Base style preset: offers several styles for a better compatibility of your pop-ups with the design of your website;
-* Container background type and color/image: lets you choose, whether to use an image-based or a single-color background.
-* Container opacity, width and height: allows you to modify the basic visual parameters of the pop-up container.
+* Popup content type: allows you to choose between subcribe, login register or simple popup type;
+* Show once: PopUp will appears just once and won’t come up when you close it;
+* Base style settings: popup style settings( background type, background color, opacity, width, height, padding, border radius);
+* Overlay settings: overlay style settings( type of overlay, overlay background color, overlay opacity, use Overlay as close button );
+* Custom openning event: define event(click, hover) type and selector for current popup;
 
 You can also enable, disable or customize the overlay that will cover the content of your page when the pop-up is on.
 Open and Close settings define the conditions under which pop-up windows show up and hide.
@@ -30,6 +33,10 @@ Open and Close settings define the conditions under which pop-up windows show up
 = Easy integration with Mailchimp =
 One of the best ways of using pop-ups is for collecting emails via integrated newsletter subscription forms. Cherry PopUp is insegrated with Mailchimp out of the box, so you can leverage its functionality to increase traffic and user engagement of your website.
 In order to connect Mailchimp to your website, just input your Mailchimp API Key and List ID.
+
+= Login & Registration form =
+
+Responsive Frontend Login and Registration forms. Add your login form in the frontend easily (page or post). And also the registration form.
 
 = Customizable templates =
 The plugin offers simplified templating system for .tmpl files. 13 templates are available by default:
@@ -43,6 +50,8 @@ Cherry PopUp plugin supports templates, which can be quickly modified using macr
 * TITLE - Title of your pop-up window;
 * CONTENT - General content;
 * SUBSCRIBEFORM - To place a Mailchimp email subscription form;
+* LOGINFORM - Login form;
+* REGISTERFORM - Register form;
 
 All you need is to create a template file with the macros listed above, and upload it to the templates folder.
 
@@ -53,6 +62,9 @@ You can enable two pop-up windows simultaneously: for example, one at the beginn
 
 = Popup Identification on static page =
 If standard settings are not enough for identifying visible section, there is a metablock that allows you to add a particular popup to any static page.
+
+= Social login =
+The login form allows registering using social network accounts. To use this option one needs to install additional <a href="http://miled.github.io/wordpress-social-login/">WordPress Social Login</a> plugin.
 
 == Installation ==
 
@@ -67,10 +79,12 @@ If standard settings are not enough for identifying visible section, there is a 
 4. Settings page - Mailing List manager settings(MailChimp).
 5. Popup Settings - General.
 6. Popup Settings - Overlay.
-7. Popup Settings - "Open page" settings.
-8. Popup Settings - "Close page" settings.
-9. Popup Settings - Advanced settings.
-10. Popup Identification on static page
+7. Popup Settings - Styles.
+8. Popup Settings - "Open page" settings.
+9. Popup Settings - "Close page" settings.
+10. Popup Settings - Custom openning event.
+11. Popup Settings - Advanced settings.
+11. Popup Identification on static page
 
 == Configuration ==
 
@@ -80,7 +94,7 @@ All plugin options are gathered in PopUps -> Settings
 = General settings =
 * Enable popups - Enable/disable plugin functions globally for the site
 * Enable Plugin on Mobile Devices - Show/hide popups on mobile devices
- *Enable for logged users - Show/hide popups for logged in users
+* Enable for logged users - Show/hide popups for logged in users
 
 = "Open page" settings =
 * Default Open Page Popup - Default  open page popup identity
@@ -95,18 +109,14 @@ All plugin options are gathered in PopUps -> Settings
 * MailChimp list ID - Profile list id
 
 = Popup Settings =
-Each popup has its own settings which are gathered in Popup settings
+* Each popup has its own settings which are gathered in Popup settings
 
 = General =
-* Popup layout type - Choose popup layout type (center, fullwidth center, fullwidth bottom)
+* Popup layout type - Choose popup layout type (center, fullwidth center, fullwidth bottom, fullwidth)
 * Show/Hide animation - Choose show/hide animation effects(fade, scale, move up)
 * Base style preset - Popup controls base color styles(default, light, dark, blue, red)
-* Container background type - Container background type (fill-color, image)
-* Container background color - Popup container background color
-* Container background image - Choose container background image
-* Container opacity - Container opacity (active for fill-color type)
-* Popup width - Popup container width
-* Popup height - Popup container height
+* Popup content type - allows you to choose between subcribe, login register or simple popup type
+* Show once - PopUp will appears just once and won’t come up when you close it.
 
 = Overlay =
 * Type of overlay - Overlay type
@@ -115,6 +125,16 @@ Each popup has its own settings which are gathered in Popup settings
 * Overlay background image - Set overlay background image
 * Overlay close clicking- Clicking on the overlay closes the popup
 
+= Popup Styles =
+* Container background type - Container background type (fill-color, image)
+* Container background color - Popup container background color
+* Container background image - Choose container background image
+* Container opacity - Container opacity (active for fill-color type)
+* Popup width - Popup container width
+* Popup height - Popup container height
+* Popup padding - Popup container padding
+* Popup border radius - Popup container border radius
+
 = "Open" page settings =
 * "Open page" popup appear event - Set an event to which a popup will be opened
 * Open delay - Set the time delay when the page loads
@@ -122,11 +142,15 @@ Each popup has its own settings which are gathered in Popup settings
 * Page scrolling value - Page scrolling progress(%). Option for On page scrolling event
 
 = "Close" page settings =
-* Outside viewport -  Set top border for mouse cursor
+* Outside viewport - Set top border for mouse cursor
 * Page unfocus - User sets focus on another page or app in the system
 
+= Custom openning event =
+* Custom event type - define custom event type
+* Selector - jQuery selector for custom event
+
 = Advanced settings =
-*Template - Template file for content
+* Custom class - Popup custom class
 
 == Changelog ==
 
@@ -163,3 +187,8 @@ Each popup has its own settings which are gathered in Popup settings
 = 1.1.3 =
 
 * Fixes
+
+= 1.1.4 =
+
+* Fix popup style settings
+* Upd: documentation
