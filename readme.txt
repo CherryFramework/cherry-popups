@@ -84,7 +84,8 @@ The login form allows registering using social network accounts. To use this opt
 9. Popup Settings - "Close page" settings.
 10. Popup Settings - Custom openning event.
 11. Popup Settings - Advanced settings.
-11. Popup Identification on static page
+12. Popup Identification on static page
+13. Login form
 
 == Configuration ==
 
