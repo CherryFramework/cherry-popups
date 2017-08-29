@@ -10,6 +10,10 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Cherry PopUps is a powerful and extremely useful plugin, which allows you to create customizable pop-up windows and manage them effectively.
 
+== Documentation ==
+This plugin is used to display popups of your projects on a site page. It has its own settings page which allows to save, reset and set default options. With its help you will be able to create various kinds of popups and manage them the way you like.
+Full documentation <a href="http://documentation.jetimpex.com/wordpress/index.php?project=cherry_popups">here</a>
+
 == Description ==
 
 Cherry PopUps is a standalone plugin, however it depends on the Cherry Framework package that comes with the plugin by default. You don't need to download any additional modules manually, just be aware of this dependency.
