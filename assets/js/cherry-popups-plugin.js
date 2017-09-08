@@ -408,12 +408,12 @@
 					$( 'span', $subscribeFormMessage ).html( message );
 					$subscribeFormMessage.slideDown( 300 );
 
-					/*timeout = setTimeout( function() {
+					timeout = setTimeout( function() {
 						$subscribeFormMessage.slideUp( 300, function() {
 							$subscribeFormMessage.removeClass( 'success-type' );
 							clearTimeout( timeout );
 						} );
-					}, 6000 );*/
+					}, 6000 );
 				}
 
 				/*
@@ -556,13 +556,13 @@
 					$( 'span', $registerFormMessage ).html( message );
 					$registerFormMessage.slideDown( 300 );
 
-					timeout = setTimeout( function() {
+					/*timeout = setTimeout( function() {
 						$registerFormMessage.slideUp( 300, function() {
 							$registerFormMessage.removeClass( 'success-type' );
 
 							clearTimeout( timeout );
 						} );
-					}, 6000 );
+					}, 6000 );*/
 				}
 
 				/**
