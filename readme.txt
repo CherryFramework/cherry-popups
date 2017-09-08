@@ -4,7 +4,7 @@ Contributors: TemplateMonster 2002
 Tags: custom post type, popup, subscribe, mailchimp, cherry framework, login, sign in, custom popup styles, custom open events
 Requires at least: 4.5
 Tested up to: 4.8.1
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 

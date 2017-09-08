@@ -5,6 +5,7 @@
  * Description: A plugin for WordPress.
  * Version:     1.1.5
  * Author:      Jetimpex
+ * Author URI:  https://jetimpex.com/wordpress/
  * Text Domain: cherry-popups
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
