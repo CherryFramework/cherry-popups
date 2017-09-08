@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Cherry PopUps
- * Plugin URI:  http://www.cherryframework.com/
+ * Plugin URI:  https://jetimpex.com/wordpress/
  * Description: A plugin for WordPress.
- * Version:     1.1.4
- * Author:      Cherry Team
+ * Version:     1.1.5
+ * Author:      Jetimpex
  * Text Domain: cherry-popups
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -12,7 +12,7 @@
  *
  * @package Cherry_Popups
  * @author  Cherry Team
- * @version 1.1.4
+ * @version 1.1.5
  * @license GPL-3.0+
  * @copyright  2002-2016, Cherry Team
  */
@@ -141,7 +141,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_POPUPS_VERSION', '1.1.4' );
+			define( 'CHERRY_POPUPS_VERSION', '1.1.5' );
 
 			/**
 			 * Set constant name for the post type name.

@@ -408,12 +408,12 @@
 					$( 'span', $subscribeFormMessage ).html( message );
 					$subscribeFormMessage.slideDown( 300 );
 
-					timeout = setTimeout( function() {
+					/*timeout = setTimeout( function() {
 						$subscribeFormMessage.slideUp( 300, function() {
 							$subscribeFormMessage.removeClass( 'success-type' );
 							clearTimeout( timeout );
 						} );
-					}, 6000 );
+					}, 6000 );*/
 				}
 
 				/*
@@ -485,13 +485,13 @@
 					$( 'span', $loginFormMessage ).html( message );
 					$loginFormMessage.slideDown( 300 );
 
-					timeout = setTimeout( function() {
+					/*timeout = setTimeout( function() {
 						$loginFormMessage.slideUp( 300, function() {
 							$loginFormMessage.removeClass( 'success-type' );
 
 							clearTimeout( timeout );
 						} );
-					}, 6000 );
+					}, 6000 );*/
 				}
 
 				/*
