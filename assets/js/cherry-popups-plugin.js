@@ -181,6 +181,17 @@
 							}, 300 );
 					} );
 
+					$this.on( 'click', '.cherry-popup-close-label', function( event ) {
+						var overlay = event.currentTarget;
+
+							$this.toggleClass( 'hide-animation show-animation' );
+
+							clearTimeout( timeout );
+							timeout = setTimeout( function() {
+								hidePopup();
+							}, 300 );
+					} );
+
 					$( document ).on( 'keyup', function( event ) {
 
 						if ( ! $this.hasClass( 'show-animation' ) ) {

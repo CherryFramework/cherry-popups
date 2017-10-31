@@ -3,7 +3,7 @@
  * Plugin Name: Cherry PopUps
  * Plugin URI:  https://jetimpex.com/wordpress/
  * Description: A plugin for WordPress.
- * Version:     1.1.5
+ * Version:     1.1.6
  * Author:      Jetimpex
  * Author URI:  https://jetimpex.com/wordpress/
  * Text Domain: cherry-popups
@@ -13,7 +13,7 @@
  *
  * @package Cherry_Popups
  * @author  Cherry Team
- * @version 1.1.5
+ * @version 1.1.6
  * @license GPL-3.0+
  * @copyright  2002-2016, Cherry Team
  */
@@ -62,6 +62,15 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 		 * @var null
 		 */
 		public $dynamic_css = null;
+
+		/**
+		 * Holder for base plugin path
+		 *
+		 * @since  1.0.0
+		 * @access private
+		 * @var    string
+		 */
+		private $plugin_path = null;
 
 		/**
 		 * Default options
@@ -142,7 +151,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_POPUPS_VERSION', '1.1.5' );
+			define( 'CHERRY_POPUPS_VERSION', '1.1.6' );
 
 			/**
 			 * Set constant name for the post type name.
@@ -401,6 +410,21 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			wp_cache_set( $option_name, $option_default, CHERRY_OPTIONS_NAME );
 
 			return $option_default;
+		}
+
+		/**
+		 * Returns path to file or dir inside plugin folder
+		 *
+		 * @param  string $path Path inside plugin dir.
+		 * @return string
+		 */
+		public function plugin_path( $path = null ) {
+
+			if ( ! $this->plugin_path ) {
+				$this->plugin_path = trailingslashit( plugin_dir_path( __FILE__ ) );
+			}
+
+			return $this->plugin_path . $path;
 		}
 
 		/**

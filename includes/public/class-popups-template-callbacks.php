@@ -132,16 +132,15 @@ class Cherry_Popups_Template_Callbacks {
 
 		$attr = wp_parse_args( $attr, $default_attr );
 
+		global $post;
+
+		$post = get_post( $this->popup_id );
+
+		setup_postdata( $post );
 		ob_start();
-		?><div class="cherry-popup-content"><?php
-
-		$content = $post_data->post_content;
-		$content = str_replace( ']]>', ']]&gt;', $content );
-		echo do_shortcode( $content );
-		?></div><?php
-		$content = ob_get_contents();
-
-		ob_end_clean();
+		the_content();
+		$content = sprintf( '<div class="cherry-popup-content">%s</div>', ob_get_clean() );
+		wp_reset_postdata();
 
 		return $content;
 	}
@@ -153,8 +152,8 @@ class Cherry_Popups_Template_Callbacks {
 	 */
 	public function get_subscribe_form( $attr = array() ) {
 		$default_attr = array(
-			'submit_text'      => esc_html__( 'Subscribe', 'cherry-projects' ),
-			'placeholder_text' => esc_html__( 'Your email', 'cherry-projects' ),
+			'submit_text'      => esc_html__( 'Subscribe', 'cherry-popups' ),
+			'placeholder_text' => esc_html__( 'Your email', 'cherry-popups' ),
 		);
 
 		$attr = wp_parse_args( $attr, $default_attr );
@@ -179,15 +178,15 @@ class Cherry_Popups_Template_Callbacks {
 	 */
 	public function get_login_form( $attr = array() ) {
 		$default_attr = apply_filters( 'cherry_popup_login_form_defaults_attr', array(
-			'submit_text'          => esc_html__( 'Log in', 'cherry-projects' ),
-			'user_placeholder'     => esc_html__( 'Login', 'cherry-projects' ),
-			'password_placeholder' => esc_html__( 'Password', 'cherry-projects' ),
-			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to', 'cherry-projects' ),
-			'sign_up_link_text'    => esc_html__( 'Sign up', 'cherry-projects' ),
-			'sign_up_link'         => esc_html__( '#', 'cherry-projects' ),
-			'remember_message'     => esc_html__( 'Remember me', 'cherry-projects' ),
-			'use_mail'             => esc_html__( 'or use your login data', 'cherry-projects' ),
-			'already_login_text'   => esc_html__( 'You are currently logged in', 'cherry-projects' ),
+			'submit_text'          => esc_html__( 'Log in', 'cherry-popups' ),
+			'user_placeholder'     => esc_html__( 'Login', 'cherry-popups' ),
+			'password_placeholder' => esc_html__( 'Password', 'cherry-popups' ),
+			'sign_up_message'      => esc_html__( 'Don\'t have an account? Click here to', 'cherry-popups' ),
+			'sign_up_link_text'    => esc_html__( 'Sign up', 'cherry-popups' ),
+			'sign_up_link'         => esc_html__( '#', 'cherry-popups' ),
+			'remember_message'     => esc_html__( 'Remember me', 'cherry-popups' ),
+			'use_mail'             => esc_html__( 'or use your login data', 'cherry-popups' ),
+			'already_login_text'   => esc_html__( 'You are currently logged in', 'cherry-popups' ),
 		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
@@ -242,13 +241,13 @@ class Cherry_Popups_Template_Callbacks {
 	 */
 	public function get_register_form( $attr = array() ) {
 		$default_attr = apply_filters( 'cherry_popup_register_form_defaults_attr', array(
-			'submit_text'       => esc_html__( 'Sign up', 'cherry-projects' ),
-			'login_placeholder' => esc_html__( 'Login', 'cherry-projects' ),
-			'mail_placeholder'  => esc_html__( 'Email', 'cherry-projects' ),
-			'have_account'      => esc_html__( 'Already have an account?', 'cherry-projects' ),
-			'login_link_text'   => esc_html__( 'Log in', 'cherry-projects' ),
-			'login_link'        => esc_html__( '#', 'cherry-projects' ),
-			'new_user_data'     => esc_html__( 'or enter your registration credentials', 'cherry-projects' ),
+			'submit_text'       => esc_html__( 'Sign up', 'cherry-popups' ),
+			'login_placeholder' => esc_html__( 'Login', 'cherry-popups' ),
+			'mail_placeholder'  => esc_html__( 'Email', 'cherry-popups' ),
+			'have_account'      => esc_html__( 'Already have an account?', 'cherry-popups' ),
+			'login_link_text'   => esc_html__( 'Log in', 'cherry-popups' ),
+			'login_link'        => esc_html__( '#', 'cherry-popups' ),
+			'new_user_data'     => esc_html__( 'or enter your registration credentials', 'cherry-popups' ),
 		) );
 
 		$attr = wp_parse_args( $attr, $default_attr );
@@ -279,6 +278,24 @@ class Cherry_Popups_Template_Callbacks {
 				$html .= '<div class="cherry-popup-register__message"><span></span></div>';
 			$html .= '</form>';
 		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * Get register form.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_close_label( $attr = array() ) {
+
+		$default_attr = apply_filters( 'cherry_popup_close_label_defaults_attr', array(
+			'label_text' => esc_html__( 'Close Popup', 'cherry-popups' ),
+		) );
+
+		$attr = wp_parse_args( $attr, $default_attr );
+
+		$html = '<span class="cherry-popup-close-label">' . $attr['label_text'] . '</span>';
 
 		return $html;
 	}

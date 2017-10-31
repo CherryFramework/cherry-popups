@@ -77,12 +77,13 @@ class Cherry_Popups_Data {
 			'base-style'           => $this->get_popup_meta_field( 'cherry-popup-base-style', 'light' ),
 			'width'                => $this->get_popup_meta_field( 'cherry-popup-width', 600 ),
 			'height'               => $this->get_popup_meta_field( 'cherry-popup-height', 400 ),
-			'padding'              => $this->get_popup_meta_field( 'cherry-popup-padding', 20 ),
+			'padding'              => $this->get_popup_meta_field( 'cherry-popup-padding', 0 ),
 			'container-bg-type'    => $this->get_popup_meta_field( 'cherry-container-bg-type', 'fill-color' ),
 			'container-color'      => $this->get_popup_meta_field( 'cherry-container-color', '#fff' ),
 			'container-opacity'    => $this->get_popup_meta_field( 'cherry-container-opacity', 100 ),
 			'container-image'      => $this->get_popup_meta_field( 'cherry-container-image', '' ),
 			'border-radius'        => $this->get_popup_meta_field( 'cherry-border-radius', 3 ),
+			'content-position'     => $this->get_popup_meta_field( 'cherry-content-position', 'center' ),
 			'show-once'            => $this->get_popup_meta_field( 'cherry-show-once', 'false' ),
 			'overlay-type'         => $this->get_popup_meta_field( 'cherry-overlay-type', 'fill-color' ),
 			'overlay-color'        => $this->get_popup_meta_field( 'cherry-overlay-color', '#000' ),
@@ -122,6 +123,10 @@ class Cherry_Popups_Data {
 
 				case 'simple':
 					$template_name = 'default-simple-popup.tmpl';
+					break;
+
+				case 'content':
+					$template_name = 'default-content-only-popup.tmpl';
 					break;
 
 				case 'login':
@@ -235,6 +240,13 @@ class Cherry_Popups_Data {
 			)
 		);
 
+		cherry_popups()->dynamic_css->add_style(
+			sprintf( '.cherry-popup-%1$s .cherry-popup-container__inner', $this->options['id'] ),
+			array(
+				'justify-content' => $this->popup_settings['content-position'],
+			)
+		);
+
 		// Overlay styles
 		switch ( $this->popup_settings['overlay-type'] ) {
 			case 'fill-color':
@@ -298,6 +310,7 @@ class Cherry_Popups_Data {
 			'subscribeform' => array( $callbacks, 'get_subscribe_form' ),
 			'loginform'     => array( $callbacks, 'get_login_form' ),
 			'registerform'  => array( $callbacks, 'get_register_form' ),
+			'closelabel'    => array( $callbacks, 'get_close_label' ),
 		);
 
 		/**

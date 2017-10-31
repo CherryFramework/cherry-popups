@@ -897,6 +897,8 @@
       font-size: 30px; }
     .cherry-popup-wrapper .cherry-popup-close-button:hover {
       color: #e54343; }
+  .cherry-popup-wrapper .cherry-popup-close-label {
+    cursor: pointer; }
   .cherry-popup-wrapper .cherry-popup-check {
     display: -webkit-box;
     display: -webkit-flex;

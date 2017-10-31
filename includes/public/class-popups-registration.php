@@ -37,8 +37,25 @@ class Cherry_Popups_Registration {
 		add_action( 'load-post.php', array( $this, 'add_post_formats_support' ) );
 		add_action( 'load-post-new.php', array( $this, 'add_post_formats_support' ) );
 
+		add_filter( 'option_elementor_cpt_support', array( $this, 'set_option_support' ) );
+		add_filter( 'default_option_elementor_cpt_support', array( $this, 'set_option_support' ) );
+
+		add_action( 'template_include', array( $this, 'set_post_type_template' ), 9999 );
+
 		// Removes rewrite rules and then recreate rewrite rules.
 		// add_action( 'init', array( $this, 'rewrite_rules' ) );
+	}
+
+	/**
+	 * Add elementor support for mega menu items.
+	 */
+	public function set_option_support( $value ) {
+
+		if ( empty( $value ) ) {
+			$value = array();
+		}
+
+		return array_merge( $value, array( CHERRY_POPUPS_NAME ) );
 	}
 
 	/**
@@ -51,6 +68,7 @@ class Cherry_Popups_Registration {
 
 		$labels = array(
 			'name'               => __( 'PopUps', 'cherry-popups' ),
+			'menu_name'          => __( 'PopUps', 'cherry-popups' ),
 			'singular_name'      => __( 'Popups list', 'cherry-popups' ),
 			'add_new'            => __( 'Add Popup', 'cherry-popups' ),
 			'add_new_item'       => __( 'Add Popup Item', 'cherry-popups' ),
@@ -73,7 +91,8 @@ class Cherry_Popups_Registration {
 			'labels'              => $labels,
 			'supports'            => $supports,
 			'exclude_from_search' => false,
-			'publicly_queryable'  => false,
+			'publicly_queryable'  => true,
+			'public'              => true,
 			'show_in_nav_menus'   => false,
 			'show_ui'             => true,
 			'show_in_menu'        => true,
@@ -82,8 +101,9 @@ class Cherry_Popups_Registration {
 			'menu_position'       => null,
 			'menu_icon'           => ( version_compare( $GLOBALS['wp_version'], '3.8', '>=' ) ) ? CHERRY_POPUPS_URI . 'assets/img/svg/cherry-popup-icon.svg' : '',
 			'can_export'          => true,
-			'has_archive'         => true,
-			'taxonomies'          => array( 'post_format' ),
+			'has_archive'         => false,
+			'rewrite'             => true,
+			'taxonomies'          => array(),
 		);
 
 		$args = apply_filters( 'cherry_popups_post_type_args', $args );
@@ -112,6 +132,25 @@ class Cherry_Popups_Registration {
 	 */
 	public function rewrite_rules() {
 		flush_rewrite_rules();
+	}
+
+	/**
+	 * Set blank template for editor
+	 */
+	public function set_post_type_template( $template ) {
+		$found = false;
+
+		if ( is_singular( CHERRY_POPUPS_NAME ) ) {
+			$found    = true;
+			$template = cherry_popups()->plugin_path( 'templates/blank.php' );
+		}
+
+		if ( $found ) {
+			do_action( 'cherry-popups/template-include/found' );
+		}
+
+		return $template;
+
 	}
 
 	/**

@@ -185,6 +185,7 @@ class Cherry_Popups_Meta_Boxes {
 					'options'     => array(
 						'default' => esc_html__( 'Default(Content + Subscribe form)', 'cherry-popups' ),
 						'simple'    => esc_html__( 'Simple(Title + Content)', 'cherry-popups' ),
+						'content'   => esc_html__( 'Content Only', 'cherry-popups' ),
 						'login'     => esc_html__( 'Login Form', 'cherry-popups' ),
 						'signup'    => esc_html__( 'New User Register Form', 'cherry-popups' ),
 						'subscribe' => esc_html__( 'Subscribe Form', 'cherry-popups' ),
@@ -230,6 +231,7 @@ class Cherry_Popups_Meta_Boxes {
 						),
 					),
 				),
+
 				$prefix . 'overlay-color' => array(
 					'type'        => 'colorpicker',
 					'parent'      => 'overlay_tab',
@@ -361,6 +363,28 @@ class Cherry_Popups_Meta_Boxes {
 					'max_value'   => 50,
 					'min_value'   => 0,
 					'value'       => 3,
+				),
+
+				$prefix . 'content-position' => array(
+					'type'          => 'radio',
+					'parent'        => 'style_tab',
+					'title'         => esc_html__( 'Content Position', 'cherry-popups' ),
+					'value'         => 'center',
+					'display-input' => true,
+					'options'       => array(
+						'flex-start' => array(
+							'label' => esc_html__( 'Top', 'cherry-popups' ),
+						),
+						'center' => array(
+							'label' => esc_html__( 'Center', 'cherry-popups' ),
+						),
+						'flex-end' => array(
+							'label' => esc_html__( 'Bottom', 'cherry-popups' ),
+						),
+						'stretch' => array(
+							'label' => esc_html__( 'Stretch', 'cherry-popups' ),
+						),
+					),
 				),
 
 				$prefix . 'popup-open-appear-event' => array(

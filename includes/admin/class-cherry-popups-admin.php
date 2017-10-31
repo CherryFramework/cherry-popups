@@ -143,8 +143,6 @@ if ( ! class_exists( 'Cherry_Popups_Admin' ) ) {
 			cherry_popups()->save_options( CHERRY_OPTIONS_NAME, $default_options );
 		}
 
-
-
 		/**
 		 * Enqueue admin stylesheets.
 		 *
