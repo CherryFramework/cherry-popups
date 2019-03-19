@@ -3,7 +3,7 @@
  * Plugin Name: Cherry PopUps
  * Plugin URI:  https://jetimpex.com/wordpress/
  * Description: A plugin for WordPress.
- * Version:     1.1.7
+ * Version:     1.1.8
  * Author:      Jetimpex
  * Author URI:  https://jetimpex.com/wordpress/
  * Text Domain: cherry-popups
@@ -151,7 +151,7 @@ if ( ! class_exists( 'Cherry_Popups' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_POPUPS_VERSION', '1.1.7' );
+			define( 'CHERRY_POPUPS_VERSION', '1.1.8' );
 
 			/**
 			 * Set constant name for the post type name.

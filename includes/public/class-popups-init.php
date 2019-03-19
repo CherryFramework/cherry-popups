@@ -136,7 +136,7 @@ class Cherry_Popups_Init {
 		}
 
 		// Check if global modile popups enable.
-		if ( 'false' === $enable_popups_mobile && is_mobile() ) {
+		if ( 'false' === $enable_popups_mobile && wp_is_mobile() ) {
 			return false;
 		}
 
